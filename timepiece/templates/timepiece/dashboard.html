@@ -103,51 +103,7 @@ document.getElementById("id_end_date").value = date;
             </form>
         </div>
 <hr>
-<h3>To-Do List</h3>
-<ul class="nav nav-pills">
-		 <li><a href='{% url 'todo_complete' %}'>Completed To-Do's</a></li>
-            </ul>
-<br>
-{% if todos %}
-<form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
-<table class="table">
-  {% csrf_token %}
 
-<tr>
-<th>Priority</th>
-<th>Description</th>
-<th>Mark</th>
-<th>Edit</th>
-<th>Delete</th>
-</tr>
-{% for todo in todos %}
-<tr> 
-<td>{{ todo.priority }}</td>
-<td>{{ todo.description }}</td>
-<td><button class="btn btn-primary btn-sm" type="submit" name="taskComplete" formnovalidate="" value="{{ todo.id }}" id="{{todo.id}}">Done</button></td>
-<td><a class="btn btn-primary btn-sm" href="{% url 'todo_edit' todo.id %}"> Edit</a></td>
-<td><a class="btn btn-primary btn-sm" href="{% url 'todo_delete' todo.id %}"> Delete</a></td>
-</tr>
-{% endfor %}
-</table>
-</form>
-<br>
-{% endif %}
-<h4>Add Item</h4>
-<br>
-<form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
-  {% csrf_token %}
-<div class="form-group">
-<label for="priority">Priority: </label>
-<input type="number" id="priority" name="priority" required>
-<label for="description">Description: </label>
-<input type="text" id="description" name="description" required>
-                    <button class="btn btn-primary" type="submit" value="Add" name="taskAdd">Add</button>
-</div>
-</form>
-
-   <hr> 
-        <div>
 <h3>Hours for the Week of {{ week|date:'M j' }}</h3>
 
 <p>
@@ -220,6 +176,7 @@ document.getElementById("id_end_date").value = date;
                 {% endif %}
             
                             <div>
+                                <hr>
                                 <h3>Project Summary</h3>
 {% if week_entries %}
                                 <table class="table table-bordered">
@@ -241,7 +198,54 @@ document.getElementById("id_end_date").value = date;
 {% else %}
 <p>No entries exist for this week.</p>
 {% endif %}
-		</div>		
+		</div>
+
         </div>
     {% endif %}
+<hr>
+<h3>To-Do List</h3>
+<ul class="nav nav-pills">
+		 <li><a href='{% url 'todo_complete' %}'>Completed To-Do's</a></li>
+            </ul>
+<br>
+{% if todos %}
+<form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
+<table class="table">
+  {% csrf_token %}
+
+<tr>
+<th>Priority</th>
+<th>Description</th>
+<th>Mark</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+{% for todo in todos %}
+<tr>
+<td>{{ todo.priority }}</td>
+<td>{{ todo.description }}</td>
+<td><button class="btn btn-primary btn-sm" type="submit" name="taskComplete" formnovalidate="" value="{{ todo.id }}" id="{{todo.id}}">Done</button></td>
+<td><a class="btn btn-primary btn-sm" href="{% url 'todo_edit' todo.id %}"> Edit</a></td>
+<td><a class="btn btn-primary btn-sm" href="{% url 'todo_delete' todo.id %}"> Delete</a></td>
+</tr>
+{% endfor %}
+</table>
+</form>
+<br>
+{% endif %}
+<h4>Add Item</h4>
+<br>
+<form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
+  {% csrf_token %}
+<div class="form-group">
+<label for="priority">Priority: </label>
+<input type="number" id="priority" name="priority" required>
+<label for="description">Description: </label>
+<input type="text" id="description" name="description" required>
+                    <button class="btn btn-primary" type="submit" value="Add" name="taskAdd">Add</button>
+</div>
+</form>
+
+   <hr>
+
 {% endblock content %}

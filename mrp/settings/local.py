@@ -145,12 +145,12 @@ LOGOUT_REDIRECT_URL = 'auth_login'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-#STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
+# doug commented out these two lines
 AWS_ACCESS_KEY_ID = os.environ['access_key']
 AWS_SECRET_ACCESS_KEY = os.environ['secret_access_key']
 AWS_STORAGE_BUCKET_NAME = 'emus-mrp'
