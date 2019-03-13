@@ -27,7 +27,7 @@ Can search for Purchase Orders that contain a specific part description, engimus
                                 {% for po in purchase_orders %}
 
                         <tr>
-			    <td><a href="{% url 'detail_po' po.id %}">{{ po.number}}</td>
+                            <td><a href="{% url 'detail_po' po.id %}">{{ po.number}}</a></td>
                             <td><a href="{% url 'edit_po' po.id%}">Edit</a></td>
 			    <td><a href="{% url 'delete_po' po.id%}">Delete</a></td>
                         </tr>

@@ -68,9 +68,10 @@
                                         <td>
                                             <p class="mb-0">
                                             {{ entry.project }} </p>
-<small class="text-muted">
+                                        <small class="text-muted">
                                                 <a href="{% url 'edit_entry' entry.id %}?next={{ next_url|add_parameters:request.GET|urlencode }}">Edit</a>
                                                 <a href="{% url 'delete_entry' entry.id %}?next={{ next_url|add_parameters:request.GET|urlencode }}">Delete</a>
+                                        </small>
                                         </td>
                                         
                                         <td class="align-middle">{{ entry.start_time|time }}</td>
@@ -170,3 +171,5 @@
         </div>
   {% endcomment %}  
 {% endblock content %}
+    </div>
+            </div>

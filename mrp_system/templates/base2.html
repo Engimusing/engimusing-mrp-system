@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>MRP: {% block title %}{% endblock title %}</title>
-    <link rel="icon" type="image/png" href="{% static "images/icons/timepiece.png" %}">
+    <link rel="icon" type="image/png" href="{% static 'images/icons/timepiece.png' %}">
 <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">                 
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -19,11 +19,11 @@
     jqueryui's, and bootstrap's is not currently used, so we'll load
     jqueryui last so that it has precedence.
     {% endcomment %}
-    <script charset="utf-8" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <script charset="utf-8" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script charset="utf-8" src="{% static "selectable/js/jquery.dj.selectable.js" %}"></script>
+    <script charset="utf-8" src="{% static 'selectable/js/jquery.dj.selectable.js' %}"></script>
     {% endblock javascript %}
-    <script charset="utf-8" src="{% static "timepiece/js/widgets.js" %}"></script>
+    <script charset="utf-8" src="{% static 'timepiece/js/widgets.js' %}"></script>
 
 
     {% block css %}
@@ -151,7 +151,7 @@
         </footer>
     {% endblock footer %}
 
-    <script charset="utf-8" src="{% static "timepiece/js/sticky_table_header.js" %}"></script>
+    <script charset="utf-8" src="{% static 'timepiece/js/sticky_table_header.js' %}"></script>
 <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

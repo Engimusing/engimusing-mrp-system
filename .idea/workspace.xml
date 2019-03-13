@@ -2,310 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55dc5a8c-71ee-48c7-9086-544c69561bb7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Procfile.windows" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile.windows" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/middleware/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/middleware/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/middleware/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/middleware/middleware.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/settings/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/settings/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/settings/custom_storages.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/settings/custom_storages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/settings/local.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/settings/local.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/static/.keep" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/static/.keep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/500.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/registration/base_accounts.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/registration/base_accounts.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/registration/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/registration/password_change_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/registration/password_change_done.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/registration/password_change_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/registration/password_change_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/registration/password_reset_complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/registration/password_reset_complete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/registration/password_reset_confirm.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/registration/password_reset_confirm.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/registration/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/registration/password_reset_done.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/templates/registration/password_reset_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/templates/registration/password_reset_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp/wsgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0002_auto_20181114_1116.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0002_auto_20181114_1116.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0003_auto_20181114_1133.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0003_auto_20181114_1133.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0004_auto_20181114_1144.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0004_auto_20181114_1144.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0005_auto_20181114_1154.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0005_auto_20181114_1154.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0006_auto_20181114_1231.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0006_auto_20181114_1231.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0007_auto_20181114_1234.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0007_auto_20181114_1234.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0008_auto_20181128_1057.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0008_auto_20181128_1057.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0009_auto_20181128_1210.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0009_auto_20181128_1210.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0010_part_document.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0010_part_document.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0011_auto_20181206_1145.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0011_auto_20181206_1145.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0012_auto_20181206_1227.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0012_auto_20181206_1227.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0013_type_suffix.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0013_type_suffix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0014_auto_20181206_1254.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0014_auto_20181206_1254.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0015_auto_20181206_1257.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0015_auto_20181206_1257.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0016_auto_20181206_1258.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0016_auto_20181206_1258.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0017_auto_20181206_1348.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0017_auto_20181206_1348.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0018_auto_20181206_1500.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0018_auto_20181206_1500.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0019_auto_20181206_1811.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0019_auto_20181206_1811.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0020_part_char9.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0020_part_char9.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0021_auto_20181211_0950.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0021_auto_20181211_0950.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0022_auto_20181211_0951.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0022_auto_20181211_0951.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0023_auto_20181214_1129.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0023_auto_20181214_1129.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0024_auto_20181226_1348.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0024_auto_20181226_1348.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0025_auto_20181226_1736.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0025_auto_20181226_1736.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0026_auto_20181227_1616.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0026_auto_20181227_1616.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0027_digikeyapi.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0027_digikeyapi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0028_delete_digikeyapi.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0028_delete_digikeyapi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0029_digikeyapi.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0029_digikeyapi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0030_auto_20181228_1544.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0030_auto_20181228_1544.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0031_digikeyapi_date.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0031_digikeyapi_date.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0032_remove_digikeyapi_date.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0032_remove_digikeyapi_date.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0033_digikeyapi_access_token.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0033_digikeyapi_access_token.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0034_field_mouser_name.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0034_field_mouser_name.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0035_auto_20190109_1312.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0035_auto_20190109_1312.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0036_auto_20190111_1357.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0036_auto_20190111_1357.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0037_billofmaterials_amount.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0037_billofmaterials_amount.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0038_auto_20190114_1348.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0038_auto_20190114_1348.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0039_product_part_products.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0039_product_part_products.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0040_auto_20190114_1549.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0040_auto_20190114_1549.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0041_auto_20190114_1647.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0041_auto_20190114_1647.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0042_auto_20190114_1853.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0042_auto_20190114_1853.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0043_auto_20190115_1025.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0043_auto_20190115_1025.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0044_auto_20190115_1105.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0044_auto_20190115_1105.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0045_auto_20190115_1125.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0045_auto_20190115_1125.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0046_auto_20190115_1245.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0046_auto_20190115_1245.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0047_billofmaterials_name.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0047_billofmaterials_name.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0048_auto_20190115_1828.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0048_auto_20190115_1828.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0049_auto_20190115_1848.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0049_auto_20190115_1848.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0050_auto_20190115_1849.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0050_auto_20190115_1849.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0051_auto_20190118_1051.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0051_auto_20190118_1051.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0052_auto_20190121_0916.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0052_auto_20190121_0916.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0053_auto_20190121_1931.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0053_auto_20190121_1931.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0054_auto_20190121_1943.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0054_auto_20190121_1943.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0055_auto_20190121_2007.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0055_auto_20190121_2007.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0056_auto_20190122_1952.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0056_auto_20190122_1952.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0057_auto_20190123_1029.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0057_auto_20190123_1029.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0058_product_engimusingproductnumber.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0058_product_engimusingproductnumber.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0059_auto_20190124_1230.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0059_auto_20190124_1230.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0060_auto_20190124_1638.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0060_auto_20190124_1638.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0061_auto_20190124_2231.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0061_auto_20190124_2231.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0062_auto_20190129_1509.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0062_auto_20190129_1509.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0063_auto_20190129_1513.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0063_auto_20190129_1513.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0064_remove_part_partnumber.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0064_remove_part_partnumber.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0065_purchaseorder.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0065_purchaseorder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0066_auto_20190130_1148.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0066_auto_20190130_1148.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0067_auto_20190130_1217.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0067_auto_20190130_1217.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0068_auto_20190130_1248.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0068_auto_20190130_1248.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0069_auto_20190130_1305.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0069_auto_20190130_1305.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0070_auto_20190130_1416.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0070_auto_20190130_1416.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0071_auto_20190130_1503.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0071_auto_20190130_1503.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0072_auto_20190130_1515.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0072_auto_20190130_1515.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0073_auto_20190130_1623.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0073_auto_20190130_1623.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0074_auto_20190130_1704.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0074_auto_20190130_1704.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0075_auto_20190130_1707.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0075_auto_20190130_1707.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0076_remove_purchaseorderparts_item_number.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0076_remove_purchaseorderparts_item_number.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0077_purchaseorderparts_item_number.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0077_purchaseorderparts_item_number.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0078_remove_purchaseorder_vendor.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0078_remove_purchaseorder_vendor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0079_vendor_purchase_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0079_vendor_purchase_order.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0080_remove_vendor_purchase_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0080_remove_vendor_purchase_order.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0081_purchaseorder_vendor.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0081_purchaseorder_vendor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0082_purchaseorderparts_total.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0082_purchaseorderparts_total.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/0083_auto_20190131_1155.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/0083_auto_20190131_1155.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/add_loc_relationship.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/add_loc_relationship.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mrp_system/templates/base2.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/base2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/bom_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/bom_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/delete_location.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/delete_location.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/delete_mo.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/delete_mo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/delete_part.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/delete_part.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/delete_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/delete_product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/delete_purchase_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/delete_purchase_order.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/delete_type.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/delete_type.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/delete_vendor.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/delete_vendor.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/enter_part.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/enter_part.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/enter_tokens.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/enter_tokens.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/location_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/location_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/location_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/location_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/merge_locations.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/merge_locations.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/merge_vendors.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/merge_vendors.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/mo_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/mo_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/mo_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/mo_form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mrp_system/templates/mo_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/mo_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/mouser.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/mouser.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/mouser_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/mouser_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/oauth.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/oauth.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/part_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/part_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/part_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/part_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mrp_system/templates/part_po_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/part_po_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/print_tokens.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/print_tokens.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/product_create.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/product_create.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/product_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/product_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mrp_system/templates/product_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/product_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/purchase_order_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/purchase_order_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/purchase_order_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/purchase_order_form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mrp_system/templates/purchase_order_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/purchase_order_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/quick_type_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/quick_type_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/type_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/type_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/type_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/type_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/update_loc_relationship.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/update_loc_relationship.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/update_location.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/update_location.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/update_vendor.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/update_vendor.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/vendor_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/vendor_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/vendor_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/vendor_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templatetags/mrp_tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templatetags/mrp_tags.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redirect/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/redirect/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redirect/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/redirect/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redirect/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/redirect/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redirect/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/redirect/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redirect/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/redirect/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redirect/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/redirect/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redirect/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/redirect/signals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redirect/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/redirect/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime.txt" beforeDir="false" afterPath="$PROJECT_DIR$/runtime.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/context_processors.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/context_processors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/defaults.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/defaults.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/migrations/0002_entry_end.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/migrations/0002_entry_end.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/migrations/0003_todo.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/migrations/0003_todo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/migrations/0004_todo_completed.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/migrations/0004_todo_completed.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/migrations/0005_auto_20181106_1424.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/migrations/0005_auto_20181106_1424.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/migrations/0006_auto_20181120_1305.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/migrations/0006_auto_20181120_1305.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/migrations/0007_auto_20190121_1451.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/migrations/0007_auto_20190121_1451.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/fields.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/fields.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/management/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/management/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/management/commands/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/management/commands/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/management/commands/check_entries.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/management/commands/check_entries.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/migrations/0002_profile_payroll.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/migrations/0002_profile_payroll.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/manager/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/manager/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/UsersGuide.txt" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/UsersGuide.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/UsersGuideAdmin.txt" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/UsersGuideAdmin.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/img/glyphicons-halflings-white.png" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/img/glyphicons-halflings-white.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/img/glyphicons-halflings.png" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/img/glyphicons-halflings.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/.jshintrc" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/.jshintrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-affix.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-affix.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-alert.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-alert.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-button.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-button.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-carousel.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-carousel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-collapse.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-collapse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-dropdown.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-dropdown.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-modal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-popover.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-popover.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-scrollspy.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-scrollspy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-tab.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-tab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-tooltip.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-tooltip.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-transition.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-transition.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-typeahead.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap-typeahead.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/phantom.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/phantom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-affix.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-affix.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-alert.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-alert.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-button.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-button.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-carousel.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-carousel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-collapse.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-collapse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-dropdown.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-dropdown.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-modal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-phantom.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-phantom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-popover.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-popover.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-scrollspy.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-scrollspy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-tab.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-tab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-tooltip.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-tooltip.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-transition.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-transition.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-typeahead.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/unit/bootstrap-typeahead.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/vendor/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/vendor/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/vendor/qunit.css" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/vendor/qunit.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/vendor/qunit.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/bootstrap/js/tests/vendor/qunit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/css/accounts.css" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/css/accounts.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/static/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/images/icons/business.png" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/images/icons/business.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/images/icons/project.png" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/images/icons/project.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/images/icons/timepiece.png" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/images/icons/timepiece.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/images/icons/user.png" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/images/icons/user.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/js/jquery-3.3.1.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/js/jquery-3.3.1.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/js/popper.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/js/popper.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/ajax.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/ajax.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/chart/billable_chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/chart/billable_chart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/chart/estimation_accuracy_chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/chart/estimation_accuracy_chart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/chart/productivity_chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/chart/productivity_chart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/contract.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/contract.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/handsontable/jquery.handsontable.css" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/handsontable/jquery.handsontable.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/handsontable/jquery.handsontable.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/handsontable/jquery.handsontable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/highlight.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/highlight.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/permanent_tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/permanent_tabs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/prevent_double_click.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/prevent_double_click.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/project_hours/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/project_hours/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/project_hours/models.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/project_hours/models.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/quick_search.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/quick_search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/sticky_table_header.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/sticky_table_header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/js/widgets.js" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/js/widgets.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/timepiece/less/style.less" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/timepiece/less/style.less" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/date_filters.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/date_filters.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/delete_object.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/delete_object.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_in.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_in.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_out.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_out.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/create_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/create_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/delete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/create.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/inactive_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/inactive_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/timesheet.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/timesheet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/relationship/delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/relationship/delete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/relationship/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/relationship/edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete-all.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-create.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-create.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/user/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/user/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/user/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/user/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/user/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/user/settings.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/user/timesheet/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/user/timesheet/view.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/user/weektimesheet.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/user/weektimesheet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templatetags/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templatetags/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templatetags/timepiece_tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templatetags/timepiece_tags.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/utils/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/utils/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -316,86 +33,68 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/timesheet/view.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-586" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/base.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="178" column="36" selection-start-line="178" selection-start-column="36" selection-end-line="178" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timepiece/manager/admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timepiece/manager/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-810">
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mrp_system/admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-300">
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timepiece/admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/create.html">
+        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/create_edit.html">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/timesheet.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-555" />
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/view.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/timesheet/view.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/settings.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/weektimesheet.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timepiece/entries/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-105" />
+            <state>
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timepiece/entries/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2235">
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="965">
+              <caret line="215" column="22" selection-start-line="215" selection-start-column="22" selection-end-line="215" selection-end-column="22" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -418,16 +117,33 @@
         <option value="/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/os.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
         <option value="$PROJECT_DIR$/mrp/settings/local.py" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/base.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_in.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_out.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/project/create.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/project/inactive_list.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete-all.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-list.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/user/list.html" />
         <option value="$PROJECT_DIR$/timepiece/templates/timepiece/user/weektimesheet.html" />
+        <option value="$PROJECT_DIR$/timepiece/templates/timepiece/user/timesheet/view.html" />
+        <option value="$PROJECT_DIR$/mrp_system/templates/base2.html" />
+        <option value="$PROJECT_DIR$/mrp_system/templates/mo_list.html" />
+        <option value="$PROJECT_DIR$/mrp_system/templates/part_po_list.html" />
+        <option value="$PROJECT_DIR$/mrp_system/templates/product_list.html" />
+        <option value="$PROJECT_DIR$/mrp_system/templates/purchase_order_list.html" />
+        <option value="$PROJECT_DIR$/timepiece/static/css/app.css" />
         <option value="$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="40" />
-    <option name="y" value="23" />
-    <option name="width" value="1400" />
-    <option name="height" value="877" />
+    <option name="x" value="-2560" />
+    <option name="width" value="2560" />
+    <option name="height" value="1440" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -445,12 +161,31 @@
             <path>
               <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
               <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
-              <item name="mrp_system" type="462c0819:PsiDirectoryNode" />
+              <item name="mrp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
               <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
               <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="entries" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
@@ -464,6 +199,39 @@
               <item name="timepiece" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="entry" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="timesheet" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -552,10 +320,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="-2560" y="0" width="2560" height="1440" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24242425" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13548641" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -575,239 +343,127 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/delete_mo.html">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/merge_vendors.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/enter_part.html">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/mo_detail.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Procfile">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/mo_form.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/mo_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#22#31#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="435">
+          <caret line="29" column="20" lean-forward="true" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/redirect/apps.py">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/mouser.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/redirect/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/entries/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6000">
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/entries/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4170">
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/entries/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2865">
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/entries/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/__init__.py">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/mouser_detail.html">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/defaults.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/fields.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/views.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/models.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/entries/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/manager/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/manager/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-600">
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1102">
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_in.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-315" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/create_edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-180" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_out.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/delete.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-75" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/add_loc_relationship.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/base2.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/bom_detail.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-263" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/product_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="39" lean-forward="true" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mrp_system/templates/part_form.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/mo_detail.html">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/part_list.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/part_po_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="21" lean-forward="true" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+        <state relative-caret-position="525">
+          <caret line="35" column="24" lean-forward="true" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/forms.py">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/print_tokens.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/product_create.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/product_detail.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/product_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-354">
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="360">
+          <caret line="24" column="109" selection-start-line="24" selection-start-column="109" selection-end-line="24" selection-end-column="109" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/location_form.html">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/purchase_order_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="-12" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/purchase_order_form.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/purchase_order_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="88" selection-start-line="29" selection-start-column="88" selection-end-line="29" selection-end-column="88" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/relationship/edit.html">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/quick_type_form.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/base.html">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/type_form.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/list.html">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/type_list.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/weektimesheet.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/create.html">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/update_loc_relationship.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/timesheet.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-555" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-105" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/management/commands/__init__.py">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/update_location.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/management/commands/check_entries.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/base.html">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/update_vendor.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/timesheet/view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-586" />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/vendor_form.html">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/admin.py">
+    <entry file="file://$PROJECT_DIR$/mrp_system/templates/vendor_list.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/registration/base_accounts.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/registration/login.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/registration/password_change_done.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/registration/password_change_form.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/registration/password_reset_complete.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/registration/password_reset_confirm.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/registration/password_reset_done.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/registration/password_reset_form.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/404.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/templates/500.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mrp/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
@@ -816,40 +472,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/admin.py">
+    <entry file="file://$PROJECT_DIR$/timepiece/static/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-300">
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/manager/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/manager/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-810">
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="150">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/base.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/date_filters.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/delete_object.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_out.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_in.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/create_edit.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/timesheet.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/view.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/timesheet/view.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/settings.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/user/weektimesheet.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/entries/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/entries/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2235">
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="178" column="36" selection-start-line="178" selection-start-column="36" selection-end-line="178" selection-end-column="36" />
+        <state relative-caret-position="965">
+          <caret line="215" column="22" selection-start-line="215" selection-start-column="22" selection-end-line="215" selection-end-column="22" />
         </state>
       </provider>
     </entry>

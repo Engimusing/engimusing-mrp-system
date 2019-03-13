@@ -26,7 +26,7 @@
                                 {% for po in purchase_orders %}
 
                         <tr>
-			    <td><a href="{% url 'detail_po' po.purchase_order.id %}">{{ po.purchase_order}}</td>
+                            <td><a href="{% url 'detail_po' po.purchase_order.id %}">{{ po.purchase_order}}</a></td>
                             <td>{% if po.purchase_order.vendor %}{{ po.purchase_order.vendor.name }}{% endif %}</td>
 			    <td>{{ po.quantity }}</td>
 			    <td>{{ po.unit_price }}</td>
