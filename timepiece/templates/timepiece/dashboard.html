@@ -148,14 +148,28 @@ document.getElementById("id_end_date").value = date;
 {% endif %}
 <h4>Add Item</h4>
 <br>
+    <style>
+        .formLabel {
+        display:inline block;
+        text-align:left;
+        width: 140px;
+        }
+        #priority {
+        text-align:right;
+        }
+    </style>
 <form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
   {% csrf_token %}
-<div class="form-group">
-<label class="col-lg-5 col-sm-12" for="priority">Priority: </label>
-<input type="number" id="priority" name="priority" required>
-<label class="col-lg-5 col-sm-12" for="description">Description: </label>
+<div class="form-group ">
+    <div class="block">
+<label class="formLabel" for="priority">Priority: </label>
+<input type="number" id="priority" name="priority" required >
+    </div>
+    <div class="block">
+<label class="formLabel" for="description">Description: </label>
 <input type="text" id="description" name="description" required>
-    <br><br>
+    </div>
+    <br>
                     <button class="btn btn-primary" type="submit" value="Add" name="taskAdd">Add</button>
 </div>
 </form>
