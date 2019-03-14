@@ -3,26 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="55dc5a8c-71ee-48c7-9086-544c69561bb7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/base2.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/base2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/mo_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/mo_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/part_po_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/part_po_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/product_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/product_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrp_system/templates/purchase_order_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mrp_system/templates/purchase_order_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/static/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/static/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_in.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_in.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_out.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_out.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/create.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/inactive_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/inactive_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete-all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/user/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/user/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/user/timesheet/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/user/timesheet/view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/user/weektimesheet.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/user/weektimesheet.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -92,8 +73,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="965">
-              <caret line="215" column="22" selection-start-line="215" selection-start-column="22" selection-end-line="215" selection-end-column="22" />
+            <state relative-caret-position="1014">
+              <caret line="157" column="12" selection-start-line="157" selection-start-column="12" selection-end-line="157" selection-end-column="12" />
+              <folding>
+                <element signature="e#1567#1591#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -535,8 +519,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="965">
-          <caret line="215" column="22" selection-start-line="215" selection-start-column="22" selection-end-line="215" selection-end-column="22" />
+        <state relative-caret-position="1014">
+          <caret line="157" column="12" selection-start-line="157" selection-start-column="12" selection-end-line="157" selection-end-column="12" />
+          <folding>
+            <element signature="e#1567#1591#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

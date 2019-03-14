@@ -53,7 +53,118 @@ document.getElementById("id_end_date").value = date;
     {% if perms.entries.can_clock_in %}
        <br> <h3> Timesheet </h3><hr>
 
+<div class="row ">
 
+
+
+<!--CLOCK IN -->
+
+   <div  class=" col-lg-6 col-md-6" >
+            <div class="row" style="margin-left:1px;">
+                <div class="btn-group-sm">
+
+
+                        {% if active_entry %}
+                            <a class="btn btn-primary" href="{% url 'clock_out' %}">Clock Out</a>
+                            <a class="btn btn-primary" href="{% url 'edit_entry' active_entry.pk %}">Edit</a>
+                        {% endif %}
+			<a class="btn btn-primary" href="{% url 'clock_in' %}">
+                            {% if active_entry %}Switch{% else %}Clock In{% endif %}
+                        </a>
+
+                        <a class="btn btn-primary" href="{% url 'create_entry' %}" title="Add Entry">Add Entry</a>
+                   </div>
+                </div>
+
+                <div id="active-text">
+		<p>
+                    {% if active_entry %}
+                        You have been clocked into
+                        <strong> {{ active_entry.project }}</strong>
+                        since {{ active_entry.start_time|time }}
+                        {% ifnotequal active_entry.start_time.date today %}
+                            {% if active_entry.start_time.date < week_start or active_entry.start_time.date > week_end %}
+                                on {{ active_entry.start_time|date:'M j' }}
+                            {% else %}
+                                on {{ active_entry.start_time|date:"l" }}
+                            {% endif %}
+                        {% endifnotequal %}
+                        ({{ active_entry.get_total_seconds|humanize_seconds }} time clocked).
+
+
+                    {% else %}
+                        You are not currently clocked into a project.
+                    {% endif %}
+</p>
+                </div>
+        <br>
+	<div>
+            <form class="form-horizontal" method="post" action="" accept-charset="utf-8">
+               {% csrf_token %}
+		{{ form.as_p }}
+{% comment %}
+{{ form.non_field_errors }}
+		<p>{{ form.project.errors }}{{ form.project.label_tag }}{{ form.project }}</p><p>{{ form.start_time.errors }}{{ form.start_time.label_tag }}{{ form.start_time }}</p>
+		<p> {{ form.end_date.errors }}{{ form.end_date.label_tag }}{{ form.end_date }}{{ form.time_end.errors }}{{ form.time_end }} <a id="demo" onclick=myFunction() href="#"> Today</a></p><p>{{ form.activities.errors }}{{ form.activities.label_tag }}{{ form.activities }}</p>
+{% endcomment %}
+
+                <input class="btn btn-primary btn-sm" type='submit' value="Save" />
+
+            </form>
+        </div>
+   </div>
+
+
+<div  class=" col-lg-6 col-md-6" >
+<h3>To-Do List</h3>
+<ul class="nav nav-pills">
+		 <li><a href="{% url 'todo_complete' %}">Completed To-Do's</a></li>
+            </ul>
+<br>
+{% if todos %}
+<form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
+<table class="table">
+  {% csrf_token %}
+
+<tr>
+<th>Priority</th>
+<th>Description</th>
+<th>Mark</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+{% for todo in todos %}
+<tr>
+<td>{{ todo.priority }}</td>
+<td>{{ todo.description }}</td>
+<td><button class="btn btn-primary btn-sm" type="submit" name="taskComplete" formnovalidate="" value="{{ todo.id }}" id="{{todo.id}}">Done</button></td>
+<td><a class="btn btn-primary btn-sm" href="{% url 'todo_edit' todo.id %}"> Edit</a></td>
+<td><a class="btn btn-primary btn-sm" href="{% url 'todo_delete' todo.id %}"> Delete</a></td>
+</tr>
+{% endfor %}
+</table>
+</form>
+<br>
+{% endif %}
+<h4>Add Item</h4>
+<br>
+<form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
+  {% csrf_token %}
+<div class="form-group">
+<label class="col-lg-5 col-sm-12" for="priority">Priority: </label>
+<input type="number" id="priority" name="priority" required>
+<label class="col-lg-5 col-sm-12" for="description">Description: </label>
+<input type="text" id="description" name="description" required>
+    <br><br>
+                    <button class="btn btn-primary" type="submit" value="Add" name="taskAdd">Add</button>
+</div>
+</form>
+
+</div>
+
+</div>
+
+<hr>
 <h3>Hours for the Week of {{ week|date:'M j' }}</h3>
 
 
@@ -173,110 +284,5 @@ document.getElementById("id_end_date").value = date;
 <!--TO DO LIST -->
 
 
-<div class="row ">
 
-<div  class=" col-lg-6 col-md-6" >
-<h3>To-Do List</h3>
-<ul class="nav nav-pills">
-		 <li><a href="{% url 'todo_complete' %}">Completed To-Do's</a></li>
-            </ul>
-<br>
-{% if todos %}
-<form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
-<table class="table">
-  {% csrf_token %}
-
-<tr>
-<th>Priority</th>
-<th>Description</th>
-<th>Mark</th>
-<th>Edit</th>
-<th>Delete</th>
-</tr>
-{% for todo in todos %}
-<tr>
-<td>{{ todo.priority }}</td>
-<td>{{ todo.description }}</td>
-<td><button class="btn btn-primary btn-sm" type="submit" name="taskComplete" formnovalidate="" value="{{ todo.id }}" id="{{todo.id}}">Done</button></td>
-<td><a class="btn btn-primary btn-sm" href="{% url 'todo_edit' todo.id %}"> Edit</a></td>
-<td><a class="btn btn-primary btn-sm" href="{% url 'todo_delete' todo.id %}"> Delete</a></td>
-</tr>
-{% endfor %}
-</table>
-</form>
-<br>
-{% endif %}
-<h4>Add Item</h4>
-<br>
-<form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
-  {% csrf_token %}
-<div class="form-group">
-<label class="col-lg-5 col-sm-12" for="priority">Priority: </label>
-<input type="number" id="priority" name="priority" required>
-<label class="col-lg-5 col-sm-12" for="description">Description: </label>
-<input type="text" id="description" name="description" required>
-                    <button class="btn btn-primary" type="submit" value="Add" name="taskAdd">Add</button>
-</div>
-</form>
-
-</div>
-
-<hr class="line-between-clock-in">
-<!--CLOCK IN -->
-
-   <div  class=" col-lg-6 col-md-6" >
-            <div class="row">
-                <div class="btn-group-sm">
-
-
-                        {% if active_entry %}
-                            <a class="btn btn-primary" href="{% url 'clock_out' %}">Clock Out</a>
-                            <a class="btn btn-primary" href="{% url 'edit_entry' active_entry.pk %}">Edit</a>
-                        {% endif %}
-			<a class="btn btn-primary" href="{% url 'clock_in' %}">
-                            {% if active_entry %}Switch{% else %}Clock In{% endif %}
-                        </a>
-
-                        <a class="btn btn-primary" href="{% url 'create_entry' %}" title="Add Entry">Add Entry</a>
-                   </div>
-                </div>
-
-                <div id="active-text">
-		<p>
-                    {% if active_entry %}
-                        You have been clocked into
-                        <strong> {{ active_entry.project }}</strong>
-                        since {{ active_entry.start_time|time }}
-                        {% ifnotequal active_entry.start_time.date today %}
-                            {% if active_entry.start_time.date < week_start or active_entry.start_time.date > week_end %}
-                                on {{ active_entry.start_time|date:'M j' }}
-                            {% else %}
-                                on {{ active_entry.start_time|date:"l" }}
-                            {% endif %}
-                        {% endifnotequal %}
-                        ({{ active_entry.get_total_seconds|humanize_seconds }} time clocked).
-
-
-                    {% else %}
-                        You are not currently clocked into a project.
-                    {% endif %}
-</p>
-                </div>
-        <br>
-	<div>
-            <form class="form-horizontal" method="post" action="" accept-charset="utf-8">
-               {% csrf_token %}
-		{{ form.as_p }}
-{% comment %}
-{{ form.non_field_errors }}
-		<p>{{ form.project.errors }}{{ form.project.label_tag }}{{ form.project }}</p><p>{{ form.start_time.errors }}{{ form.start_time.label_tag }}{{ form.start_time }}</p>
-		<p> {{ form.end_date.errors }}{{ form.end_date.label_tag }}{{ form.end_date }}{{ form.time_end.errors }}{{ form.time_end }} <a id="demo" onclick=myFunction() href="#"> Today</a></p><p>{{ form.activities.errors }}{{ form.activities.label_tag }}{{ form.activities }}</p>
-{% endcomment %}
-
-                <input class="btn btn-primary btn-sm" type='submit' value="Save" />
-
-            </form>
-        </div>
-   </div>
-</div>
 {% endblock content %}
