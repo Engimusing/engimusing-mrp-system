@@ -423,7 +423,7 @@ def todo_admin_create(request):
 def todo_admin_edit(request, todo_id):
     todo = get_object_or_404(ToDo, id=todo_id)
     if request.method == "POST": 
-        form = TodoLAdminForm(request.POST, instance=todo)
+        form = TodoAdminForm(request.POST, instance=todo)
         if form.is_valid():
             form.save()
             return redirect('todo_list')

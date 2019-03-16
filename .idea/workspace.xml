@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55dc5a8c-71ee-48c7-9086-544c69561bb7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timepiece/entries/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,22 +14,32 @@
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/create_edit.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-edit.html">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/timesheet.html">
+        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-list.html">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/view.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/timepiece/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -58,10 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/timepiece/entries/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2235">
+            <state relative-caret-position="413">
+              <caret line="425" column="19" selection-start-line="425" selection-start-column="19" selection-end-line="425" selection-end-column="19" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -69,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="623">
-              <caret line="149" column="4" lean-forward="true" selection-start-line="149" selection-start-column="4" selection-end-line="149" selection-end-column="4" />
+            <state relative-caret-position="209">
+              <caret line="176" column="6" lean-forward="true" selection-start-line="176" selection-start-column="6" selection-end-line="176" selection-end-column="6" />
               <folding>
                 <element signature="e#1567#1591#0" expanded="true" />
               </folding>
@@ -120,13 +131,15 @@
         <option value="$PROJECT_DIR$/mrp_system/templates/purchase_order_list.html" />
         <option value="$PROJECT_DIR$/timepiece/static/css/app.css" />
         <option value="$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html" />
+        <option value="$PROJECT_DIR$/timepiece/entries/views.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="-2560" />
-    <option name="width" value="2560" />
-    <option name="height" value="1440" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="40" />
+    <option name="y" value="23" />
+    <option name="width" value="1400" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -156,65 +169,6 @@
               <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
               <item name="timepiece" type="462c0819:PsiDirectoryNode" />
               <item name="entries" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="entry" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emus-mrp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emus-mrp" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="timepiece" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-              <item name="timesheet" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -303,10 +257,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2560" y="0" width="2560" height="1440" extended-state="0" />
+    <frame x="40" y="23" width="1400" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13548641" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24945612" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -326,15 +280,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/merge_vendors.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/mo_detail.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mrp_system/templates/mo_form.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/mrp_system/templates/mo_list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -477,9 +422,6 @@
     <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/clock_in.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/create_edit.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/timesheet.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -507,21 +449,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/entries/views.py">
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2235">
+        <state relative-caret-position="209">
+          <caret line="176" column="6" lean-forward="true" selection-start-line="176" selection-start-column="6" selection-end-line="176" selection-end-column="6" />
+          <folding>
+            <element signature="e#1567#1591#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/entry/create_edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-edit.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-list.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timepiece/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/dashboard.html">
+    <entry file="file://$PROJECT_DIR$/timepiece/entries/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="149" column="4" lean-forward="true" selection-start-line="149" selection-start-column="4" selection-end-line="149" selection-end-column="4" />
+        <state relative-caret-position="413">
+          <caret line="425" column="19" selection-start-line="425" selection-start-column="19" selection-end-line="425" selection-end-column="19" />
           <folding>
-            <element signature="e#1567#1591#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
