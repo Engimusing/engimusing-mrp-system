@@ -318,6 +318,13 @@ class DeleteProject(DeleteView):
     pk_url_kwarg = 'project_id'
     template_name = 'timepiece/delete_object.html'
 
+
+#class InactivateProject(InactivateView):
+ #   model = Project
+ #   success_url = reverse_lazy('inactive_projects')
+ #   pk_url_kwarg = 'project_id'
+  #  template_name = "timepiece/inactivate_object.html"
+
 #used in project detail view to create project-user relationship
 #users and project passed through url and GET parameters
 class CreateRelationship(View):

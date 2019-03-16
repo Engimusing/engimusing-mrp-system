@@ -407,7 +407,7 @@ def todo_delete(request, todo_id):
     todo = get_object_or_404(ToDo, id=todo_id)
     todo.delete()
     #get previous url
-    return redirect('/')
+    return redirect('todo_list')
 
 #separate todo create for admin to add todo's to any user
 def todo_admin_create(request):
