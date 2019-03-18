@@ -42,11 +42,13 @@ urlpatterns = [
         views.DeleteProject.as_view(),
         name='delete_project'),
 
-#url(r'^project/(?P<project_id>\d+)/inactivate/$',
- #       views.InactivateProject.as_view(),
- #       name='inactivate_project'),
+    url(r'^project/(?P<project_id>\d+)/Inactivate/$',
+        views.ProjectInactivate,
+        name='inactivate_project'),
 
-
+    url(r'^project/(?P<project_id>\d+)/Activate/$',
+        views.ProjectActivate,
+        name='activate_project'),
 
      # Project timesheets
     url(r'^project/(?P<project_id>\d+)/timesheet/$',

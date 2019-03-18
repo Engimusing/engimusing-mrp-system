@@ -1,5 +1,6 @@
 import datetime, csv
 from dateutil.relativedelta import relativedelta
+from django.core.exceptions import ValidationError
 
 from six.moves.urllib.parse import urlencode
 
@@ -310,7 +311,31 @@ def ProjectEdit(request, project_id):
         form = ProjectCreateForm(initial={'name': project_instance.name,
                                           'inactive': project_instance.inactive,
                                           'users': project_instance.users.all()})
-    return render(request, "timepiece/project/create.html", {"form": form})
+    return render(request, "timepiece/project/edit.html", {"form": form})
+
+
+def ProjectInactivate(request, project_id):
+    project_instance = get_object_or_404(Project, pk=project_id)
+
+    project_instance.inactive = True
+    try:
+        project_instance.save()
+    except:
+        raise ValidationError(_('Could not delete relationship'),)
+
+    return redirect(reverse('inactive_projects'))
+
+
+def ProjectActivate(request, project_id):
+    project_instance = get_object_or_404(Project, pk=project_id)
+
+    project_instance.inactive = False
+    try:
+        project_instance.save()
+    except:
+        raise ValidationError(_('Could not delete relationship'),)
+
+    return redirect(reverse('list_projects'))
 
 class DeleteProject(DeleteView):
     model = Project
@@ -319,11 +344,11 @@ class DeleteProject(DeleteView):
     template_name = 'timepiece/delete_object.html'
 
 
-#class InactivateProject(InactivateView):
- #   model = Project
- #   success_url = reverse_lazy('inactive_projects')
- #   pk_url_kwarg = 'project_id'
-  #  template_name = "timepiece/inactivate_object.html"
+class InactivateProject(DeleteView):
+    model = Project
+    success_url = reverse_lazy('list_projects')
+    pk_url_kwarg = 'project_id'
+    template_name = 'timepiece/Inactivate_objects.html'
 
 #used in project detail view to create project-user relationship
 #users and project passed through url and GET parameters

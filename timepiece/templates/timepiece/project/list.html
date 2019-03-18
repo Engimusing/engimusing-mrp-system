@@ -20,6 +20,7 @@
                 <thead>
                     <tr>
                         <th style="width: 60%">Name</th>
+                        <th>Users</th>
                         <th></th>
                         <th>Time Sheet</th>
 			  <th>Edit</th>
@@ -30,9 +31,10 @@
                     {% for project in object_list %}
                         <tr>
                             <td><a href="{% url 'view_project' project.id %}">{{ project.name }}</a></td>
-                            <td><a href="{% url 'inactive_projects' %}">Inactivate</a></td>
+                            <td><a href="{% url 'view_project' project.id %}">{{ user.first_name }}</a></td>
+                            <td><a href="{% url 'inactivate_project' project.id %}">Inactivate</a></td>
                             <td><a href="{% url 'view_project_timesheet' project.id %}">Time Sheet</a></td>
-<td><a href="{% url 'edit_project' project.id %}">Edit</a></td>
+                            <td><a href="{% url 'edit_project' project.id %}">Edit</a></td>
                            <td><a href="{% url 'delete_project' project.id %}">Delete</a></td>
                         </tr>
                     {% endfor %}

@@ -34,7 +34,7 @@
                         <tr>
 
                             <td><a href="{% url 'view_project' project.id %}">{{ project.name }}</a></td>
-                            <td><a href="{% url 'list_projects' %}">Activate</a></td>
+                            <td><a href="{% url 'activate_project' project.id %}">Activate</a></td>
                             <td><a href="{% url 'view_project_timesheet' project.id %}">Time Sheet</a></td>
                             <td><a href="{% url 'edit_project' project.id %}">Edit</a></td>
                             <td><a href="{% url 'delete_project' project.id %}">Delete</a></td>
