@@ -362,7 +362,7 @@ def to_do(request):
             Todo.save()
             messages.success(request, "Task '{}' has been added.".
                         format(Todo.description))
-            return redirect('/')
+            return redirect(reverse('todo_list'))
         if "taskComplete" in request.POST:
             #taskComplete is value assigned to button
             todo_id = request.POST["taskComplete"]            
@@ -378,7 +378,7 @@ def to_do(request):
             todo.delete()
             messages.success(request, "Task '{}' has been deleted.".
                         format(todo.description))
-            return redirect('/')
+            return redirect(reverse('todo_list'))
     return render(request, "timepiece/todo/todo.html", {"todos": todos})
 
 #user can view their todo's that have been marked completed
@@ -397,7 +397,7 @@ def todo_edit(request, todo_id):
             todo = form.save(commit=False)
             todo.user = request.user
             todo.save()
-            return redirect('/')
+            return redirect(reverse('todo_list'))
     else:
         form = TodoForm(instance=todo)
     return render(request, "timepiece/todo/todo-edit.html", {'form': form})
