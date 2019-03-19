@@ -333,9 +333,10 @@ def ProjectActivate(request, project_id):
     try:
         project_instance.save()
     except:
-        raise ValidationError(_('Could not delete relationship'),)
+        raise ValidationError('Could not delete relationship')
 
     return redirect(reverse('list_projects'))
+
 
 class DeleteProject(DeleteView):
     model = Project
