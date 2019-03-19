@@ -31,7 +31,7 @@
                     {% for project in object_list %}
                         <tr>
                             <td><a href="{% url 'view_project' project.id %}">{{ project.name }}</a></td>
-                            <td><a href="{% url 'view_project' project.id %}">{% for user in project.users.all %} {{user.username}} {%endfor%}</a></td>
+                            <td><a href="{% url 'view_project' project.id %}">{% for user in project.users.all %} {{user.username}}<br> {%endfor%}</a></td>
                             <td><a href="{% url 'inactivate_project' project.id %}">Inactivate</a></td>
                             <td><a href="{% url 'view_project_timesheet' project.id %}">Time Sheet</a></td>
                             <td><a href="{% url 'edit_project' project.id %}">Edit</a></td>

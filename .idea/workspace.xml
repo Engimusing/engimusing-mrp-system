@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55dc5a8c-71ee-48c7-9086-544c69561bb7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/entries/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/entries/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-complete-all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/timepiece/templates/timepiece/todo/todo-list.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +16,7 @@
         <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="495">
-              <caret line="33" column="142" selection-start-line="33" selection-start-column="142" selection-end-line="33" selection-end-column="142" />
+              <caret line="33" column="135" selection-start-line="33" selection-start-column="135" selection-end-line="33" selection-end-column="135" />
             </state>
           </provider>
         </entry>
@@ -719,7 +715,7 @@
     <entry file="file://$PROJECT_DIR$/timepiece/templates/timepiece/project/list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
-          <caret line="33" column="142" selection-start-line="33" selection-start-column="142" selection-end-line="33" selection-end-column="142" />
+          <caret line="33" column="135" selection-start-line="33" selection-start-column="135" selection-end-line="33" selection-end-column="135" />
         </state>
       </provider>
     </entry>
