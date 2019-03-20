@@ -21,10 +21,11 @@
                     <tr>
                         <th style="width: 60%">Name</th>
                         <th>Users</th>
-                        <th></th>
+
                         <th>Time Sheet</th>
 			  <th>Edit</th>
 			 <th>Delete</th>
+                         <th>Inactivate</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,10 +33,11 @@
                         <tr>
                             <td><a href="{% url 'view_project' project.id %}">{{ project.name }}</a></td>
                             <td><a href="{% url 'view_project' project.id %}">{% for user in project.users.all %} {{user.username}}<br> {%endfor%}</a></td>
-                            <td><a href="{% url 'inactivate_project' project.id %}">Inactivate</a></td>
+
                             <td><a href="{% url 'view_project_timesheet' project.id %}">Time Sheet</a></td>
                             <td><a href="{% url 'edit_project' project.id %}">Edit</a></td>
                            <td><a href="{% url 'delete_project' project.id %}">Delete</a></td>
+                            <td><a href="{% url 'inactivate_project' project.id %}">Inactivate</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

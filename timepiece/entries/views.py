@@ -409,6 +409,14 @@ def todo_delete(request, todo_id):
     #get previous url
     return redirect('todo_list')
 
+def todo_completed(request, todo_id):
+    todo = get_object_or_404(ToDo, id=todo_id)
+    todo.completed = True
+    todo.save()
+    messages.success(request, "Task '{}' has been marked completed".
+                     format(todo.description))
+    return redirect('todo_list')
+
 #separate todo create for admin to add todo's to any user
 def todo_admin_create(request):
     data = request.POST or None

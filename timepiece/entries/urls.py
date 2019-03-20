@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^todo/create/$', views.todo_admin_create, name="todo_create"),
     url(r'^todo/edit/(?P<todo_id>\d+)/$', views.todo_admin_edit, name="todo_admin_edit"),
     url(r'^todo/delete/(?P<todo_id>\d+)/$', views.todo_delete, name="todo_delete"),
+    url(r'^todo/completed/(?P<todo_id>\d+)/$', views.todo_completed, name="todo_completed"),
     url(r'^todo/list/$', views.TodoAdminListView.as_view(), name="todo_list"),
     url(r'^todo/list/completed/$',
         views.TodoCompletedListView.as_view(),
