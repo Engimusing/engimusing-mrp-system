@@ -483,8 +483,9 @@ def enter_digi_part(request):
             #get new access token with refresh token
             API_ENDPOINT = "https://sso.digikey.com/as/token.oauth2"
 
-            data = {'client_id': '73432ca9-e8ba-4965-af17-a22107f63b35',
-                    'client_secret': 'G2rQ1cM8yM4gV6rW2nA1wL2yF7dN4sX4fJ2lV6jE5uT0bB0uG8',
+            data = {'client_id': '3859c456-1ae6-4e4b-a8d6-40dc8c7cf944',
+              #      'client_secret': 'G2rQ1cM8yM4gV6rW2nA1wL2yF7dN4sX4fJ2lV6jE5uT0bB0uG8',
+                    'client_secret': 'C1vD5wR0dL8hJ6xC3fF7qN1rR7gP1gS5aU2hX7wO7gA5tC2mQ5',
                     'refresh_token': digi.refresh_token,
                     'grant_type': 'refresh_token'
                     }
@@ -622,8 +623,11 @@ def enter_digi_part(request):
                 exists = ManufacturerRelationship.objects.filter(manufacturer=manu, partNumber=number)
                 if exists:
                     messages.warning(request, ('Manufacturer Part Number already exists.'))
-                    url = reverse('digi_part')
-                    return HttpResponseRedirect(url)
+                    url = reverse('edit_part')
+                    return HttpResponseRedirect(reverse())
+               # return HttpResponseRedirect(url)
+            #    return HttpResponseRedirect(reverse('edit_po', args=[po_id]))
+
             new_part = Part.objects.create(partType=partType, description=description)
             if manufacturer:
                 ManufacturerRelationship.objects.create(part=new_part, manufacturer=manu, partNumber=number)
