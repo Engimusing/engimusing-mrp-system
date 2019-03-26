@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
-#from django.contrib.sites.models import Site
+# from django.contrib.sites.models import Site
+
 
 class Vendor(models.Model):
     TYPE_CHOICES = (
@@ -13,11 +14,12 @@ class Vendor(models.Model):
     address = models.CharField(max_length=300, blank=True)
     phone = models.CharField(max_length=10, blank=True)
     web_address = models.CharField(max_length=300, blank=True)
-    #purchase_order = models.ForeignKey('mrp_system.PurchaseOrder', on_delete=models.CASCADE,
-                                       #null=True, blank=True)
+    # purchase_order = models.ForeignKey('mrp_system.PurchaseOrder', on_delete=models.CASCADE,
+                                         # null=True, blank=True)
 
     def __str__(self):
         return self.name
+
 
 class Location(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -25,7 +27,8 @@ class Location(models.Model):
     def __str__(self):
         return self.name
 
-#used to track different part types
+
+# used to track different part types
 class Type(models.Model):
     name = models.CharField(max_length=100, unique=True)
     prefix = models.CharField(max_length=4)
@@ -33,7 +36,8 @@ class Type(models.Model):
     def __str__(self):
         return self.name
 
-#names of fields for each part type tracked with field model
+
+# names of fields for each part type tracked with field model
 class Field(models.Model):
 
     FIELD_CHOICES = (
@@ -77,15 +81,16 @@ class Field(models.Model):
     fields = models.CharField(max_length=50, choices=FIELD_CHOICES)
     typePart = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="field", null=True)
 
+
 class Part(models.Model):
-    #used to keep track of part type and fields
+    # used to keep track of part type and fields
     partType = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="part")
     engimusingPartNumber = models.CharField(max_length=30, editable=False)
     description = models.CharField(max_length=300, blank=True)
     location = models.ManyToManyField(Location, through='LocationRelationship')
     manufacturer = models.ManyToManyField(Vendor,
                                           through='ManufacturerRelationship')
-    #all of the fields that could be tracked for a part type
+    # all of the fields that could be tracked for a part type
     char1 = models.CharField(max_length=100, blank=True)
     char2 = models.CharField(max_length=100, blank=True)
     char3 = models.CharField(max_length=100, blank=True)
@@ -126,7 +131,7 @@ class Part(models.Model):
     def __str__(self):
         return '%s - %s' % (self.engimusingPartNumber, self.description)
 
-    #can call these 4 functions from template to get related fields
+    # can call these 4 functions from template to get related fields
     def get_location(self):
         if self.location:
             return [LocationRelationship.location.name for LocationRelationship
@@ -146,18 +151,19 @@ class Part(models.Model):
             return [str(ManufacturerRelationship.partNumber) for ManufacturerRelationship
                                       in self.manufacturerrelationship_set.all()] #.objects.get(part=self)])
 
-    #auto assign engimusingPartNumber with prefix and auto incremented number
+    # auto assign engimusingPartNumber with prefix and auto incremented number
     def save(self, *args, **kwargs):
         if not self.id:
             partType = self.partType
             self.engimusingPartNumber = increment_engi_partnumber(partType)
         super().save(*args, **kwargs)
 
+
 def increment_engi_partnumber(partType):
-    #get greatest part number
+    # get greatest part number
     last_id = Part.objects.filter(partType=partType).order_by('engimusingPartNumber').last()
     prefix = partType.prefix
-    #if no parts yet
+    # if no parts yet
     if not last_id:
         return prefix + '000001'
     length = len(prefix)
@@ -166,16 +172,19 @@ def increment_engi_partnumber(partType):
     new_engi_partNumber = prefix + str(new_partNumber).zfill(6)
     return new_engi_partNumber
 
+
 class ManufacturerRelationship(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
     manufacturer = models.ForeignKey(Vendor, on_delete=models.CASCADE,
                                      limit_choices_to={'vendor_type': 'manufacturer'},)
     partNumber = models.CharField(max_length=40, blank=True)
 
+
 class LocationRelationship(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     stock = models.IntegerField(blank=True, null=True)
+
 
 class Product(models.Model):
     engimusing_product_number = models.CharField(max_length=50, blank=True)
@@ -183,7 +192,7 @@ class Product(models.Model):
     url = models.CharField(max_length=500, blank=True)
     location = models.ManyToManyField(Location, through='ProductLocation')
     part = models.ManyToManyField(Part, through='PartAmount')
-    #sub products, must not be symmetrical for relationship to be onesided
+    # sub products, must not be symmetrical for relationship to be onesided
     component_product = models.ManyToManyField('self', symmetrical=False,
                                                through='ProductAmount',
                                                through_fields=('from_product', 'to_product'),)
@@ -196,15 +205,18 @@ class Product(models.Model):
             return [ProductLocation for ProductLocation in
                     self.productlocation_set.order_by('id')]
 
+
 class PartAmount(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     amount = models.IntegerField(blank=True, null=True, default=1)
 
+
 class ProductAmount(models.Model):
     from_product = models.ForeignKey(Product, related_name='from_product', on_delete=models.CASCADE)
     to_product = models.ForeignKey(Product, related_name='to_product', on_delete=models.CASCADE)
     amount = models.IntegerField(blank=True, null=True, default=1)
+
 
 class ProductLocation(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -219,11 +231,13 @@ class ManufacturingOrder(models.Model):
 
     def __str__(self):
         return self.number
-    
+
+
 class MOProduct(models.Model):
     manufacturing_order = models.ForeignKey(ManufacturingOrder, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     amount = models.IntegerField(blank=True, null=True)
+
 
 class PurchaseOrder(models.Model):
     number = models.CharField(max_length=20, editable=False)
@@ -273,10 +287,10 @@ class PurchaseOrderParts(models.Model):
             self.total = 0
         super().save(*args, **kwargs)
 
+
 """used to keep track of tokens, only one instance of this model named "DigiKey",
 don't create another instance of this as it can mess up the tokens"""
 class DigiKeyAPI(models.Model):
     name = models.CharField(max_length=100)
     refresh_token = models.CharField(max_length=150)
     access_token = models.CharField(max_length=150)
-    
