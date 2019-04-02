@@ -31,6 +31,10 @@ from django.contrib import messages
 from django.core.files.base import ContentFile
 from django.utils.safestring import mark_safe
 from itertools import chain
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class TypeListView(ListView):
     model = Type
@@ -483,25 +487,25 @@ def enter_digi_part(request):
             #get new access token with refresh token
             API_ENDPOINT = "https://sso.digikey.com/as/token.oauth2"
 
-            # data = {'client_id': '73432ca9-e8ba-4965-af17-a22107f63b35',
-            #         'client_secret': 'G2rQ1cM8yM4gV6rW2nA1wL2yF7dN4sX4fJ2lV6jE5uT0bB0uG8',
-            #         'refresh_token': digi.refresh_token,
-            #         'grant_type': 'refresh_token'
-            #         }
-            # r = requests.post(url = API_ENDPOINT, data=data)
-            # response = r.json()
-            # try:
-            #     refreshToken = response['refresh_token']
-            # except (IndexError, KeyError):
-            #     messages.warning(request, ('Digi-Key access tokens are off.'))
-            #     url = reverse('digi_part')
-            #     return HttpResponseRedirect(url)
-            #
-            # #set access and refresh token from tokens returned with API
-            # accessToken = response['access_token']
-            # setattr(digi,"refresh_token",refreshToken)
-            # setattr(digi,"access_token",accessToken)
-            # digi.save()
+            data = {'client_id': '73432ca9-e8ba-4965-af17-a22107f63b35',
+                    'client_secret': 'G2rQ1cM8yM4gV6rW2nA1wL2yF7dN4sX4fJ2lV6jE5uT0bB0uG8',
+                    'refresh_token': digi.refresh_token,
+                    'grant_type': 'refresh_token'
+                    }
+            r = requests.post(url=API_ENDPOINT, data=data)
+            response = r.json()
+            try:
+                refreshToken = response['refresh_token']
+            except (IndexError, KeyError):
+                messages.warning(request, ('Digi-Key access tokens are off.'))
+                url = reverse('digi_part')
+                return HttpResponseRedirect(url)
+
+            # set access and refresh token from tokens returned with API
+            accessToken = response['access_token']
+            setattr(digi, "refresh_token", refreshToken)
+            setattr(digi, "access_token", accessToken)
+            digi.save()
             #if digikey barcode, use barcode api to get part number
             if website == 'Digi-Key' and barcode:
                 conn = http.client.HTTPSConnection("api.digikey.com")
@@ -553,9 +557,12 @@ def enter_digi_part(request):
             string = res.read().decode('utf-8')
             sys.stdout.flush()
             jstr = json.loads(string)
+            logger.info('Im here')
             try:
                 part = jstr['ExactDigiKeyPart']
+                logger.info(part)
                 data = part['Parameters']
+                logger.info(data)
             except(IndexError, KeyError, TypeError):
                 try:
                     part=jstr['ExactParts'][0]

@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.forms import Textarea
 from django.db.models import F, Q, Sum, Max, Min
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible

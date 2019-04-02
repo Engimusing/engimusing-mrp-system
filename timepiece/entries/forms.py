@@ -217,9 +217,11 @@ class EntryDashboardForm(forms.ModelForm):
         if commit:
             entry.save()
         return entry
-    
+
 
 class TodoAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'rows':10,'cols': 90, 'maxlength':'1000'}), required=True)
+
     class Meta:
         model = ToDo
         fields = '__all__'
