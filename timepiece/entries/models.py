@@ -312,7 +312,7 @@ class ProjectHours(models.Model):
 class ToDo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,)
     priority = models.IntegerField()
-    description = models.TextField(max_length=500, blank=False)
+    description = models.TextField(max_length=1500, blank=False)
     completed = models.BooleanField(blank=False, default=False)
 
     class Meta:

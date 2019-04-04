@@ -220,7 +220,7 @@ class EntryDashboardForm(forms.ModelForm):
 
 
 class TodoAdminForm(forms.ModelForm):
-    description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'rows':10,'cols': 90, 'maxlength':'1000'}), required=True)
+    description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'rows': 10, 'cols': 90, 'max_length': 1500}), required=True)
 
     class Meta:
         model = ToDo
