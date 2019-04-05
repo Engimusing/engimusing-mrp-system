@@ -15,7 +15,7 @@ class ClockInForm(forms.ModelForm):
         label='Notes for the active entry', widget=forms.Textarea(attrs={'rows': 12, 'cols': 90, 'max_length': '50'}),
         required=False)
     start_time = TimepieceSplitDateTimeField()
-    activities = forms.CharField(label='Activities', widget=forms.Textarea(attrs={'rows': 7, 'cols': 90, 'max_length': 350}), required=True)
+    activities = forms.CharField(label='Activities', widget=forms.Textarea(attrs={'rows': 4, 'cols': 39, 'max_length': 350}), required=True)
 
     class Meta:
         model = Entry
