@@ -101,14 +101,19 @@ document.getElementById("id_end_date").value = date;
 	<div>
             <form class="form-horizontal" method="post" action="" accept-charset="utf-8">
                {% csrf_token %}
-		{{ form.as_p }}
+                <table>
+		{{ form.as_table }}
+                </table>
 {% comment %}
 {{ form.non_field_errors }}
-		<p>{{ form.project.errors }}{{ form.project.label_tag }}{{ form.project }}</p><p>{{ form.start_time.errors }}{{ form.start_time.label_tag }}{{ form.start_time }}</p>
-		<p> {{ form.end_date.errors }}{{ form.end_date.label_tag }}{{ form.end_date }}{{ form.time_end.errors }}{{ form.time_end }} <a id="demo" onclick=myFunction() href="#"> Today</a></p><p>{{ form.activities.errors }}{{ form.activities.label_tag }}{{ form.activities }}</p>
+
+		{{ form.project.errors }}{{ form.project.label_tag }}{{ form.project }}{{ form.start_time.errors }}{{ form.start_time.label_tag }}{{ form.start_time }}
+                     {{ form.end_date.errors }}{{ form.end_date.label_tag }}{{ form.end_date }}{{ form.time_end.errors }}{{ form.time_end }}
+            <a id="demo" onclick=myFunction() href="#"> Today</a>{{ form.activities.errors }}{{ form.activities.label_tag }}{{ form.activities }}
 {% endcomment %}
 
-                <input class="btn btn-primary btn-sm" type='submit' value="Save" />
+               <input class="btn btn-primary btn-sm" type='submit' value="Save" />
+
 
             </form>
         </div>

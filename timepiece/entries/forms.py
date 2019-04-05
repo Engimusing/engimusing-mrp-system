@@ -10,22 +10,16 @@ from timepiece.entries.models import Entry, ToDo
 from timepiece.forms import TimepieceSplitDateTimeField
 
 
-class ClockInAdminForm(forms.ModelForm):
-    activities = forms.CharField(label='Activities', widget=forms.Textarea(attrs={'rows': 5, 'cols': 20, 'max_length': 250}), required=True)
-    class Meta:
-        model = ToDo
-        fields = '__all__'
-
-
 class ClockInForm(forms.ModelForm):
     active_comment = forms.CharField(
-        label='Notes for the active entry', widget=forms.Textarea(attrs={'rows':5, 'cols':90, 'maxlength': '50'}),
+        label='Notes for the active entry', widget=forms.Textarea(attrs={'rows': 12, 'cols': 90, 'max_length': '50'}),
         required=False)
     start_time = TimepieceSplitDateTimeField()
+    activities = forms.CharField(label='Activities', widget=forms.Textarea(attrs={'rows': 7, 'cols': 90, 'max_length': 350}), required=True)
 
     class Meta:
         model = Entry
-        exclude = []
+        exclude = ['end_time']
         fields = ('active_comment', 'project',
                   'start_time', 'activities')
 
@@ -163,6 +157,7 @@ class EntryDashboardForm(forms.ModelForm):
     start_time = TimepieceSplitDateTimeField()
     #just time for end time, gets date from start time
     end = forms.TimeField(required=False)
+    activities = forms.CharField(label='Activities', widget=forms.Textarea(attrs={'rows': 3, 'cols': 90, 'max_length': 250}), required=True)
 
     class Meta:
         model = Entry
