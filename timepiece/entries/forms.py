@@ -10,6 +10,13 @@ from timepiece.entries.models import Entry, ToDo
 from timepiece.forms import TimepieceSplitDateTimeField
 
 
+class ClockInAdminForm(forms.ModelForm):
+    activities = forms.CharField(label='Activities', widget=forms.Textarea(attrs={'rows': 5, 'cols': 20, 'max_length': 250}), required=True)
+    class Meta:
+        model = ToDo
+        fields = '__all__'
+
+
 class ClockInForm(forms.ModelForm):
     active_comment = forms.CharField(
         label='Notes for the active entry', widget=forms.Textarea(attrs={'rows':5, 'cols':90, 'maxlength': '50'}),

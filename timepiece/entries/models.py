@@ -88,7 +88,7 @@ class Entry(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField(blank=True, null=True, db_index=True)
     end = models.TimeField(blank=True, null=True)
-    activities = models.CharField(max_length=50, blank=False)
+    activities = models.CharField(max_length=250, blank=False)
     date_updated = models.DateTimeField(auto_now=True)
     hours = models.DecimalField(max_digits=11, decimal_places=5, default=0)
 

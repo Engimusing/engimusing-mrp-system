@@ -626,10 +626,12 @@ def enter_digi_part(request):
             if manufacturer:
                 manu, created = Vendor.objects.get_or_create(name=manufacturer, vendor_type="manufacturer")
                 # this is our way of checking for duplicates
-                exists = ManufacturerRelationship.objects.filter(manufacturer=manu, partNumber=number)
+                exists = ManufacturerRelationship.objects.filter(manufacturer=manu, partNumber=number).first()
                 if exists:
-                    messages.warning(request, exists)
-                    url = reverse('digi_part')
+                    messages.warning(request, 'Manufacturer Part Number already exists.')
+                    part = exists.part
+                    partType = exists.part.partType
+                    url = reverse('edit_part', args=(partType.pk, part.pk))
                     return HttpResponseRedirect(url)
             new_part = Part.objects.create(partType=partType, description=description)
             if manufacturer:
