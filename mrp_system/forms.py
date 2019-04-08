@@ -317,7 +317,7 @@ class APIForm(forms.Form):
 """api requires tokens to operate, can save them here to make it easier to switch b/w
 production and development since they share tokens"""
 class EnterTokensForm(forms.Form):
-        access_token = forms.CharField()
-        refresh_token = forms.CharField()
+        access_token = forms.CharField(label='Access token', widget=forms.Textarea(attrs={'rows': 1, 'cols': 35}), required=True)
+        refresh_token = forms.CharField(label='Refresh token', widget=forms.Textarea(attrs={'rows': 1, 'cols': 50}), required=True)
      
-        
+        #(label='Activities', widget=forms.Textarea(attrs={'rows': 4, 'cols': 39, 'max_length': 350}), required=True)

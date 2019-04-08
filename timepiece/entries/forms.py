@@ -12,7 +12,7 @@ from timepiece.forms import TimepieceSplitDateTimeField
 
 class ClockInForm(forms.ModelForm):
     active_comment = forms.CharField(
-        label='Notes for the active entry', widget=forms.Textarea(attrs={'rows': 12, 'cols': 90, 'max_length': '50'}),
+        label='Notes for the active entry', widget=forms.Textarea(attrs={'rows': 4, 'cols': 39, 'max_length': '50'}),
         required=False)
     start_time = TimepieceSplitDateTimeField()
     activities = forms.CharField(label='Activities', widget=forms.Textarea(attrs={'rows': 4, 'cols': 39, 'max_length': 350}), required=True)
