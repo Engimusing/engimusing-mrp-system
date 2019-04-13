@@ -8,4 +8,5 @@ class PermissionAdmin(admin.ModelAdmin):
     list_display = ['content_type', 'codename', 'name']
     list_filter = ['content_type__app_label']
 
+
 admin.site.register(Permission, PermissionAdmin)

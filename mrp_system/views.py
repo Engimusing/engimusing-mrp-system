@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseNotFound,
                          JsonResponse)
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
 from mrp_system.models import (Part, Type, Field, Vendor,
                                ManufacturerRelationship, Location,
@@ -32,10 +33,28 @@ from django.core.files.base import ContentFile
 from django.utils.safestring import mark_safe
 from itertools import chain
 import logging
+from django.conf import settings
+import http.client
+from django.contrib.auth.decorators import login_required, permission_required
 
 logger = logging.getLogger(__name__)
 
+def class_view_decorator(function_decorator):
+    """Convert a function based decorator into a class based decorator usable
+    on class based Views.
 
+    Can't subclass the `View` as it breaks inheritance (super in particular),
+    so we monkey-patch instead.
+    """
+
+    def simple_decorator(View):
+        View.dispatch = method_decorator(function_decorator)(View.dispatch)
+        return View
+
+    return simple_decorator
+
+
+@class_view_decorator(login_required)
 class TypeListView(ListView):
     model = Type
     template_name = 'type_list.html'
@@ -71,6 +90,8 @@ def quick_type_create(request):
         form = QuickTypeForm()
     return render(request,'quick_type_form.html',{'form': form})
 
+
+@class_view_decorator(login_required)
 class TypeCreate(CreateView):
     form_class = TypeForm
     template_name = 'type_form.html'
@@ -115,6 +136,8 @@ class TypeCreate(CreateView):
         return self.render_to_response(
             self.get_context_data(form=form, field_formset=field_formset))
 
+
+@class_view_decorator(login_required)
 class EditType(UpdateView):
     model = Type
     form_class = TypeForm
@@ -156,11 +179,14 @@ class EditType(UpdateView):
         return self.render_to_response(
             self.get_context_data(form=form, field_formset=field_formset))
 
+
+@class_view_decorator(login_required)
 class DeleteType(DeleteView):
     model = Type
     success_url = reverse_lazy('list_types')
     pk_url_kwarg = 'type_id'
     template_name = 'delete_type.html' 
+
 
 def PartCreate(request, type_id):
     partType = Type.objects.get(id=type_id)
@@ -217,8 +243,11 @@ def PartEdit(request, type_id, id):
                                             'manu_formset': manu_formset,
                                             'partType': partType})
 
+
 def ListParts(request, type_id):
-    filters={}
+    # if not request.user.is_authenticated:
+    #     return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    filters = {}
     partType = Type.objects.get(id=type_id)
     parts = Part.objects.filter(partType=partType)
     fields = Field.objects.filter(typePart_id=type_id)
@@ -231,7 +260,7 @@ def ListParts(request, type_id):
         if field.fields == "char1":
             name = field.name
     searchField = None
-    models={}
+    models = {}
     for field in fields:
         models[field.fields] = field.name
     if request.method == 'POST':
@@ -278,12 +307,16 @@ def ListParts(request, type_id):
                                               'fields': fields, 'form': form,
                                               'name': name, 'string_filters': string_filters})
 
+
+@class_view_decorator(login_required)
 class DeletePart(DeleteView):
     model = Part
     success_url = reverse_lazy('list_types')
     pk_url_kwarg = 'part_id'
     template_name = 'delete_part.html'
-    
+
+
+@class_view_decorator(login_required)
 class VendorListView(ListView):
     template_name = 'vendor_list.html'
     context_object_name = 'all_manufacturers'
@@ -296,11 +329,15 @@ class VendorListView(ListView):
         context['distributors'] = Vendor.objects.filter(vendor_type='distributor').order_by('name')
         return context
 
+
+@class_view_decorator(login_required)
 class LocationListView(ListView):
     model = Location
     template_name = 'location_list.html'
     ordering = ['name']
 
+
+@class_view_decorator(login_required)
 class CreateVendor(CreateView):
     model = Vendor
     form_class = VendorForm
@@ -312,6 +349,8 @@ class CreateVendor(CreateView):
         kwargs['vendors'] = Vendor.objects.order_by('name')
         return super(CreateVendor, self).get_context_data(**kwargs)
 
+
+@class_view_decorator(login_required)
 class CreateLocation(CreateView):
     model = Location
     fields = ['name']
@@ -322,21 +361,26 @@ class CreateLocation(CreateView):
         kwargs['locations'] = Location.objects.order_by('name')
         return super(CreateLocation, self).get_context_data(**kwargs)
 
+
+@class_view_decorator(login_required)
 class VendorUpdate(UpdateView):
     
-##    fields = ['name','vendor_type','address','phone','web_address']
+    # fields = ['name','vendor_type','address','phone','web_address']
     form_class = VendorForm
     model = Vendor
     pk_url_kwarg = 'vendor_id'
     template_name = 'update_vendor.html'
     success_url = reverse_lazy('list_vendors')
 
+
+@class_view_decorator(login_required)
 class LocationUpdate(UpdateView):
     model = Location
     fields = ['name']
     pk_url_kwarg = 'location_id'
     template_name = 'update_location.html'
     success_url = reverse_lazy('list_locations')
+
 
 #used in part list to quickly edit location and stock
 def LocationRelationshipEdit(request, locationrelationship_id):
@@ -353,6 +397,8 @@ def LocationRelationshipEdit(request, locationrelationship_id):
     return render(request, 'update_loc_relationship.html', {'form': form,
                                                             'loc_rel': rel,
                                                             'partType': partType})
+
+
 #used in part list to quickly add location and stock if there isn't one
 def LocationRelationshipAdd(request, part_id):
     part = get_object_or_404(Part, id=part_id)
@@ -369,6 +415,8 @@ def LocationRelationshipAdd(request, part_id):
         form = LocationForm()
     return render(request, 'add_loc_relationship.html', {'form': form, 'partType': partType})
 
+
+@class_view_decorator(login_required)
 class LocationRelationshipDelete(DeleteView):
     model = LocationRelationship
     pk_url_kwarg = 'locationrelationship_id'    
@@ -381,17 +429,22 @@ class LocationRelationshipDelete(DeleteView):
         partType = Type.objects.get(part=rel.part)
         return reverse_lazy('list_parts', kwargs={'type_id': partType.id})
 
+
+@class_view_decorator(login_required)
 class VendorDelete(DeleteView):
     model = Vendor
     pk_url_kwarg = 'vendor_id'
     template_name = 'delete_vendor.html'
     success_url = reverse_lazy('list_vendors')
 
+
+@class_view_decorator(login_required)
 class LocationDelete(DeleteView):
     model = Location
     pk_url_kwarg = 'location_id'
     template_name = 'delete_location.html'
     success_url = reverse_lazy('list_locations')
+
 
 #takes in 2 objects and passes to mergeVendor function
 def MergeVendorView(request):
@@ -445,6 +498,7 @@ def MergeLocationView(request):
     else: form = MergeLocationsForm()
     return render(request, "merge_locations.html", {"form":form})
 
+
 def MergeLocation(primary_object, alias_object):
     #ensure objects are of type Location
     if not isinstance(alias_object, Location):
@@ -470,8 +524,6 @@ def MergeLocation(primary_object, alias_object):
                                             stock=stock[x])
     alias_object.delete()
 
-
-import http.client
 
 def enter_digi_part(request):
     if request.method == "POST":
@@ -677,8 +729,11 @@ def enter_digi_part(request):
         form = APIForm()
     return render(request, "oauth.html", {'form': form})
 
+
 """used in create/edit product form to filter parts in dropdown
 called in template with javascript"""
+
+
 def get_parts(request):
     searchField = request.GET.get('search')
     if searchField:
@@ -691,6 +746,7 @@ def get_parts(request):
     for part in parts:
         parts_dict[part.id] = part.engimusingPartNumber + " - " + part.description
     return JsonResponse(parts_dict)
+
 
 def CreateProduct(request):
     if request.method == 'POST':
@@ -746,16 +802,21 @@ def EditProduct(request, id):
                                             'product_formset': product_formset,
                                                  'location_formset': location_formset})
 
+
+@class_view_decorator(login_required)
 class ProductListView(ListView):
     model = Product
     template_name = 'product_list.html'
     ordering = ['description']
-    
+
+
+@class_view_decorator(login_required)
 class DeleteProduct(DeleteView):
     model = Product
     success_url = reverse_lazy('list_product')
     pk_url_kwarg = 'product_id'
     template_name = 'delete_product.html'
+
 
 def ProductDetailView(request, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -766,6 +827,7 @@ def ProductDetailView(request, product_id):
                                                    'locations': locations,
                                                    'parts': parts,
                                                    'component_products': component_products})
+
 
 #used to gather Bill of material details into a downloadable excel sheet
 def bomExcel(parts, description):
@@ -801,6 +863,7 @@ def bomExcel(parts, description):
     response['Content-Disposition'] = 'attachment; filename=%s' % title
 
     return response                
+
 
 def billOfMaterialsDetail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -838,6 +901,7 @@ def billOfMaterialsDetail(request, product_id):
         return bomExcel(parts, product.description)
     return render(request, 'bom_detail.html', {'parts': parts, 'product': product}) 
 
+
 def CreateMO(request):
     if request.method == 'POST':
         form = ManufacturingOrderForm(request.POST)
@@ -853,11 +917,14 @@ def CreateMO(request):
         manu_formset = ManufacturingProductFormSet()
     return render(request,'mo_form.html',{'form': form, 'manu_formset': manu_formset})
 
+
+@class_view_decorator(login_required)
 class MOListView(ListView):
     model = ManufacturingOrder
     template_name = 'mo_list.html'
     ordering = ['date_created']
-        
+
+
 def EditMO(request, id):
     instance = get_object_or_404(ManufacturingOrder, id=id)
     if request.method == 'POST':
@@ -874,11 +941,14 @@ def EditMO(request, id):
         manu_formset = ManufacturingProductFormSet(instance=instance)
     return render(request,'mo_form.html',{'form': form, 'manu_formset': manu_formset})
 
+
+@class_view_decorator(login_required)
 class DeleteMO(DeleteView):
     model = ManufacturingOrder
     success_url = reverse_lazy('list_mo')
     pk_url_kwarg = 'manufacturingorder_id'
     template_name = 'delete_mo.html'
+
 
 def MODetailView(request, mo_id):
     mo = get_object_or_404(ManufacturingOrder, id=mo_id)
@@ -954,6 +1024,7 @@ def MODetailView(request, mo_id):
     return render(request, 'mo_detail.html', {'parts': parts, 'products': products,
                                               'mo': mo})
 
+
 def generate_po_from_mo(partList):
     #create purchase order, PO number will be assigned
     po = PurchaseOrder.objects.create()
@@ -975,7 +1046,8 @@ def po_list_view(request):
         purchase_orders = purchase_orders.distinct('number')
     return render(request, 'purchase_order_list.html',
                   {'purchase_orders': purchase_orders})
-    
+
+
 def create_purchase_order(request):
     if request.method == 'POST':
         form = PurchaseOrderForm(request.POST)
@@ -992,6 +1064,7 @@ def create_purchase_order(request):
         part_formset = POPartFormSet()
     return render(request,'purchase_order_form.html',{'form': form,
                                                       'part_formset': part_formset})
+
 
 def edit_purchase_order(request, id):
     instance = get_object_or_404(PurchaseOrder, id=id)
@@ -1010,11 +1083,14 @@ def edit_purchase_order(request, id):
     return render(request,'purchase_order_form.html',{'form': form,
                                                  'part_formset': part_formset})
 
+
+@class_view_decorator(login_required)
 class DeletePurchaseOrder(DeleteView):
     model = PurchaseOrder
     success_url = reverse_lazy('list_po')
     pk_url_kwarg = 'purchaseorder_id'
     template_name = 'delete_purchase_order.html'
+
 
 def purchase_order_detail(request, purchaseorder_id):
     purchase_order = get_object_or_404(PurchaseOrder, id=purchaseorder_id)
@@ -1023,6 +1099,7 @@ def purchase_order_detail(request, purchaseorder_id):
                   {'purchase_order': purchase_order,
                    'parts': parts})
 
+
 #in part list table, can click Purchase Orders to get list of all purchase orders that contain this part
 def get_po_from_part(request, part_id):
     part = Part.objects.get(id=part_id)
@@ -1030,13 +1107,15 @@ def get_po_from_part(request, part_id):
     return render(request, 'part_po_list.html',
                   {'purchase_orders': purchase_orders,
                    'part': part})
-    
+
+
 #used to show current tokens for digikey model, useful to switch the access tokens from production to development
 def print_tokens_digi(request):
     digi = DigiKeyAPI.objects.get(name="DigiKey")
     access = digi.access_token
     refresh = digi.refresh_token
     return render(request, 'print_tokens.html', {'access':access, 'refresh':refresh})
+
 
 #form to enter correct access tokens 
 def enter_tokens(request):

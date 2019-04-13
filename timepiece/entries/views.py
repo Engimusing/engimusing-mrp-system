@@ -14,6 +14,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
 
+
 from timepiece import utils
 
 from timepiece.manager.models import Project, Profile
