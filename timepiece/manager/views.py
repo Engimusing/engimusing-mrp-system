@@ -1,6 +1,7 @@
 import datetime, csv
 from dateutil.relativedelta import relativedelta
 from django.core.exceptions import ValidationError
+from django.utils.decorators import method_decorator
 
 from six.moves.urllib.parse import urlencode
 
@@ -34,8 +35,24 @@ from timepiece.entries.models import Entry
 #create, edit, delete, and view user all in admin
 
 
+def class_view_decorator(function_decorator):
+    """Convert a function based decorator into a class based decorator usable
+    on class based Views.
+
+    Can't subclass the `View` as it breaks inheritance (super in particular),
+    so we monkey-patch instead.
+    """
+
+    def simple_decorator(View):
+        View.dispatch = method_decorator(function_decorator)(View.dispatch)
+        return View
+
+    return simple_decorator
+
+
 ##can filter project by month to see all clocked entries
 # Project timesheets
+@class_view_decorator(login_required)
 class ProjectTimesheet(DetailView):
     template_name = 'timepiece/project/timesheet.html'
     model = Project
@@ -108,6 +125,7 @@ class EditSettings(UpdateView):
         return self.request.GET.get('next', None) or reverse('dashboard')
 
 
+@class_view_decorator(login_required)
 class ListUsers(ListView):
     model = User
     redirect_if_one_result = True
@@ -239,7 +257,7 @@ class WeekTimesheet(WeekTimesheetMixin, TemplateView):
 
 
 # Projects
-
+@class_view_decorator(login_required)
 class ListProjects(ListView):
     model = Project
     template_name = 'timepiece/project/list.html'
@@ -250,11 +268,14 @@ class ListProjects(ListView):
         return context
 
 
+@class_view_decorator(login_required)
 class ListInactiveProjects(ListView):
     model = Project
     template_name = 'timepiece/project/inactive_list.html'
     queryset = Project.objects.filter(inactive=True)
 
+
+@class_view_decorator(login_required)
 class ViewProject(DetailView):
     model = Project
     pk_url_kwarg = 'project_id'
@@ -338,6 +359,7 @@ def ProjectActivate(request, project_id):
     return redirect(reverse('inactive_projects'))
 
 
+@class_view_decorator(login_required)
 class DeleteProject(DeleteView):
     model = Project
     success_url = reverse_lazy('list_projects')
@@ -345,6 +367,7 @@ class DeleteProject(DeleteView):
     template_name = 'timepiece/delete_object.html'
 
 
+@class_view_decorator(login_required)
 class InactivateProject(DeleteView):
     model = Project
     success_url = reverse_lazy('list_projects')

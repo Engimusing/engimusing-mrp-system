@@ -39,6 +39,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 logger = logging.getLogger(__name__)
 
+
 def class_view_decorator(function_decorator):
     """Convert a function based decorator into a class based decorator usable
     on class based Views.
