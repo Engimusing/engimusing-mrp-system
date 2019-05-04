@@ -8,7 +8,7 @@ from mrp_system.models import (Part, Type, Field, Vendor,
                                LocationRelationship, DigiKeyAPI,
                                PartAmount, Product, ProductAmount, ManufacturingOrder,
                                MOProduct, ProductLocation, PurchaseOrder, PurchaseOrderParts)
-from mrp_system.forms import (FilterForm, PartForm, LocationForm, LocationFormSet,
+from mrp_system.forms import (FilterForm, PartForm, ViewPartForm, LocationForm, LocationFormSet,
                               MergeLocationsForm, ManufacturerFormSet,
                               MergeVendorsForm, FieldFormSet, TypeForm, APIForm,
                               ProductForm, PartToProductFormSet, PartToProductForm,
@@ -307,6 +307,33 @@ def ListParts(request, type_id):
     return render(request, 'part_list.html', {'type': partType, 'parts': parts,
                                               'fields': fields, 'form': form,
                                               'name': name, 'string_filters': string_filters})
+
+
+def PartView(request, type_id, id):
+    partType = Type.objects.get(id=type_id)
+    instance = get_object_or_404(Part, id=id)
+
+    if request.method == 'POST':
+        form = ViewPartForm(type_id, request.POST, request.FILES, instance=instance)
+        manu_formset = ManufacturerFormSet(request.POST, instance=instance)
+        location_formset = LocationFormSet(request.POST, instance=instance)
+        if form.is_valid():
+            part = form.save(commit=False)
+            part.partType_id = type_id
+            if manu_formset.is_valid() and location_formset.is_valid():
+                part.save()
+                manu_formset.save()
+                location_formset.save()
+                url = reverse('list_parts', args=[partType.pk])
+                return HttpResponseRedirect(url)
+    else:
+        form = ViewPartForm(type_id=type_id, instance=instance)
+        manu_formset = ManufacturerFormSet(instance=instance)
+        location_formset = LocationFormSet(instance=instance)
+    return render(request, 'part_view.html', {'view_part_form': form,
+                                              'location_formset': location_formset,
+                                              'manu_formset': manu_formset,
+                                              'partType': partType})
 
 
 @class_view_decorator(login_required)

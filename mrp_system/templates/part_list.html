@@ -16,7 +16,7 @@
 
 <form action="" method="post">
 <div class="row">
-{% csrf_token %} 
+{% csrf_token %}
 {% for field in form.visible_fields %}
 
 <div class="group">
@@ -32,7 +32,7 @@
 <br>
 <pre><h5>{{ string_filters }}</h5></pre>
 <hr/>
-            
+
             <table class='table table-bordered table-striped table-condensed'>
                 <thead>
                     <tr class="table-active">
@@ -58,8 +58,8 @@
                 <tbody>
                     {% for part in parts %}
                         <tr>
-			<td>{{part.engimusingPartNumber}}</td>	
-{% if name %} <td>{{part.char1}}</td>{% endif %}	
+							<td><a href="{% url 'part_view' type.id part.id  %}">{{part.engimusingPartNumber}}</a></td>
+{% if name %} <td>{{part.char1}}</td>{% endif %}
                             <td>{{ part.description }}</td>
 			<td>{% if part.datasheet %}
 			    <a href="{{part.datasheet.url}}" target="_new">PDF</a>{% endif %}</td>
@@ -70,14 +70,14 @@
 {% endif %}
 </td>
 	<td>{% for manu in part.get_manufacturers %}{{ manu }}</br>{% endfor %}</td>
-			<td>{% for number in part.get_related %}{{ number }}</br>{% endfor %} </td>		   
+			<td>{% for number in part.get_related %}{{ number }}</br>{% endfor %} </td>
 
 {% for field in fields %}
 {% if field.fields != "char1" %}
 			<td>{{ part|get_obj_attr:field.fields }}</td>
 {% endif %}
 			{% endfor %}
-			
+
 			    <td><a class="btn btn-primary btn-sm" href="{% url 'edit_part' type.id part.id %}">Edit</a></td>
 			<td><a class="btn btn-primary btn-sm" href="{% url 'delete_part' part.id %}">Delete</a></td>
 			<td><a class="btn btn-primary btn-sm" href="{% url 'part_po' part.id %}">Purchase Orders</a></td>
@@ -85,6 +85,7 @@
                     {% endfor %}
                 </tbody>
             </table>
-     
+
     </div>
 {% endblock content %}
+

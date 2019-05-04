@@ -32,6 +32,10 @@ urlpatterns = [
     url(r'^part/delete/(?P<part_id>\d+)/$',
         views.DeletePart.as_view(),
         name='delete_part'),
+    url(r'part/view/(?P<type_id>\d+)/(?P<id>\d+)$',
+        views.PartView,
+        name='part_view'),
+
 
     #manufacturers and locations
     path('vendor/create/',

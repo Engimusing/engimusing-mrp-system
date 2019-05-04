@@ -13,14 +13,16 @@
         {% endfor %}
     {% endif %}
 <div class="container-fluid">
-<h3> Create New {{ partType }}</h3>
+<h3> {{ partType }}</h3>
 <a href="{% url 'create_vendor' %}">New Manufacturer</a> &nbsp;&nbsp;
 <a href="{% url 'create_location' %}">New Location</a>
 <br><br>
 <div class="form-horizontal">
 <form action="" method="post" enctype='multipart/form-data'>{% csrf_token %}
 <div class="section">
-{{ part_form.as_p }}
+    <table>
+{{ view_part_form.as_table }}
+        </table>
 </div>
 {{ location_formset.management_form }}
 <div id="formset">

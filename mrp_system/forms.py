@@ -31,12 +31,38 @@ class PartForm(ModelForm):
         class Meta:
             model = Part
             exclude = ('manufacturer', 'location', 'partType')
-            
+
+
+class ViewPartForm(ModelForm):
+
+    def __init__(self, type_id, *args, **kwargs):
+        super(ViewPartForm, self).__init__(*args, **kwargs)
+        partType = Type.objects.get(id=type_id)
+        """take label from Type/Field models and assign it to the
+        correct field"""
+        for field in partType.field.all():
+            self.fields[field.fields].label = field.name
+        field_options = []
+        """generate a list of all possible fields"""
+        for x in range(1, 36):
+            field_options.append('char' + str(x))
+        for field in field_options:
+            """if field hasn't been assigned to this type, don't include
+            it in the form"""
+            if field not in partType.field.values_list('fields', flat=True):
+                self.fields.pop(field)
+
+    class Meta:
+        model = Part
+        exclude = ('manufacturer', 'location', 'partType')
+
+
 class ManufacturerForm(ModelForm):
     manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
     class Meta:
         model = ManufacturerRelationship
         exclude = ('part',)
+
 
 class CustomFormset(BaseInlineFormSet):
     def clean(self):
@@ -237,6 +263,10 @@ class EditCustomInlineFormset(BaseInlineFormSet):
                         
 EditFieldFormSet = inlineformset_factory(Type, Field, form=EditFieldForm, extra=35, max_num=35,
                                      formset=EditCustomInlineFormset)
+
+# class PartInfoForm(ModelForm):
+#     fields = forms.CharField()
+
 
 class QuickTypeForm(forms.Form):
         fields = forms.CharField()
