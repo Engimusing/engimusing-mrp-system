@@ -35,6 +35,9 @@ class PartForm(ModelForm):
 
 
 class ViewPartForm(ReadOnlyFormMixin, ModelForm):
+    description = forms.CharField(label='Description',
+                                  widget=forms.Textarea(attrs={'rows': 4, 'cols': 35, 'max_length': 800}),
+                                  required=True)
 
     def __init__(self, type_id, *args, **kwargs):
         super(ViewPartForm, self).__init__(*args, **kwargs)

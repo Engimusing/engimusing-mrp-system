@@ -108,6 +108,10 @@ class Part(models.Model):
     partType = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="part")
     engimusingPartNumber = models.CharField(max_length=30, editable=False)
     description = models.CharField(max_length=300, blank=True)
+
+    #description = forms.CharField(label='Description',
+    # widget=forms.Textarea(attrs={'rows': 10, 'cols': 90, 'max_length': 1500}), required=True)
+
     location = models.ManyToManyField(Location, through='LocationRelationship')
     manufacturer = models.ManyToManyField(Vendor,
                                           through='ManufacturerRelationship')
