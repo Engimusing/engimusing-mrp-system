@@ -36,8 +36,116 @@ class PartForm(ModelForm):
 
 class ViewPartForm(ReadOnlyFormMixin, ModelForm):
     description = forms.CharField(label='Description',
-                                  widget=forms.Textarea(attrs={'rows': 4, 'cols': 35, 'max_length': 800}),
+                                  widget=forms.Textarea(attrs={'rows': 3, 'cols': 35, 'max_length': 800}),
                                   required=True)
+    char20= forms.CharField(label='Description',
+                                  widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                                  required=True)
+    char1 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char2 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char3 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char4 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char5 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char6 = forms.CharField(label='Description',
+                            widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                            required=True)
+    char7 = forms.CharField(label='Description',
+                            widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                            required=True)
+    char8 = forms.CharField(label='Description',
+                            widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                            required=True)
+    char9 = forms.CharField(label='Description',
+                            widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                            required=True)
+    char10 = forms.CharField(label='Description',
+                            widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                            required=True)
+    char11 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char12 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char13 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char14 = forms.CharField(label='Description',
+                            widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                            required=True)
+    char15 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char16 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char17 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char18 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char19 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char21 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char22 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char23 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char24 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+
+    char25 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char26 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+
+    char27 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+
+    char28 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char29 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char30 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char31 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char32 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char33 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char34 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char35 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
 
     def __init__(self, type_id, *args, **kwargs):
         super(ViewPartForm, self).__init__(*args, **kwargs)
