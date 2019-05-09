@@ -333,7 +333,8 @@ def PartView(request, type_id, id):
     return render(request, 'part_view.html', {'view_part_form': form,
                                               'location_formset': location_formset,
                                               'manu_formset': manu_formset,
-                                              'partType': partType})
+                                              'partType': partType,
+                                               'part': instance})
 
 
 @class_view_decorator(login_required)

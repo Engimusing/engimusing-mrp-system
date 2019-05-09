@@ -1,6 +1,6 @@
 {% extends "base2.html" %}
 
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 {% block title %}Parts{% endblock title %}
 {% block crumbs %}
     {{ block.super }}
@@ -17,13 +17,27 @@
 <a href="{% url 'create_vendor' %}">New Manufacturer</a> &nbsp;&nbsp;
 <a href="{% url 'create_location' %}">New Location</a>
 <br><br>
-<div class="form-horizontal">
-<form action="" method="post" enctype='multipart/form-data'>{% csrf_token %}
-<div class="section">
-    <table>
-{{ view_part_form.as_table }}
-        </table>
+<div class="form-horizontal" >
+<form action="" method="post" enctype='multipart/form-data'> {% csrf_token %}
+
+<div class="w3-container" >
+
+
+
+ {% for field in view_part_form.visible_fields %}
+
+<div class="group">
+     {{ field.label_tag }}</br>
+     {{field}}
+</div>&nbsp;&nbsp;
+  {% endfor %}
+    <br>
+
+
+
 </div>
+
+<div class="w3-container" >
 {{ location_formset.management_form }}
 <div id="formset">
 {% for form in location_formset.forms %}
@@ -71,6 +85,7 @@
 </script>
 <br><br>
 <input class="btn btn-primary" type="submit" value="Save"/>
+    </div>
 </form>
 
 </div>

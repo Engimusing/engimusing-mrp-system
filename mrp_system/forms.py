@@ -8,6 +8,7 @@ from django.forms import ModelForm, BaseInlineFormSet
 from django.forms.models import inlineformset_factory
 from timepiece.forms import TimepieceSplitDateTimeField
 from django.utils.safestring import mark_safe
+from mrp_system.models import ReadOnlyFormMixin
 
 class PartForm(ModelForm): 
 
@@ -33,7 +34,7 @@ class PartForm(ModelForm):
             exclude = ('manufacturer', 'location', 'partType')
 
 
-class ViewPartForm(ModelForm):
+class ViewPartForm(ReadOnlyFormMixin, ModelForm):
 
     def __init__(self, type_id, *args, **kwargs):
         super(ViewPartForm, self).__init__(*args, **kwargs)
@@ -42,6 +43,7 @@ class ViewPartForm(ModelForm):
         correct field"""
         for field in partType.field.all():
             self.fields[field.fields].label = field.name
+            #self.fields[key].widget.attrs['readonly'] = True
         field_options = []
         """generate a list of all possible fields"""
         for x in range(1, 36):
@@ -57,7 +59,7 @@ class ViewPartForm(ModelForm):
         exclude = ('manufacturer', 'location', 'partType')
 
 
-class ManufacturerForm(ModelForm):
+class ManufacturerForm(ReadOnlyFormMixin, ModelForm):
     manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
     class Meta:
         model = ManufacturerRelationship
@@ -88,6 +90,7 @@ ManufacturerFormSet = inlineformset_factory(Part, ManufacturerRelationship,
                                             form=ManufacturerForm, extra=1,
                                             formset=CustomFormset)
 
+
 class LocationForm(ModelForm):
     location = forms.ModelChoiceField(queryset=Location.objects.order_by('name'))
     class Meta:
@@ -96,6 +99,19 @@ class LocationForm(ModelForm):
         
 LocationFormSet = inlineformset_factory(Part, LocationRelationship,
                                         form=LocationForm, extra=1)
+
+
+class Location1Form(ModelForm):
+    location = forms.ModelChoiceField(queryset=Location.objects.order_by('name'))
+
+    class Meta:
+        model = LocationRelationship
+        exclude = ('part',)
+
+
+Location1FormSet = inlineformset_factory(Part, LocationRelationship,
+                                        form=Location1Form, extra=1)
+
 
 class VendorForm(ModelForm):
     class Meta:

@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 # from django.contrib.sites.models import Site
+from django.forms import ModelForm
 
 
 class Vendor(models.Model):
@@ -28,6 +29,13 @@ class Location(models.Model):
         return self.name
 
 
+class Location1(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 # used to track different part types
 class Type(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -37,6 +45,19 @@ class Type(models.Model):
         return self.name
 
 
+##############
+class ReadOnlyFormMixin(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ReadOnlyFormMixin, self).__init__(*args, **kwargs)
+        for key in self.fields.keys():
+            self.fields[key].widget.attrs['readonly'] = True
+
+    def save(self, *args, **kwargs):
+        # do not do anything
+        pass
+
+
+################
 # names of fields for each part type tracked with field model
 class Field(models.Model):
 
