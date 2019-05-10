@@ -35,28 +35,27 @@ class PartForm(ModelForm):
 
 
 class ViewPartForm(ReadOnlyFormMixin, ModelForm):
+
     description = forms.CharField(label='Description',
                                   widget=forms.Textarea(attrs={'rows': 3, 'cols': 35, 'max_length': 800}),
                                   required=True)
-    char20= forms.CharField(label='Description',
-                                  widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
-                                  required=True)
-    char1 = forms.CharField(label='Description',
+
+    char1 = forms.CharField(label='field2',
                              widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                              required=True)
-    char2 = forms.CharField(label='Description',
+    char2 = forms.CharField(label='field3',
                              widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                              required=True)
-    char3 = forms.CharField(label='Description',
+    char3 = forms.CharField(label='field4',
                              widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                              required=True)
-    char4 = forms.CharField(label='Description',
+    char4 = forms.CharField(label='field5',
                              widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                              required=True)
-    char5 = forms.CharField(label='Description',
+    char5 = forms.CharField(label='field6',
                              widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                              required=True)
-    char6 = forms.CharField(label='Description',
+    char6 = forms.CharField(label='field7',
                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                             required=True)
     char7 = forms.CharField(label='Description',
@@ -96,6 +95,9 @@ class ViewPartForm(ReadOnlyFormMixin, ModelForm):
                              widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                              required=True)
     char19 = forms.CharField(label='Description',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=True)
+    char20 = forms.CharField(label='field',
                              widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                              required=True)
     char21 = forms.CharField(label='Description',

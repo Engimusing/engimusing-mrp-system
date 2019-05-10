@@ -23,6 +23,7 @@ from timepiece.entries.forms import (ClockInForm, ClockOutForm,
                                      TodoAdminForm, TodoForm)
 from timepiece.entries.models import Entry, ProjectHours, ToDo
 
+
 class DashboardMixin(object):
 
     def dispatch(self, request, *args, **kwargs):

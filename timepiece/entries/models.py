@@ -101,8 +101,9 @@ class Entry(models.Model):
         ordering = ('-start_time',)
         verbose_name_plural = 'entries'
         permissions = (
-            ('can_clock_in', 'Can use Pendulum to clock in'),
-            ('can_clock_out', 'Can use Pendulum to clock out'),
+            # ('can_clock_in', 'Can use Pendulum to clock in'),
+            #('can_clock_out', 'Can use Pendulum to clock out'),
+            ('can_clock_in_out', 'Can use Pendulum to clock in and out'),
         )
 
     def __str__(self):

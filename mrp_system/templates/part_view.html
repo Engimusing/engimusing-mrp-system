@@ -24,11 +24,16 @@
 
 
 
- {% for field in view_part_form.visible_fields %}
-
-<div class="group">
-     {{ field.label_tag }}</br>
+ {% for field in view_part_form %}
+<!--{{ part_form.as_p }}-->
+<div class="group" style="display:flex;">
+    <div>
+     {{ field.label_tag }}
+        </div>
+    <div>
      {{field}}
+        </div>
+
 </div>&nbsp;&nbsp;
   {% endfor %}
     <br>
