@@ -18,28 +18,25 @@
 <a href="{% url 'create_location' %}">New Location</a>
 <br><br>
 <div class="form-horizontal" >
-<form action="" method="post" enctype='multipart/form-data'> {% csrf_token %}
+<form action="" method="post" enctype='multipart/form-data' style="display:table;"> {% csrf_token %}
 
 <div class="w3-container" >
 
-
+<table>
 
  {% for field in view_part_form %}
 <!--{{ part_form.as_p }}-->
-<div class="group" style="display:flex;">
-    <div>
-     {{ field.label_tag }}
-        </div>
-    <div>
-     {{field}}
-        </div>
+<tr class="group" style="display:flex, table-row;">
 
-</div>&nbsp;&nbsp;
+           <td>  {{ field.label_tag }} </td>
+        <td> {{field}} </td>
+
+</tr>&nbsp;&nbsp;
   {% endfor %}
     <br>
 
 
-
+</table>
 </div>
 
 <div class="w3-container" >
