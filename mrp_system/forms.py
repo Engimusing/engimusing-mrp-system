@@ -200,7 +200,7 @@ class CustomFormset(BaseInlineFormSet):
         return self.cleaned_data
     
 ManufacturerFormSet = inlineformset_factory(Part, ManufacturerRelationship,
-                                            form=ManufacturerForm, extra=1,
+                                            form=ManufacturerForm, extra=0,
                                             formset=CustomFormset)
 
 
@@ -211,7 +211,7 @@ class LocationForm(ModelForm):
         exclude = ('part',)
         
 LocationFormSet = inlineformset_factory(Part, LocationRelationship,
-                                        form=LocationForm, extra=1)
+                                        form=LocationForm, extra=0)
 
 
 class Location1Form(ModelForm):
@@ -223,7 +223,7 @@ class Location1Form(ModelForm):
 
 
 Location1FormSet = inlineformset_factory(Part, LocationRelationship,
-                                        form=Location1Form, extra=1)
+                                        form=Location1Form)
 
 
 class VendorForm(ModelForm):
