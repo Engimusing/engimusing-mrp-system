@@ -60,6 +60,8 @@ class EntryQuerySet(models.query.QuerySet):
         return self.filter(datesQ)
 
 
+
+
 class EntryManager(models.Manager):
 
     def get_queryset(self):
@@ -284,6 +286,7 @@ class Entry(models.Model):
         return data
 
 
+
 @python_2_unicode_compatible
 class ProjectHours(models.Model):
     week_start = models.DateField(verbose_name='start of week')
@@ -309,6 +312,10 @@ class ProjectHours(models.Model):
         verbose_name = 'project hours entry'
         verbose_name_plural = 'project hours entries'
         unique_together = ('week_start', 'project', 'user')
+        permissions = (
+            ('modify_admin_site', 'Can modify, add, or delete project hours'),
+        )
+
 
 class ToDo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,)
@@ -318,6 +325,7 @@ class ToDo(models.Model):
 
     class Meta:
         ordering = ["user", "priority"]
+        permissions = (('time_user', 'Can modify, add, view, or delete todos'),)
 
     def __str__(self):
         return self.description

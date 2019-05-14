@@ -10,6 +10,7 @@ from timepiece.forms import TimepieceSplitDateTimeField
 from django.utils.safestring import mark_safe
 from mrp_system.models import ReadOnlyFormMixin
 
+
 class PartForm(ModelForm): 
 
         def __init__(self, type_id, *args, **kwargs):
@@ -34,7 +35,8 @@ class PartForm(ModelForm):
             exclude = ('manufacturer', 'location', 'partType')
 
 
-class ViewPartForm(ReadOnlyFormMixin, ModelForm):
+# took out ReadOnlyFormMixin
+class ViewPartForm(ModelForm):
 
     description = forms.CharField(label='Description',
                                   widget=forms.Textarea(attrs={'rows': 3, 'cols': 35, 'max_length': 800}),
@@ -172,7 +174,8 @@ class ViewPartForm(ReadOnlyFormMixin, ModelForm):
         exclude = ('manufacturer', 'location', 'partType')
 
 
-class ManufacturerForm(ReadOnlyFormMixin, ModelForm):
+# took out ReadOnlyFormMixin
+class ManufacturerForm(ModelForm):
     manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
     class Meta:
         model = ManufacturerRelationship
@@ -275,37 +278,45 @@ class PartToProductForm(ModelForm):
 PartToProductFormSet = inlineformset_factory(Product, PartAmount,
                                     form=PartToProductForm, extra=1)
 
+
 class ProductToProductForm(ModelForm):
     to_product = forms.ModelChoiceField(label='Product', queryset=Product.objects.all())
     class Meta:
         model = ProductAmount
         exclude = ('from_product',)
 
+
 #include fk_name because m2m relationship between self (products)
 ProductToProductFormSet = inlineformset_factory(Product, ProductAmount, fk_name='from_product',
                                                 form=ProductToProductForm, extra=1)
-        
+
+
 class ProductLocationForm(ModelForm):
     location=forms.ModelChoiceField(queryset=Location.objects.order_by('name'))
     class Meta:
         model = ProductLocation
         exclude = ('product',)
 
+
 ProductLocationFormSet = inlineformset_factory(Product, ProductLocation,
                                         form=ProductLocationForm, extra=1)
+
 
 class ManufacturingOrderForm(ModelForm):    
     class Meta:
         model = ManufacturingOrder
         exclude = ('product',)
-        
+
+
 class ManufacturingProductForm(ModelForm):
     product=forms.ModelChoiceField(queryset=Product.objects.order_by('description'))
     class Meta:
         model = MOProduct
         exclude = ()
-        
+
+
 ManufacturingProductFormSet = inlineformset_factory(ManufacturingOrder, MOProduct,
+
                                         form=ManufacturingProductForm, extra=1)
         
 class TypeForm(ModelForm):
@@ -316,6 +327,7 @@ class TypeForm(ModelForm):
             "name": "Type Name"
         }
 
+
 class FieldForm(ModelForm):
     class Meta:
         model = Field
@@ -323,6 +335,7 @@ class FieldForm(ModelForm):
         labels = {
             "name": "Field Name",
         }
+
 
 class CustomInlineFormset(BaseInlineFormSet):
     def clean(self):
@@ -348,6 +361,7 @@ class CustomInlineFormset(BaseInlineFormSet):
 FieldFormSet = inlineformset_factory(Type, Field, form=FieldForm, extra=35, max_num=35,
                                      formset=CustomInlineFormset)
 
+
 #edit part type requires field types to be selected
 class EditFieldForm(ModelForm):
     class Meta:
@@ -357,6 +371,7 @@ class EditFieldForm(ModelForm):
             "name": "Field Name",
             "fields": "Field Type",
         }
+
 
 class EditCustomInlineFormset(BaseInlineFormSet):
     def clean(self):
@@ -400,18 +415,21 @@ EditFieldFormSet = inlineformset_factory(Type, Field, form=EditFieldForm, extra=
 class QuickTypeForm(forms.Form):
         fields = forms.CharField()
 
-#used in case duplicate manufacturers are created        
+
+#used in case duplicate manufacturers are created
 class MergeVendorsForm(forms.Form):
         primary = forms.ModelChoiceField(label='Primary Vendor',
                                          queryset = Vendor.objects.order_by('name'))
         alias = forms.ModelChoiceField(label='Vendor To Delete',
                                          queryset = Vendor.objects.order_by('name'))
 
+
 class MergeLocationsForm(forms.Form):
         primary = forms.ModelChoiceField(label='Primary Location',
                                          queryset = Location.objects.order_by('name'))
         alias = forms.ModelChoiceField(label='Location To Delete',
                                          queryset = Location.objects.order_by('name'))
+
 
 #used in part list view to filter parts displayed in table
 class FilterForm(forms.Form):
@@ -430,10 +448,12 @@ class FilterForm(forms.Form):
         location = forms.ModelMultipleChoiceField(required=False, queryset = Location.objects.none())
         manufacturer = forms.ModelMultipleChoiceField(required=False, queryset = Vendor.objects.none())                    
 
+
 class PurchaseOrderForm(ModelForm):
     class Meta:
         model = PurchaseOrder
         exclude = ('part',)
+
 
 class POPartForm(ModelForm):
     #used to narrow down part selection dropdown with javascript
@@ -448,6 +468,7 @@ class POPartForm(ModelForm):
         
        
 POPartFormSet = inlineformset_factory(PurchaseOrder, PurchaseOrderParts, form=POPartForm, extra=1)
+
 
 class APIForm(forms.Form):
         website = forms.ChoiceField(choices = ([('Digi-Key','Digi-Key'),('Mouser','Mouser')]), required=True)
@@ -473,8 +494,11 @@ class APIForm(forms.Form):
                     raise forms.ValidationError('Can\'t enter a mouser part number, must be a manufacturer number for Mouser.')
                 return self.cleaned_data
 
+
 """api requires tokens to operate, can save them here to make it easier to switch b/w
 production and development since they share tokens"""
+
+
 class EnterTokensForm(forms.Form):
         access_token = forms.CharField(label='Access token', widget=forms.Textarea(attrs={'rows': 1, 'cols': 35}), required=True)
         refresh_token = forms.CharField(label='Refresh token', widget=forms.Textarea(attrs={'rows': 1, 'cols': 50}), required=True)

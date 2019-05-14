@@ -55,7 +55,10 @@ class Project(models.Model):
 
     class Meta:
         db_table = 'timepiece_project'  # Using legacy table name.
-        ordering = ('name',) 
+        ordering = ('name',)
+        permissions = (
+            ('time_supervisor', 'Can view, add, delete, modify projects'),
+        )
 
     def __str__(self):
         return '{0}'.format(self.name)

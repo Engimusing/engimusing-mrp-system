@@ -21,6 +21,10 @@ class Vendor(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can modify, add, view, or delete vendors'),
+        )
 
 class Location(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -28,12 +32,17 @@ class Location(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can modify, add, view, or delete locations'),
+        )
 
-class Location1(models.Model):
-    name = models.CharField(max_length=100, unique=True)
 
-    def __str__(self):
-        return self.name
+# class Location1(models.Model):
+#     name = models.CharField(max_length=100, unique=True)
+#
+#     def __str__(self):
+#         return self.name
 
 
 # used to track different part types
@@ -44,6 +53,10 @@ class Type(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can modify, add, view, or delete types'),
+        )
 
 ##############
 class ReadOnlyFormMixin(ModelForm):
@@ -102,6 +115,10 @@ class Field(models.Model):
     fields = models.CharField(max_length=50, choices=FIELD_CHOICES)
     typePart = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="field", null=True)
 
+    class Meta:
+        permissions = (
+            ('modify_admin_site', 'Can modify, add, view, or delete fields'),
+        )
 
 class Part(models.Model):
     # used to keep track of part type and fields
@@ -183,6 +200,10 @@ class Part(models.Model):
             self.engimusingPartNumber = increment_engi_partnumber(partType)
         super().save(*args, **kwargs)
 
+    class Meta:
+        permissions = (
+            ('modify_admin_site', 'Can modify, add, view, or delete parts'),
+        )
 
 def increment_engi_partnumber(partType):
     # get greatest part number
@@ -205,10 +226,20 @@ class ManufacturerRelationship(models.Model):
     partNumber = models.CharField(max_length=40, blank=True)
 
 
+    class Meta:
+        permissions = (
+        ('modify_admin_site', 'Can modify, add, view, or delete manufacturer relationships'),
+    )
+
 class LocationRelationship(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     stock = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        permissions = (
+            ('modify_admin_site', 'Can modify, add, view, or location relationships'),
+        )
 
 
 class Product(models.Model):
@@ -225,10 +256,16 @@ class Product(models.Model):
     def __str__(self):
         return str(self.description)
 
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can modify, add, view, or delete products'),
+        )
+
     def get_stock(self):
         if self.location:
             return [ProductLocation for ProductLocation in
                     self.productlocation_set.order_by('id')]
+
 
 
 class PartAmount(models.Model):
@@ -236,17 +273,32 @@ class PartAmount(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     amount = models.IntegerField(blank=True, null=True, default=1)
 
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can modify, add, view, or delete part amounts'),
+        )
+
 
 class ProductAmount(models.Model):
     from_product = models.ForeignKey(Product, related_name='from_product', on_delete=models.CASCADE)
     to_product = models.ForeignKey(Product, related_name='to_product', on_delete=models.CASCADE)
     amount = models.IntegerField(blank=True, null=True, default=1)
 
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can modify, add, view, or delete product amounts'),
+        )
+
 
 class ProductLocation(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     stock = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        permissions = (
+            ('modify_admin_site', 'Can modify, add, view, or delete product locations'),
+        )
 
 
 class ManufacturingOrder(models.Model):
@@ -257,11 +309,21 @@ class ManufacturingOrder(models.Model):
     def __str__(self):
         return self.number
 
+    class Meta:
+        permissions = (
+            ('modify_admin_site', 'Can modify, add, view, or delete manufacturing orders'),
+        )
+
 
 class MOProduct(models.Model):
     manufacturing_order = models.ForeignKey(ManufacturingOrder, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     amount = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        permissions = (
+            ('modify_admin_site', 'Can modify, add, view, or delete MO products'),
+        )
 
 
 class PurchaseOrder(models.Model):
@@ -290,6 +352,11 @@ class PurchaseOrder(models.Model):
             self.number = new_number
         super().save(*args, **kwargs)
 
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can modify, add, view, or delete purchase orders'),
+        )
+
 
 class PurchaseOrderParts(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
@@ -312,9 +379,16 @@ class PurchaseOrderParts(models.Model):
             self.total = 0
         super().save(*args, **kwargs)
 
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can modify, add, view, or delete purchase order parts'),
+        )
+
 
 """used to keep track of tokens, only one instance of this model named "DigiKey",
 don't create another instance of this as it can mess up the tokens"""
+
+
 class DigiKeyAPI(models.Model):
     name = models.CharField(max_length=100)
     refresh_token = models.CharField(max_length=150)

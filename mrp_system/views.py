@@ -213,10 +213,10 @@ def PartCreate(request, type_id):
         form = PartForm(type_id=type_id)
         manu_formset = ManufacturerFormSet()
         location_formset = LocationFormSet()
-    return render(request,'part_form.html',{'part_form': form,
-                                            'location_formset': location_formset,
-                                            'manu_formset': manu_formset,
-                                            'partType': partType})
+    return render(request,'part_form.html', {'part_form': form,
+                                             'location_formset': location_formset,
+                                             'manu_formset': manu_formset,
+                                             'partType': partType})
 
 def PartEdit(request, type_id, id):
     partType = Type.objects.get(id=type_id)
@@ -239,10 +239,10 @@ def PartEdit(request, type_id, id):
         form = PartForm(type_id=type_id, instance=instance)
         manu_formset = ManufacturerFormSet(instance=instance)
         location_formset = LocationFormSet(instance=instance)
-    return render(request,'part_form.html',{'part_form': form,
-                                            'location_formset': location_formset,
-                                            'manu_formset': manu_formset,
-                                            'partType': partType})
+    return render(request,'part_form.html', {'part_form': form,
+                                             'location_formset': location_formset,
+                                             'manu_formset': manu_formset,
+                                             'partType': partType})
 
 
 def ListParts(request, type_id):
@@ -334,7 +334,7 @@ def PartView(request, type_id, id):
                                               'location_formset': location_formset,
                                               'manu_formset': manu_formset,
                                               'partType': partType,
-                                               'part': instance})
+                                              'part': instance})
 
 
 @class_view_decorator(login_required)
@@ -646,7 +646,7 @@ def enter_digi_part(request):
                 logger.info(data)
             except(IndexError, KeyError, TypeError):
                 try:
-                    part=jstr['ExactParts'][0]
+                    part = jstr['ExactParts'][0]
                     data = part['Parameters']
                 except(IndexError, KeyError, TypeError):
                     if website == 'Mouser' and barcode:
@@ -679,7 +679,7 @@ def enter_digi_part(request):
                 #series is always separate from the other parameters 
                 try:
                     part['Series']['Parameter']
-                    Field.objects.create(name='Series',fields='char1', typePart=partType)
+                    Field.objects.create(name='Series', fields='char1', typePart=partType)
                     count = 2
                 except(IndexError, KeyError, TypeError):
                     count = 1
@@ -691,7 +691,7 @@ def enter_digi_part(request):
                         count += 1
                     #part model only allows for 35 fields currently
                     else:
-                        messages.warning(request, ('Can\'t create type, too many fields.'))
+                        messages.warning(request, 'Can\'t create type, too many fields.')
                         url = reverse('digi_part')
                         return HttpResponseRedirect(url)
             fields = Field.objects.filter(typePart=partType)
@@ -767,8 +767,8 @@ def get_parts(request):
     searchField = request.GET.get('search')
     if searchField:
         parts = Part.objects.annotate(search=SearchVector('partType__name', 'description', 'location__name',
-                                                      'engimusingPartNumber', 'manufacturer__name',
-                                                      'manufacturerrelationship__partNumber'),).filter(search=searchField)
+                                                          'engimusingPartNumber', 'manufacturer__name',
+                                                          'manufacturerrelationship__partNumber'),).filter(search=searchField)
     else:
         parts = Part.objects.all()
     parts_dict = {}
@@ -784,7 +784,7 @@ def CreateProduct(request):
         product_formset = ProductToProductFormSet(request.POST)
         location_formset = ProductLocationFormSet(request.POST)
         if (form.is_valid() and part_formset.is_valid() and
-            product_formset.is_valid() and location_formset.is_valid()):
+           product_formset.is_valid() and location_formset.is_valid()):
             self_object = form.save()
             part_formset.instance = self_object
             part_formset.save()
@@ -827,9 +827,9 @@ def EditProduct(request, id):
         part_formset = PartToProductFormSet(instance=instance)
         product_formset = ProductToProductFormSet(instance=instance)
         location_formset = ProductLocationFormSet(instance=instance)
-    return render(request,'product_create.html',{'form': form, 'part_formset': part_formset,
-                                            'product_formset': product_formset,
-                                                 'location_formset': location_formset})
+    return render(request,'product_create.html', {'form': form, 'part_formset': part_formset,
+                                                  'product_formset': product_formset,
+                                                  'location_formset': location_formset})
 
 
 @class_view_decorator(login_required)
@@ -926,7 +926,7 @@ def billOfMaterialsDetail(request, product_id):
             else:
                 products = ProductAmount.objects.filter(from_product=pr.to_product)
     #download BOM button has been pressed, call bomExcel function to download excel file
-    if(request.GET.get('downloadBtn')):
+    if request.GET.get('downloadBtn'):
         return bomExcel(parts, product.description)
     return render(request, 'bom_detail.html', {'parts': parts, 'product': product}) 
 
@@ -935,7 +935,7 @@ def CreateMO(request):
     if request.method == 'POST':
         form = ManufacturingOrderForm(request.POST)
         manu_formset = ManufacturingProductFormSet(request.POST)
-        if (form.is_valid() and manu_formset.is_valid()):
+        if form.is_valid() and manu_formset.is_valid():
             self_object = form.save()
             manu_formset.instance = self_object
             manu_formset.save()
@@ -944,7 +944,7 @@ def CreateMO(request):
     else:
         form = ManufacturingOrderForm()
         manu_formset = ManufacturingProductFormSet()
-    return render(request,'mo_form.html',{'form': form, 'manu_formset': manu_formset})
+    return render(request, 'mo_form.html', {'form': form, 'manu_formset': manu_formset})
 
 
 @class_view_decorator(login_required)
@@ -959,7 +959,7 @@ def EditMO(request, id):
     if request.method == 'POST':
         form = ManufacturingOrderForm(request.POST, instance=instance)
         manu_formset = ManufacturingProductFormSet(request.POST, instance=instance)
-        if (form.is_valid() and manu_formset.is_valid()):
+        if form.is_valid() and manu_formset.is_valid():
             self_object = form.save()
             manu_formset.instance = self_object
             manu_formset.save()
