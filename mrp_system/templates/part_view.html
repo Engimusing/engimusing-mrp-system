@@ -4,7 +4,7 @@
 {% block title %}Parts{% endblock title %}
 {% block crumbs %}
     {{ block.super }}
-    <li><span class="divider">/</span> <a href="{% url 'list_parts'  partType.id %}">Parts</a></li>
+    <li><span class="divider">/</span> <a href="{% url 'list_parts' partType.id %}">Parts</a></li>
 {% endblock crumbs %}
 {% block content %}
 {% if manu_formset.non_form_errors %}
@@ -13,9 +13,8 @@
         {% endfor %}
     {% endif %}
 <div class="container-fluid">
-<h3> Edit {{ partType }}</h3>
-<a href="{% url 'create_vendor' %}">New Manufacturer</a> &nbsp;&nbsp;
-<a href="{% url 'create_location' %}">New Location</a>
+<h3> {{ partType }}</h3>
+ <a style=" padding:3px;" href="{% url 'edit_part' partType.id part.id %}">Edit</a>
 <br><br>
 <div class="form-horizontal" >
 <form action="" method="post" enctype='multipart/form-data' style="display:table;"> {% csrf_token %}
@@ -48,7 +47,10 @@
 </table>
 {% endfor %}
 </div>
+    <br>
 <input type="button" value="Add Location" id="addmore">
+    <br>
+    <br>
 <div id="emptyform" style="display:none">
     <table class='no_error'>
         {{ location_formset.empty_form.as_table }}

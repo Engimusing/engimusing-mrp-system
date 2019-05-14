@@ -13,7 +13,7 @@
         {% endfor %}
     {% endif %}
 <div class="container-fluid">
-<h3> Create New {{ partType }}</h3>
+<h3> Edit/Create {{ partType }}</h3>
 <a href="{% url 'create_vendor' %}">New Manufacturer</a> &nbsp;&nbsp;
 <a href="{% url 'create_location' %}">New Location</a>
 <br><br>
@@ -30,7 +30,9 @@
 </table>
 {% endfor %}
 </div>
-<input type="button" value="Add" id="addmore">
+<input type="button" value="Add Location" id="addmore">
+    <br>
+    <br>
 <div id="emptyform" style="display:none">
     <table class='no_error'>
         {{ location_formset.empty_form.as_table }}
@@ -53,7 +55,7 @@
 </table>
 {% endfor %}
 </div>
-<input type="button" value="Add" id="add_more">
+<input type="button" value="Add Manufacturer" id="add_more">
 <div id="empty_form" style="display:none">
     <table class='no_error'>
         {{ manu_formset.empty_form.as_table }}

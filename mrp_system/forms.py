@@ -36,7 +36,7 @@ class PartForm(ModelForm):
 
 
 # took out ReadOnlyFormMixin
-class ViewPartForm(ModelForm):
+class ViewPartForm(ReadOnlyFormMixin, ModelForm):
 
     description = forms.CharField(label='Description',
                                   widget=forms.Textarea(attrs={'rows': 3, 'cols': 35, 'max_length': 800}),
@@ -175,7 +175,7 @@ class ViewPartForm(ModelForm):
 
 
 # took out ReadOnlyFormMixin
-class ManufacturerForm(ModelForm):
+class ManufacturerForm(ReadOnlyFormMixin, ModelForm):
     manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
     class Meta:
         model = ManufacturerRelationship
