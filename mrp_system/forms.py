@@ -150,6 +150,9 @@ class ViewPartForm(ReadOnlyFormMixin, ModelForm):
     char35 = forms.CharField(label='Description',
                              widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                              required=True)
+    datasheet = forms.FileField(label='Datasheet',
+                             widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
+                             required=False)
 
     def __init__(self, type_id, *args, **kwargs):
         super(ViewPartForm, self).__init__(*args, **kwargs)
@@ -175,7 +178,7 @@ class ViewPartForm(ReadOnlyFormMixin, ModelForm):
 
 
 # took out ReadOnlyFormMixin
-class ManufacturerForm(ReadOnlyFormMixin, ModelForm):
+class ManufacturerForm(ModelForm):
     manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
     class Meta:
         model = ManufacturerRelationship
@@ -207,7 +210,7 @@ ManufacturerFormSet = inlineformset_factory(Part, ManufacturerRelationship,
                                             formset=CustomFormset)
 
 
-class LocationForm(ModelForm):
+class LocationForm(ReadOnlyFormMixin, ModelForm):
     location = forms.ModelChoiceField(queryset=Location.objects.order_by('name'))
     class Meta:
         model = LocationRelationship

@@ -60,8 +60,6 @@ class EntryQuerySet(models.query.QuerySet):
         return self.filter(datesQ)
 
 
-
-
 class EntryManager(models.Manager):
 
     def get_queryset(self):
@@ -313,7 +311,7 @@ class ProjectHours(models.Model):
         verbose_name_plural = 'project hours entries'
         unique_together = ('week_start', 'project', 'user')
         permissions = (
-            ('modify_admin_site', 'Can modify, add, or delete project hours'),
+            ('modify_admin_site', 'Can view, modify, add, or delete project hours'),
         )
 
 

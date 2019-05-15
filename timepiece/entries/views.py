@@ -119,6 +119,7 @@ class Dashboard(DashboardMixin, TemplateView):
             'todos': todos,
         })
         return context
+
     def process_progress(self, entries, assignments):
         """
         Returns a list of progress summary data (pk, name, hours worked, and
@@ -155,7 +156,7 @@ class Dashboard(DashboardMixin, TemplateView):
         return project_progress
 
 
-@permission_required('entries.can_clock_in')
+@permission_required('entries.can_clock_in_out')
 @transaction.atomic
 def clock_in(request):
     """For clocking the user into a project."""
@@ -180,7 +181,7 @@ def clock_in(request):
     })
 
 
-@permission_required('entries.can_clock_out')
+@permission_required('entries.can_clock_in_out')
 def clock_out(request):
     entry = utils.get_active_entry(request.user)
     if not entry:
@@ -351,6 +352,7 @@ def delete_entry(request, entry_id):
         'entry': entry,
     })
 
+
 #used to process todo's on home page
 def to_do(request):
     user = request.user
@@ -383,11 +385,13 @@ def to_do(request):
             return redirect(reverse('todo_list'))
     return render(request, "timepiece/todo/todo.html", {"todos": todos})
 
+
 #user can view their todo's that have been marked completed
 def todo_completed(request):
     user = request.user
     todos = ToDo.objects.filter(completed=True,)
     return render(request, "timepiece/todo/todo-complete.html", {"todos": todos})
+
 
 #user can edit their todo's
 def todo_edit(request, todo_id):
@@ -404,12 +408,14 @@ def todo_edit(request, todo_id):
         form = TodoForm(instance=todo)
     return render(request, "timepiece/todo/todo-edit.html", {'form': form})
 
+
 #works for user or admin
 def todo_delete(request, todo_id):
     todo = get_object_or_404(ToDo, id=todo_id)
     todo.delete()
     #get previous url
     return redirect('todo_list')
+
 
 def todo_completed(request, todo_id):
     todo = get_object_or_404(ToDo, id=todo_id)
@@ -418,6 +424,7 @@ def todo_completed(request, todo_id):
     messages.success(request, "Task '{}' has been marked completed".
                      format(todo.description))
     return redirect('todo_list')
+
 
 #separate todo create for admin to add todo's to any user
 def todo_admin_create(request):
@@ -430,6 +437,7 @@ def todo_admin_create(request):
         return redirect('todo_list')
     return render(request, "timepiece/todo/todo-create.html", {'form': form})
 
+
 def todo_admin_edit(request, todo_id):
     todo = get_object_or_404(ToDo, id=todo_id)
     if request.method == "POST": 
@@ -441,10 +449,12 @@ def todo_admin_edit(request, todo_id):
         form = TodoAdminForm(instance=todo)
     return render(request, "timepiece/todo/todo-edit.html", {'form': form})
 
+
 #admin can see todo list for all users
 class TodoAdminListView(ListView):
     queryset = ToDo.objects.filter(completed=False)
     template_name = "timepiece/todo/todo-list.html"
+
 
 #admin can see completed todo's for all users
 class TodoCompletedListView(ListView):
