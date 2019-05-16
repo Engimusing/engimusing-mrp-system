@@ -4,7 +4,7 @@ from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseNotFoun
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
 from mrp_system.models import (Part, Type, Field, Vendor,
-                               ManufacturerRelationship, Location,
+                               ManufacturerRelationship, Manufacturer1Relationship, Location,
                                LocationRelationship, DigiKeyAPI,
                                PartAmount, Product, ProductAmount, ManufacturingOrder,
                                MOProduct, ProductLocation, PurchaseOrder, PurchaseOrderParts)

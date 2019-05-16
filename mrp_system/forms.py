@@ -1,6 +1,6 @@
 from django import forms
 from mrp_system.models import (Location, LocationRelationship,
-Part, Vendor, ManufacturerRelationship, Field, Type, Product,
+Part, Vendor, ManufacturerRelationship, Manufacturer1Relationship, Field, Type, Product,
                                PartAmount, ProductAmount, ProductLocation,
                                MOProduct, ManufacturingOrder, PurchaseOrder,
                                PurchaseOrderParts)
@@ -188,7 +188,7 @@ class ManufacturerForm(ModelForm):
 class Manufacturer1Form(ReadOnlyFormMixin, ModelForm):
     manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
     class Meta:
-        model = ManufacturerRelationship
+        model = Manufacturer1Relationship
         exclude = ('part',)
 
 
@@ -211,9 +211,36 @@ class CustomFormset(BaseInlineFormSet):
                         if exists:
                             raise forms.ValidationError('Manufacturer part number already exists!')
         return self.cleaned_data
+
     
 ManufacturerFormSet = inlineformset_factory(Part, ManufacturerRelationship,
                                             form=ManufacturerForm, extra=0,
+                                            formset=CustomFormset)
+
+
+class Custom1Formset(BaseInlineFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
+        for form in self.forms:
+            if form.cleaned_data:
+                partNumber = form.cleaned_data['partNumber']
+                # exclude self
+                try:
+                    mr = Manufacturer1Relationship.objects.filter(part=self.instance, partNumber=partNumber)
+                except Manufacturer1Relationship.DoesNotExist:
+                    pass
+
+                if not mr:
+                    # check if another part with same number exists to prevent duplicates
+                    exists = Manufacturer1Relationship.objects.filter(partNumber=partNumber)
+                    if exists:
+                        raise forms.ValidationError('Manufacturer part number already exists!')
+        return self.cleaned_data
+
+
+Manufacturer1FormSet = inlineformset_factory(Part, Manufacturer1Relationship,
+                                            form=Manufacturer1Form, extra=0,
                                             formset=CustomFormset)
 
 
