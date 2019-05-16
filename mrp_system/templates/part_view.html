@@ -14,7 +14,16 @@
     {% endif %}
 <div class="container-fluid">
 <h3> {{ partType }}</h3>
- <a style=" padding:3px;" href="{% url 'edit_part' partType.id part.id %}">Edit</a>
+
+ <a style=" padding:3px display: block;
+    width: 115px;
+    height: 25px;
+    background: #007bff;
+    padding: 7px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;" href="{% url 'edit_part' partType.id part.id %}">Edit</a>
 <br><br>
 <div class="form-horizontal" >
 <form action="" method="post" enctype='multipart/form-data' style="display:table;"> {% csrf_token %}
@@ -88,7 +97,7 @@
     });
 </script>
 <br><br>
-<input class="btn btn-primary" type="submit" value="Save"/>
+
     </div>
 
 </form>

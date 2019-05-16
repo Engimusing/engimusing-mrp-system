@@ -38,6 +38,18 @@ class Location(models.Model):
         )
 
 
+class Location1(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can modify, add, view, or delete locations'),
+        )
+
+
 # class Location1(models.Model):
 #     name = models.CharField(max_length=100, unique=True)
 #
@@ -229,9 +241,34 @@ class ManufacturerRelationship(models.Model):
     class Meta:
         permissions = (
         ('modify_admin_site', 'Can modify, add, view, or delete manufacturer relationships'),
-    )
+        )
+
+
+class Manufacturer1Relationship(models.Model):
+    part = models.ForeignKey(Part, on_delete=models.CASCADE)
+    manufacturer = models.ForeignKey(Vendor, on_delete=models.CASCADE,
+                                     limit_choices_to={'vendor_type': 'manufacturer'},)
+    partNumber = models.CharField(max_length=40, blank=True)
+
+
+    class Meta:
+        permissions = (
+        ('modify_admin_site', 'Can modify, add, view, or delete manufacturer relationships'),
+        )
+
 
 class LocationRelationship(models.Model):
+    part = models.ForeignKey(Part, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    stock = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        permissions = (
+            ('modify_admin_site', 'Can modify, add, view, or location relationships'),
+        )
+
+
+class Location1Relationship(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     stock = models.IntegerField(blank=True, null=True)

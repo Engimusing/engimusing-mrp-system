@@ -315,24 +315,24 @@ def PartView(request, type_id, id):
 
     if request.method == 'POST':
         form = ViewPartForm(type_id, request.POST, request.FILES, instance=instance)
-        manu_formset = ManufacturerFormSet(request.POST, instance=instance)
-        location_formset = LocationFormSet(request.POST, instance=instance)
+        manu1_formset = ManufacturerFormSet(request.POST, instance=instance)
+        location1_formset = LocationFormSet(request.POST, instance=instance)
         if form.is_valid():
             part = form.save(commit=False)
             part.partType_id = type_id
-            if manu_formset.is_valid() and location_formset.is_valid():
+            if manu1_formset.is_valid() and location1_formset.is_valid():
                 part.save()
-                manu_formset.save()
-                location_formset.save()
+                manu1_formset.save()
+                location1_formset.save()
                 url = reverse('list_parts', args=[partType.pk])
                 return HttpResponseRedirect(url)
     else:
         form = ViewPartForm(type_id=type_id, instance=instance)
-        manu_formset = ManufacturerFormSet(instance=instance)
-        location_formset = LocationFormSet(instance=instance)
+        manu1_formset = ManufacturerFormSet(instance=instance)
+        location1_formset = LocationFormSet(instance=instance)
     return render(request, 'part_view.html', {'view_part_form': form,
-                                              'location_formset': location_formset,
-                                              'manu_formset': manu_formset,
+                                              'location_formset': location1_formset,
+                                              'manu_formset': manu1_formset,
                                               'partType': partType,
                                               'part': instance})
 

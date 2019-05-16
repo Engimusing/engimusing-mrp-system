@@ -185,6 +185,13 @@ class ManufacturerForm(ModelForm):
         exclude = ('part',)
 
 
+class Manufacturer1Form(ReadOnlyFormMixin, ModelForm):
+    manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
+    class Meta:
+        model = ManufacturerRelationship
+        exclude = ('part',)
+
+
 class CustomFormset(BaseInlineFormSet):
     def clean(self):
         if any(self.errors):
@@ -210,7 +217,7 @@ ManufacturerFormSet = inlineformset_factory(Part, ManufacturerRelationship,
                                             formset=CustomFormset)
 
 
-class LocationForm(ReadOnlyFormMixin, ModelForm):
+class LocationForm(ModelForm):
     location = forms.ModelChoiceField(queryset=Location.objects.order_by('name'))
     class Meta:
         model = LocationRelationship
@@ -220,7 +227,7 @@ LocationFormSet = inlineformset_factory(Part, LocationRelationship,
                                         form=LocationForm, extra=0)
 
 
-class Location1Form(ModelForm):
+class Location1Form(ReadOnlyFormMixin, ModelForm):
     location = forms.ModelChoiceField(queryset=Location.objects.order_by('name'))
 
     class Meta:
