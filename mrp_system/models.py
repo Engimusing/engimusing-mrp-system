@@ -70,6 +70,7 @@ class Type(models.Model):
             ('mrp_user', 'Can modify, add, view, or delete types'),
         )
 
+
 ##############
 class ReadOnlyFormMixin(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -131,6 +132,7 @@ class Field(models.Model):
         permissions = (
             ('modify_admin_site', 'Can modify, add, view, or delete fields'),
         )
+
 
 class Part(models.Model):
     # used to keep track of part type and fields

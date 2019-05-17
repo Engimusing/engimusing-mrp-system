@@ -1,5 +1,5 @@
 from django import forms
-from mrp_system.models import (Location, LocationRelationship,
+from mrp_system.models import (Location, LocationRelationship, Location1Relationship,
 Part, Vendor, ManufacturerRelationship, Manufacturer1Relationship, Field, Type, Product,
                                PartAmount, ProductAmount, ProductLocation,
                                MOProduct, ManufacturingOrder, PurchaseOrder,
@@ -180,6 +180,7 @@ class ViewPartForm(ReadOnlyFormMixin, ModelForm):
 # took out ReadOnlyFormMixin
 class ManufacturerForm(ModelForm):
     manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
+
     class Meta:
         model = ManufacturerRelationship
         exclude = ('part',)
@@ -187,6 +188,7 @@ class ManufacturerForm(ModelForm):
 
 class Manufacturer1Form(ReadOnlyFormMixin, ModelForm):
     manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
+
     class Meta:
         model = Manufacturer1Relationship
         exclude = ('part',)
@@ -218,7 +220,7 @@ ManufacturerFormSet = inlineformset_factory(Part, ManufacturerRelationship,
                                             formset=CustomFormset)
 
 
-class Custom1Formset(BaseInlineFormSet):
+class Custom1Formset(ReadOnlyFormMixin, BaseInlineFormSet):
     def clean(self):
         if any(self.errors):
             return
@@ -241,7 +243,7 @@ class Custom1Formset(BaseInlineFormSet):
 
 Manufacturer1FormSet = inlineformset_factory(Part, Manufacturer1Relationship,
                                             form=Manufacturer1Form, extra=0,
-                                            formset=CustomFormset)
+                                            formset=Custom1Formset)
 
 
 class LocationForm(ModelForm):
@@ -258,12 +260,12 @@ class Location1Form(ReadOnlyFormMixin, ModelForm):
     location = forms.ModelChoiceField(queryset=Location.objects.order_by('name'))
 
     class Meta:
-        model = LocationRelationship
+        model = Location1Relationship
         exclude = ('part',)
 
 
-Location1FormSet = inlineformset_factory(Part, LocationRelationship,
-                                        form=Location1Form)
+Location1FormSet = inlineformset_factory(Part, Location1Relationship,
+                                         form=Location1Form)
 
 
 class VendorForm(ModelForm):
@@ -284,6 +286,7 @@ class VendorForm(ModelForm):
         else:
             pass
         return self.cleaned_data
+
         
 class ProductForm(ModelForm):
     class Meta:
