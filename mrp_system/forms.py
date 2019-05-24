@@ -154,6 +154,11 @@ class ViewPartForm(ReadOnlyFormMixin, ModelForm):
                              widget=forms.Textarea(attrs={'rows': 1, 'cols': 25, 'max_length': 800}),
                              required=False)
 
+    # def getManufacturerandPartNumber(parts, description):
+    #     for key, value in parts.items():
+    #         key.engimusingPartNumber
+
+
     def __init__(self, type_id, *args, **kwargs):
         super(ViewPartForm, self).__init__(*args, **kwargs)
         partType = Type.objects.get(id=type_id)
@@ -171,6 +176,7 @@ class ViewPartForm(ReadOnlyFormMixin, ModelForm):
             it in the form"""
             if field not in partType.field.values_list('fields', flat=True):
                 self.fields.pop(field)
+
 
     class Meta:
         model = Part
@@ -194,6 +200,21 @@ class Manufacturer1Form(ReadOnlyFormMixin, ModelForm):
         exclude = ('part',)
 
 
+######
+class GetSelectedManufacturerForm(forms.Form):
+    ''' basic QuestionLanguage form '''
+    manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.all())
+
+
+def get_manufacturer_name(self):
+    ''' returns the name of the selected manufacturer'''
+    try:
+       return Vendor.objects.get(id=self.initial['vendor']).name
+    except:
+       return None
+
+
+###########
 class CustomFormset(BaseInlineFormSet):
     def clean(self):
         if any(self.errors):

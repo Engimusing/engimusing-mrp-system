@@ -8,13 +8,13 @@ from mrp_system.models import (Part, Type, Field, Vendor,
                                LocationRelationship, DigiKeyAPI,
                                PartAmount, Product, ProductAmount, ManufacturingOrder,
                                MOProduct, ProductLocation, PurchaseOrder, PurchaseOrderParts)
-from mrp_system.forms import (FilterForm, PartForm, ViewPartForm, LocationForm, LocationFormSet,
-                              MergeLocationsForm, ManufacturerFormSet,
+from mrp_system.forms import (FilterForm, PartForm, ViewPartForm, LocationForm, LocationFormSet, Location1FormSet,
+                              MergeLocationsForm, ManufacturerFormSet, Manufacturer1FormSet,
                               MergeVendorsForm, FieldFormSet, TypeForm, APIForm,
                               ProductForm, PartToProductFormSet, PartToProductForm,
                               ProductToProductFormSet, ProductLocationFormSet,
                               ManufacturingOrderForm, ManufacturingProductFormSet,
-                              EditFieldFormSet, QuickTypeForm, EnterTokensForm,
+                              EditFieldFormSet, QuickTypeForm, EnterTokensForm, GetSelectedManufacturerForm,
                               VendorForm, PurchaseOrderForm, POPartFormSet)
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.forms.models import inlineformset_factory
@@ -312,12 +312,13 @@ def ListParts(request, type_id):
 def PartView(request, type_id, id):
     partType = Type.objects.get(id=type_id)
     instance = get_object_or_404(Part, id=id)
-
+    selection = None
     if request.method == 'POST':
         form = ViewPartForm(type_id, request.POST, request.FILES, instance=instance)
         manu1_formset = ManufacturerFormSet(request.POST, instance=instance)
         location1_formset = LocationFormSet(request.POST, instance=instance)
         if form.is_valid():
+            selection = form.cleaned_data['active_feed']
             part = form.save(commit=False)
             part.partType_id = type_id
             if manu1_formset.is_valid() and location1_formset.is_valid():
@@ -333,6 +334,7 @@ def PartView(request, type_id, id):
     return render(request, 'part_view.html', {'view_part_form': form,
                                               'location_formset': location1_formset,
                                               'manu_formset': manu1_formset,
+                                              'selection': selection,
                                               'partType': partType,
                                               'part': instance})
 
