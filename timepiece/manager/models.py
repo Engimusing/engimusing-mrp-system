@@ -35,6 +35,7 @@ class Profile(models.Model):
 
     class Meta:
         db_table = 'manager_profile'  # Using legacy table name.
+        default_permissions = ()
     
 #used to get active projects
 class TrackableProjectManager(models.Manager):
@@ -56,9 +57,8 @@ class Project(models.Model):
     class Meta:
         db_table = 'timepiece_project'  # Using legacy table name.
         ordering = ('name',)
-        permissions = (
-            ('time_supervisor', 'Can view, add, delete, modify projects'),
-        )
+        default_permissions = ()
+
 
     def __str__(self):
         return '{0}'.format(self.name)
@@ -79,6 +79,8 @@ class ProjectRelationship(models.Model):
     class Meta:
         db_table = 'timepiece_projectrelationship'  # Using legacy table name.
         unique_together = ('user', 'project')
+        default_permissions = ()
+
 
     def __str__(self):
         return "{project}'s relationship to {user}".format(

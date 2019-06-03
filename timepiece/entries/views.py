@@ -156,7 +156,7 @@ class Dashboard(DashboardMixin, TemplateView):
         return project_progress
 
 
-@permission_required('entries.can_clock_in_out')
+@permission_required('perms.mrp_system.time_user')
 @transaction.atomic
 def clock_in(request):
     """For clocking the user into a project."""
@@ -181,7 +181,7 @@ def clock_in(request):
     })
 
 
-@permission_required('entries.can_clock_in_out')
+@permission_required('perms.mrp_system.time_user')
 def clock_out(request):
     entry = utils.get_active_entry(request.user)
     if not entry:

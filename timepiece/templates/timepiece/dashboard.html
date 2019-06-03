@@ -50,7 +50,7 @@ document.getElementById("id_end_date").value = date;
 {% endblock extrajs %}
 
 {% block content %}
-    {% if perms.entries.can_clock_in %}
+    {% if perms.mrp_system.time_user %}
        <br> <h3> Timesheet </h3><hr>
 
 <div class="row ">
@@ -58,13 +58,14 @@ document.getElementById("id_end_date").value = date;
 
 
 <!--CLOCK IN -->
-
+ {% if perms.mrp_system.time_user%}
    <div  class=" col-lg-6 col-md-6" >
             <div class="row" style="margin-left:1px;">
                 <div class="btn-group-sm">
 
 
                         {% if active_entry %}
+
                             <a class="btn btn-primary" href="{% url 'clock_out' %}">Clock Out</a>
                             <a class="btn btn-primary" href="{% url 'edit_entry' active_entry.pk %}">Edit</a>
                         {% endif %}
@@ -120,6 +121,7 @@ document.getElementById("id_end_date").value = date;
    </div>
 
 
+ {% if perms.mrp_system.time_user%}
 <div  class=" col-lg-6 col-md-6" >
 <h3>To-Do List</h3>
 <ul class="nav nav-pills">
@@ -188,8 +190,10 @@ document.getElementById("id_end_date").value = date;
 </form>
 
 </div>
+    {% endif %}
 
 </div>
+{% endif %}
 
 <hr>
 <h3>Hours for the Week of {{ week|date:'M j' }}</h3>
@@ -290,6 +294,7 @@ document.getElementById("id_end_date").value = date;
 		</div>
 
         </div>
+
     {% endif %}
 <hr>
 

@@ -1,6 +1,6 @@
 from django import forms
-from mrp_system.models import (Location, LocationRelationship, Location1Relationship,
-Part, Vendor, ManufacturerRelationship, Manufacturer1Relationship, Field, Type, Product,
+from mrp_system.models import (Location, LocationRelationship,
+Part, Vendor, ManufacturerRelationship, Field, Type, Product,
                                PartAmount, ProductAmount, ProductLocation,
                                MOProduct, ManufacturingOrder, PurchaseOrder,
                                PurchaseOrderParts)
@@ -192,12 +192,12 @@ class ManufacturerForm(ModelForm):
         exclude = ('part',)
 
 
-class Manufacturer1Form(ReadOnlyFormMixin, ModelForm):
-    manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
-
-    class Meta:
-        model = Manufacturer1Relationship
-        exclude = ('part',)
+# class Manufacturer1Form(ReadOnlyFormMixin, ModelForm):
+#     manufacturer = forms.ModelChoiceField(queryset=Vendor.objects.filter(vendor_type='manufacturer').order_by('name'))
+#
+#     class Meta:
+#         model = Manufacturer1Relationship
+#         exclude = ('part',)
 
 
 ######
@@ -241,30 +241,6 @@ ManufacturerFormSet = inlineformset_factory(Part, ManufacturerRelationship,
                                             formset=CustomFormset)
 
 
-class Custom1Formset(ReadOnlyFormMixin, BaseInlineFormSet):
-    def clean(self):
-        if any(self.errors):
-            return
-        for form in self.forms:
-            if form.cleaned_data:
-                partNumber = form.cleaned_data['partNumber']
-                # exclude self
-                try:
-                    mr = Manufacturer1Relationship.objects.filter(part=self.instance, partNumber=partNumber)
-                except Manufacturer1Relationship.DoesNotExist:
-                    pass
-
-                if not mr:
-                    # check if another part with same number exists to prevent duplicates
-                    exists = Manufacturer1Relationship.objects.filter(partNumber=partNumber)
-                    if exists:
-                        raise forms.ValidationError('Manufacturer part number already exists!')
-        return self.cleaned_data
-
-
-Manufacturer1FormSet = inlineformset_factory(Part, Manufacturer1Relationship,
-                                            form=Manufacturer1Form, extra=0,
-                                            formset=Custom1Formset)
 
 
 class LocationForm(ModelForm):
@@ -277,16 +253,16 @@ LocationFormSet = inlineformset_factory(Part, LocationRelationship,
                                         form=LocationForm, extra=0)
 
 
-class Location1Form(ReadOnlyFormMixin, ModelForm):
-    location = forms.ModelChoiceField(queryset=Location.objects.order_by('name'))
-
-    class Meta:
-        model = Location1Relationship
-        exclude = ('part',)
-
-
-Location1FormSet = inlineformset_factory(Part, Location1Relationship,
-                                         form=Location1Form)
+# class Location1Form(ReadOnlyFormMixin, ModelForm):
+#     location = forms.ModelChoiceField(queryset=Location.objects.order_by('name'))
+#
+#     class Meta:
+#         model = Location1Relationship
+#         exclude = ('part',)
+#
+#
+# Location1FormSet = inlineformset_factory(Part, Location1Relationship,
+#                                          form=Location1Form)
 
 
 class VendorForm(ModelForm):

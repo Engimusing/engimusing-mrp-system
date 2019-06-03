@@ -24,9 +24,7 @@ class Redirect(models.Model):
         db_table = 'django_redirect'
         unique_together = (('site', 'old_path'),)
         ordering = ('old_path',)
-        permissions = (
-            ('redirect_user', 'Can enter in a redirect for the user'),
-        )
+        default_permissions = ()
 
     def __str__(self):
         return "%s ---> %s" % (self.old_path, self.new_path)

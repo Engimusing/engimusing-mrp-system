@@ -100,11 +100,7 @@ class Entry(models.Model):
         db_table = 'timepiece_entry'  # Using legacy table name
         ordering = ('-start_time',)
         verbose_name_plural = 'entries'
-        permissions = (
-            # ('can_clock_in', 'Can use Pendulum to clock in'),
-            #('can_clock_out', 'Can use Pendulum to clock out'),
-            ('can_clock_in_out', 'Can use Pendulum to clock in and out'),
-        )
+        default_permissions = ()
 
     def __str__(self):
         return '%s on %s' % (self.user, self.project)
@@ -222,7 +218,6 @@ class Entry(models.Model):
         seconds = delta.seconds
         return seconds + (delta.days * 86400)
 
-
     @property
     def total_hours(self):
         """
@@ -284,7 +279,6 @@ class Entry(models.Model):
         return data
 
 
-
 @python_2_unicode_compatible
 class ProjectHours(models.Model):
     week_start = models.DateField(verbose_name='start of week')
@@ -310,9 +304,8 @@ class ProjectHours(models.Model):
         verbose_name = 'project hours entry'
         verbose_name_plural = 'project hours entries'
         unique_together = ('week_start', 'project', 'user')
-        permissions = (
-            ('modify_admin_site', 'Can view, modify, add, or delete project hours'),
-        )
+        default_permissions = ()
+
 
 
 class ToDo(models.Model):
@@ -323,7 +316,8 @@ class ToDo(models.Model):
 
     class Meta:
         ordering = ["user", "priority"]
-        permissions = (('time_user', 'Can modify, add, view, or delete todos'),)
+        default_permissions = ()
+
 
     def __str__(self):
         return self.description

@@ -51,6 +51,7 @@
 
   
   <ul class="navbar-nav">
+      {% if perms.mrp_system.time_user%}
 <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
         <i class="far fa-clock"></i>
@@ -60,7 +61,7 @@
             <a class="dropdown-item" href="{% url 'create_entry' %}">Add Entry</a>
       </div>
     </li>
-{% if user.is_staff %}
+
 <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">To Do
       </a>
@@ -69,17 +70,21 @@
             <a class="dropdown-item" href="{% url 'todo_list' %}">List All</a>
       </div>
     </li>
+      {% endif %}
+      {% if perms.mrp_system.time_supervisor %}
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
         Management
       </a>
+
       <div class="dropdown-menu">
         <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
             <a class="dropdown-item" href="{% url 'list_projects' %}">Projects</a>
             <a class="dropdown-item" href="{% url 'list_users' %}">Users</a>
       </div>
     </li>
-{% endif %}
+      {% endif %}
+        {% if perms.mrp_system.time_supervisor %}
 <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
         Help
@@ -91,6 +96,7 @@
 {% endif %}
       </div>
     </li>
+      {% endif %}
 
 
 </ul>

@@ -4,12 +4,12 @@ from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseNotFoun
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
 from mrp_system.models import (Part, Type, Field, Vendor,
-                               ManufacturerRelationship, Manufacturer1Relationship, Location,
+                               ManufacturerRelationship, Location,
                                LocationRelationship, DigiKeyAPI,
                                PartAmount, Product, ProductAmount, ManufacturingOrder,
                                MOProduct, ProductLocation, PurchaseOrder, PurchaseOrderParts)
-from mrp_system.forms import (FilterForm, PartForm, ViewPartForm, LocationForm, LocationFormSet, Location1FormSet,
-                              MergeLocationsForm, ManufacturerFormSet, Manufacturer1FormSet,
+from mrp_system.forms import (FilterForm, PartForm, ViewPartForm, LocationForm, LocationFormSet,
+                              MergeLocationsForm, ManufacturerFormSet,
                               MergeVendorsForm, FieldFormSet, TypeForm, APIForm,
                               ProductForm, PartToProductFormSet, PartToProductForm,
                               ProductToProductFormSet, ProductLocationFormSet,
@@ -99,16 +99,19 @@ class TypeCreate(CreateView):
     success_url = reverse_lazy('list_types')
 
     def get(self, request, *args, **kwargs):
-        self.object = None
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        field_formset = FieldFormSet()
-        hint = "Enter Part Type name, Prefix for Engimusing Part Number, "
-        hint += "and name of each individual field to be tracked (excluding description, "
-        hint += "part numbers, manufacturer, location, and stock)."
-        return render(request, self.template_name, {'form': form,
+        if request.user.has_perm('perm.mrp_system.mrp_user'):
+            self.object = None
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+            field_formset = FieldFormSet()
+            hint = "Enter Part Type name, Prefix for Engimusing Part Number, "
+            hint += "and name of each individual field to be tracked (excluding description, "
+            hint += "part numbers, manufacturer, location, and stock)."
+            return render(request, self.template_name, {'form': form,
                                                     'field_formset': field_formset,
                                                     'hint': hint})
+        else:
+            return HttpResponse("Permission to create type denied")
 
     def post(self, request, *args, **kwargs):
         self.object = None
@@ -147,17 +150,20 @@ class EditType(UpdateView):
     success_url = reverse_lazy('list_types')
 
     def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        field_formset = EditFieldFormSet(instance=self.object)
-        hint = "Enter Part Type name, Prefix for Engimusing Part Number, "
-        hint += "and name of each individual field to be tracked (excluding description, "
-        hint += "part numbers, manufacturer, location, and stock). \n"
-        hint += "Ensure each field has a different Character field type selected!"
-        return render(request, self.template_name, {'form': form,
+        if request.user.has_perm('perm.mrp_system.mrp_user'):
+            self.object = self.get_object()
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+            field_formset = EditFieldFormSet(instance=self.object)
+            hint = "Enter Part Type name, Prefix for Engimusing Part Number, "
+            hint += "and name of each individual field to be tracked (excluding description, "
+            hint += "part numbers, manufacturer, location, and stock). \n"
+            hint += "Ensure each field has a different Character field type selected!"
+            return render(request, self.template_name, {'form': form,
                                                     'field_formset': field_formset,
                                                     'hint': hint})
+        else:
+            return HttpResponse("Permission to create type denied")
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -315,25 +321,25 @@ def PartView(request, type_id, id):
     selection = None
     if request.method == 'POST':
         form = ViewPartForm(type_id, request.POST, request.FILES, instance=instance)
-        manu1_formset = ManufacturerFormSet(request.POST, instance=instance)
-        location1_formset = LocationFormSet(request.POST, instance=instance)
+        manu_formset = ManufacturerFormSet(request.POST, instance=instance)
+        location_formset = LocationFormSet(request.POST, instance=instance)
         if form.is_valid():
             selection = form.cleaned_data['active_feed']
             part = form.save(commit=False)
             part.partType_id = type_id
-            if manu1_formset.is_valid() and location1_formset.is_valid():
+            if manu_formset.is_valid() and location_formset.is_valid():
                 part.save()
-                manu1_formset.save()
-                location1_formset.save()
+                manu_formset.save()
+                location_formset.save()
                 url = reverse('list_parts', args=[partType.pk])
                 return HttpResponseRedirect(url)
     else:
         form = ViewPartForm(type_id=type_id, instance=instance)
-        manu1_formset = ManufacturerFormSet(instance=instance)
-        location1_formset = LocationFormSet(instance=instance)
+        manu_formset = ManufacturerFormSet(instance=instance)
+        location_formset = LocationFormSet(instance=instance)
     return render(request, 'part_view.html', {'view_part_form': form,
-                                              'location_formset': location1_formset,
-                                              'manu_formset': manu1_formset,
+                                              'location_formset': location_formset,
+                                              'manu_formset': manu_formset,
                                               'selection': selection,
                                               'partType': partType,
                                               'part': instance})
@@ -353,6 +359,7 @@ class VendorListView(ListView):
     context_object_name = 'all_manufacturers'
 
     def get_queryset(self):
+
         return Vendor.objects.filter(vendor_type='manufacturer').order_by('name')
 
     def get_context_data(self, **kwargs):

@@ -44,6 +44,7 @@
   
   <a class="navbar-brand" href="{% url 'list_types' %}">MRP</a>
 <ul class="navbar-nav">
+    {% if perms.mrp_system.mrp_user %}
 <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Parts
       </a>
@@ -52,8 +53,11 @@
 	<a class="dropdown-item" href="{% url 'quick_type' %}">Quick Create Type</a>
 <a class="dropdown-item" href="{% url 'list_types' %}">List</a>
 <a class="dropdown-item" href="{% url 'digi_part' %}">Part Lookup</a>
+
       </div>
     </li>
+     {% endif %}
+     {% if perms.mrp_system.mrp_user %}
 <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Product</a>
       <div class="dropdown-menu">
@@ -61,6 +65,8 @@
         <a class="dropdown-item" href="{% url 'create_product' %}">Create Product</a>
       </div>
     </li>
+     {% endif %}
+  {% if perms.mrp_system.mrp_user %}
 <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">MO</a>
       <div class="dropdown-menu">
@@ -68,6 +74,8 @@
         <a class="dropdown-item" href="{% url 'create_mo' %}">Create Manufacturing Order</a>
       </div>
     </li>
+       {% endif %}
+  {% if perms.mrp_system.mrp_user %}
 <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">PO</a>
       <div class="dropdown-menu">
@@ -75,6 +83,8 @@
         <a class="dropdown-item" href="{% url 'create_po' %}">Create Purchase Order</a>
       </div>
     </li>
+     {% endif %}
+    {% if perms.mrp_system.mrp_user %}
 <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> Vendors </a>
       <div class="dropdown-menu">
@@ -82,6 +92,8 @@
 <a class="dropdown-item" href="{% url 'list_vendors' %}">Vendor List</a>
       </div>
     </li>
+     {% endif %}
+     {% if perms.mrp_system.mrp_user %}
 <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Locations</a>
       <div class="dropdown-menu">
@@ -89,6 +101,17 @@
 <a class="dropdown-item" href="{% url 'list_locations' %}">Location List</a>
       </div>
     </li>
+         {% endif %}
+     {% if perms.mrp_system.mrp_admin %}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Digikey
+        </a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'print_tokens' %}">View Digikeys</a>
+            <a class="dropdown-item" href="{% url 'enter_tokens' %}">Edit Digikeys</a>
+        </div>
+    </li>
+     {% endif %}
 {% if user.is_staff %}
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -96,6 +119,7 @@
       </a>
       <div class="dropdown-menu">
         <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
+
       </div>
     </li>
 {% endif %}
