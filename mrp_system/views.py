@@ -99,7 +99,6 @@ class TypeCreate(CreateView):
     success_url = reverse_lazy('list_types')
 
     def get(self, request, *args, **kwargs):
-        if request.user.has_perm('perm.mrp_system.mrp_user'):
             self.object = None
             form_class = self.get_form_class()
             form = self.get_form(form_class)
@@ -110,8 +109,6 @@ class TypeCreate(CreateView):
             return render(request, self.template_name, {'form': form,
                                                     'field_formset': field_formset,
                                                     'hint': hint})
-        else:
-            return HttpResponse("Permission to create type denied")
 
     def post(self, request, *args, **kwargs):
         self.object = None
@@ -150,7 +147,6 @@ class EditType(UpdateView):
     success_url = reverse_lazy('list_types')
 
     def get(self, request, *args, **kwargs):
-        if request.user.has_perm('perm.mrp_system.mrp_user'):
             self.object = self.get_object()
             form_class = self.get_form_class()
             form = self.get_form(form_class)
@@ -162,8 +158,6 @@ class EditType(UpdateView):
             return render(request, self.template_name, {'form': form,
                                                     'field_formset': field_formset,
                                                     'hint': hint})
-        else:
-            return HttpResponse("Permission to create type denied")
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
