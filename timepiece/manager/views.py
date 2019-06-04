@@ -141,8 +141,6 @@ def week_timesheet(request, date):
     all_users = User.objects.filter(profile__payroll=True).select_related('profile')
     response = HttpResponse(content_type='text/csv')
     from_date = datetime.datetime.strptime(date, "%Y-%m-%d")
-    date2 = utils.add_timezone(datetime.datetime.today()).date()
-    
     response['Content-Disposition'] = 'attachment; filename="engimusing-llc-timesheet-%s.csv"' % date
 
     writer = csv.writer(response)
