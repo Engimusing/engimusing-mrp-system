@@ -562,6 +562,7 @@ def enter_digi_part(request):
         form = APIForm(request.POST)
         if form.is_valid():
             barcode = form.cleaned_data['barcode']
+            engimusingPartNumber = form.cleaned_data['engimusingPartNumber']
             partNumber = form.cleaned_data['partNumber']
             manuPartNumb = form.cleaned_data['manuPartNumber']
             website = form.cleaned_data['website']
@@ -616,14 +617,19 @@ def enter_digi_part(request):
                 search = partNumber
             elif manuPartNumb:
                 search = manuPartNumb
-                
+            elif engimusingPartNumber:
+                search = engimusingPartNumber
+
             else:
                 return HttpResponseNotFound('<h1>Must select a website and enter a field!</h1>')
 
             #get part information from part number or manufacturer part number
             conn = http.client.HTTPSConnection("api.digikey.com")
 
-            payload = "{\"SearchOptions\":[\"ManufacturerPartSearch\"],\"Keywords\":\"" + search + "\",\"RecordCount\":\"10\",\"RecordStartPosition\":\"0\",\"Filters\":{\"CategoryIds\":[27442628],\"FamilyIds\":[81316194],\"ManufacturerIds\":[88520800],\"ParametricFilters\":[{\"ParameterId\":\"725\",\"ValueId\":\"7\"}]},\"Sort\":{\"Option\":\"SortByUnitPrice\",\"Direction\":\"Ascending\",\"SortParameterId\":\"50\"},\"RequestedQuantity\":\"50\"}"
+            payload = "{\"SearchOptions\":[\"ManufacturerPartSearch\"],\"Keywords\":\"" \
+                      + search + "\",\"RecordCount\":\"10\",\"RecordStartPosition\":\"0\",\"Filters\":{\"CategoryIds\":[27442628],\"FamilyIds\":[81316194],\"" \
+                                 "ManufacturerIds\":[88520800],\"ParametricFilters\":[{\"ParameterId\":\"725\",\"ValueId\":\"7\"}]},\"Sort\":{\"Option\":\"SortByUnitPrice\"" \
+                                 ",\"Direction\":\"Ascending\",\"SortParameterId\":\"50\"},\"RequestedQuantity\":\"50\"}"
 
             headers = {
                 'x-ibm-client-id': '73432ca9-e8ba-4965-af17-a22107f63b35',
@@ -707,6 +713,13 @@ def enter_digi_part(request):
             except(IndexError, KeyError, TypeError):
                 number = None
                 manufacturer = None
+
+             # if  engimusingPartNumber:
+             #     if exists:
+             #        part.exists.part
+             #        partType = exists.part.partType
+             #        url = reverse('edit_part', args=(partType.pk, park.pk))
+             #        return HttpResponseRedirect(url)
             if manufacturer:
                 manu, created = Vendor.objects.get_or_create(name=manufacturer, vendor_type="manufacturer")
                 # this is our way of checking for duplicates

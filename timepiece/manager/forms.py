@@ -28,6 +28,7 @@ class ProjectCreateForm(forms.Form):
     inactive = forms.BooleanField(required=False)
     users = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                            queryset=User.objects.order_by('first_name'), required=False)
+   # activities = forms.CharField(label='Activities', widget=forms.TextInput(attrs={'rows': 1, 'cols': 90, 'max_length': 250}), required=True)
 
 
 class EditUserForm(UserChangeForm):

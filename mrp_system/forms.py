@@ -511,6 +511,7 @@ class APIForm(forms.Form):
         website = forms.ChoiceField(choices = ([('Digi-Key','Digi-Key'),('Mouser','Mouser')]), required=True)
         barcode = forms.CharField(label='Barcode', widget=forms.TextInput(attrs={'autofocus': True}),
                                      help_text='(MFG P/N Barcode for Mouser)', required=False)
+        engimusingPartNumber = forms.CharField(label='Engimusing Part Number', help_text='(Engimusing-Key only)', required=False)
         partNumber = forms.CharField(label='Digi-Key Part Number', help_text='(Digi-Key only)', required=False)
         manuPartNumber = forms.CharField(label='Manufacturer Part Number', required=False)
 
@@ -518,14 +519,15 @@ class APIForm(forms.Form):
                 super(APIForm, self).clean()
                 barcode = self.cleaned_data.get('barcode', None)
                 partNumber = self.cleaned_data.get('partNumber', None)
+                engimusingPartNumber = self.cleaned_data.get('engimusingPartNumber', None)
                 manuPartNumber = self.cleaned_data.get('manuPartNumber', None)
                 website = self.cleaned_data.get('website', None)
-                related_fields = [barcode, partNumber, manuPartNumber]
+                related_fields = [barcode, engimusingPartNumber, partNumber, manuPartNumber]
                 related_fields_selected = [field for field in related_fields if field]
 
                 #check if more than one related fields was selected
                 if len(related_fields_selected)>1: 
-                   raise forms.ValidationError('Please enter only one of Barcode, Digi-Key Part Number, and Manufacturer Part Number!')
+                   raise forms.ValidationError('Please enter only one of Barcode, Engimusing Part Number, Digi-Key Part Number, and Manufacturer Part Number!')
                 #check that if mouser is selected, a part number isn't input(no functionality for this)
                 if website == "Mouser" and partNumber:
                     raise forms.ValidationError('Can\'t enter a mouser part number, must be a manufacturer number for Mouser.')

@@ -31,6 +31,7 @@ from timepiece.manager.forms import (
 from timepiece.manager.models import Project, ProjectRelationship
 from timepiece.manager.utils import grouped_totals
 from timepiece.entries.models import Entry
+from timepiece.entries.views import create_edit_entry
 
 #create, edit, delete, and view user all in admin
 
@@ -84,7 +85,7 @@ class ProjectTimesheet(DetailView):
             project=project
         )
         extra_values = ('start_time', 'end_time',
-                        'id', 'project__name')
+                        'id', 'project__name', 'activities')
 
         month_entries = entries_qs.date_trunc('month', extra_values).order_by('start_time')
         if month_entries:
