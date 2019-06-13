@@ -565,6 +565,7 @@ def enter_digi_part(request):
             partNumber = form.cleaned_data['partNumber']
             manuPartNumb = form.cleaned_data['manuPartNumber']
             emusPartNumb = form.cleaned_data['emusPartNumber']
+            locationNumber = form.cleaned_data['locationNumber']
             website = form.cleaned_data['website']
 
             if website == 'Digi-Key':
@@ -630,6 +631,15 @@ def enter_digi_part(request):
                     redirect_url = reverse('edit_part', args=[part.partType_id, part.id])
                     return HttpResponseRedirect(redirect_url)
 
+            elif website == 'Emus' and locationNumber:
+                search = locationNumber
+
+                part = get_object_or_404(Part, locationNumber=search)
+                if not part:
+                    return HttpResponseNotFound('<h1>Invalid location number')
+                else:
+                    redirect_url = reverse('edit_part', args=[part.partType_id, part.id])
+                    return HttpResponseRedirect(redirect_url)
             else:
                 return HttpResponseNotFound('<h1>Must select a website and enter a field!</h1>')
 
