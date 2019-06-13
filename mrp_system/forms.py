@@ -514,7 +514,7 @@ class APIForm(forms.Form):
                               help_text='(MFG P/N Barcode for Mouser)', required=False)
     partNumber = forms.CharField(label='Digi-Key Part Number', help_text='(Digi-Key only)', required=False)
     manuPartNumber = forms.CharField(label='Manufacturer Part Number', required=False)
-    emusPartNumber = forms.CharField(label='Emus Part Number', required=False)
+    emusPartNumber = forms.CharField(label='Engimusing Part Number', required=False)
 
     def clean(self):
         super(APIForm, self).clean()
