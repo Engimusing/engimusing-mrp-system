@@ -33,7 +33,7 @@
 <table>
 
  {% for field in view_part_form %}
-<!--{{ part_form.as_p }}-->
+
 <tr class="group">
 
            <td>  {{ field.label_tag }} </td>
@@ -50,16 +50,11 @@
 <div class="w3-container" style="margin-left:8px">
 {{ location_formset.management_form }}
 <div id="formset">
-    <label style="font-weight:bold; padding-right:65px; ">Location:</label>
-    <label style="border-style:ridge; padding:5px;">{% for loc in part.get_location %}{{ loc }}</br>{% endfor %}</label>
-
-<br>
-    <label style="font-weight:bold; padding-right:91px;"> Stock</label>
-    <label style="border-style:ridge; padding-right:0px; padding-left:0px; padding-top:2px;
-padding-bottom:2px;">{% if part.get_stock %}
-        {% for stock in part.get_stock %}{{ stock.stock }}
-        {% endfor %}
-    {% endif %}</label>
+{% for form in location_formset.forms %}
+<table class='no_error'>
+{{ form.as_table }}
+</table>
+{% endfor %}
 </div>
     <br>
 <!--<input type="button" value="Add Location" id="addmore">-->
@@ -79,29 +74,26 @@ padding-bottom:2px;">{% if part.get_stock %}
     });
 </script>
 
-{{ manu_formset.management_form }}
 <div id="form_set">
 
-    <label style="font-weight:bold; padding-right:23px; ">Manufacturer:</label>
-    <label style="border-style:ridge; padding:5px;">{% for manu in part.get_manufacturers %}{{ manu }}</br>{% endfor %}</label>
-    <br>
-    <label style="font-weight:bold; padding-right:30px;">Part Number:</label>
-    <label style="border-style:ridge; padding:6px;">{% for number in part.get_related %}{{ number }}</br>{% endfor %}</label>
-</div>
-<!--<input type="button" value="Add" id="add_more">-->
-<div id="empty_form" style="display:none">
-    <table class='no_error'>
-        {{ manu_formset.empty_form.as_table }}
-    </table>
-</div>
-<script>
-    $('#add_more').click(function() {
-         var form_idx = $('#id_manufacturerrelationship_set-TOTAL_FORMS').val();
-        $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+{% for loc in part.get_location %}{{ loc }}</br>{% endfor %}
+{% if part.get_stock %}
+        {% for stock in part.get_stock %}{{ stock.stock }}
+        {% endfor %}
+{% endif %}
+<br><br>
 
-        $('#id_manufacturerrelationship_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-    });
-</script>
+{% for manu in part.get_manufacturers %}{{ manu }}</br>{% endfor %}
+{% for number in part.get_related %}{{ number }}</br>{% endfor %}
+
+
+{% for form in manu_formset.forms %}
+<table class='no_error'>
+{{ form.as_table }}
+</table>
+{% endfor %}
+</div>
+
 <br><br>
 
     </div>

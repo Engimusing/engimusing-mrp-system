@@ -508,31 +508,34 @@ POPartFormSet = inlineformset_factory(PurchaseOrder, PurchaseOrderParts, form=PO
 
 
 class APIForm(forms.Form):
-        website = forms.ChoiceField(choices = ([('Digi-Key','Digi-Key'),('Mouser','Mouser')]), required=True)
-        barcode = forms.CharField(label='Barcode', widget=forms.TextInput(attrs={'autofocus': True}),
-                                     help_text='(MFG P/N Barcode for Mouser)', required=False)
-        #engimusingPartNumber = forms.CharField(label='Engimusing Part Number', help_text='(Engimusing-Key only)', required=False)
-        partNumber = forms.CharField(label='Digi-Key Part Number', help_text='(Digi-Key only)', required=False)
-        manuPartNumber = forms.CharField(label='Manufacturer Part Number', required=False)
+    website = forms.ChoiceField(choices=([('Digi-Key', 'Digi-Key'), ('Mouser', 'Mouser'), ('Emus', 'Emus')]),
+                                required=True)
+    barcode = forms.CharField(label='Barcode', widget=forms.TextInput(attrs={'autofocus': True}),
+                              help_text='(MFG P/N Barcode for Mouser)', required=False)
+    partNumber = forms.CharField(label='Digi-Key Part Number', help_text='(Digi-Key only)', required=False)
+    manuPartNumber = forms.CharField(label='Manufacturer Part Number', required=False)
+    emusPartNumber = forms.CharField(label='Emus Part Number', required=False)
 
-        def clean(self):
-                super(APIForm, self).clean()
-                barcode = self.cleaned_data.get('barcode', None)
-                partNumber = self.cleaned_data.get('partNumber', None)
-                #engimusingPartNumber = self.cleaned_data.get('engimusingPartNumber', None)
-                manuPartNumber = self.cleaned_data.get('manuPartNumber', None)
-                website = self.cleaned_data.get('website', None)
-                related_fields = [barcode, partNumber, manuPartNumber]  #engimusingPartNumber
-                related_fields_selected = [field for field in related_fields if field]
+    def clean(self):
+        super(APIForm, self).clean()
+        barcode = self.cleaned_data.get('barcode', None)
+        partNumber = self.cleaned_data.get('partNumber', None)
+        manuPartNumber = self.cleaned_data.get('manuPartNumber', None)
+        website = self.cleaned_data.get('website', None)
+        emusPartNumber = self.cleaned_data.get('emusPartNumber', None)
+        related_fields = [barcode, partNumber, manuPartNumber, emusPartNumber]
+        related_fields_selected = [field for field in related_fields if field]
 
-                #check if more than one related fields was selected
-                if len(related_fields_selected)>1: 
-                   raise forms.ValidationError('Please enter only one of Barcode, Digi-Key Part Number, and Manufacturer Part Number!') #engimusingPartNumber
-                #check that if mouser is selected, a part number isn't input(no functionality for this)
-                if website == "Mouser" and partNumber:
-                    raise forms.ValidationError('Can\'t enter a mouser part number, must be a manufacturer number for Mouser.')
-                return self.cleaned_data
-
+        # check if more than one related fields was selected
+        if len(related_fields_selected) > 1:
+            raise forms.ValidationError(
+                'Please enter only one of Barcode, Digi-Key Part Number, Manufacturer Part Number, Emus Part Number!')
+        # check that if mouser is selected, a part number isn't input(no functionality for this)
+        if website == "Mouser" and partNumber:
+            raise forms.ValidationError('Can\'t enter a mouser part number, must be a manufacturer number for Mouser.')
+        if website == "Emus" and not emusPartNumber:
+            raise forms.ValidationError('Must be a Emus number for Emus.')
+        return self.cleaned_data
 
 """api requires tokens to operate, can save them here to make it easier to switch b/w
 production and development since they share tokens"""
