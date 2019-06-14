@@ -565,7 +565,7 @@ def enter_digi_part(request):
             partNumber = form.cleaned_data['partNumber']
             manuPartNumb = form.cleaned_data['manuPartNumber']
             emusPartNumb = form.cleaned_data['emusPartNumber']
-            locationNumber = form.cleaned_data['locationNumber']
+            location = form.cleaned_data['location']
             website = form.cleaned_data['website']
 
             if website == 'Digi-Key':
@@ -631,15 +631,18 @@ def enter_digi_part(request):
                     redirect_url = reverse('edit_part', args=[part.partType_id, part.id])
                     return HttpResponseRedirect(redirect_url)
 
-            elif website == 'Emus' and locationNumber:
-                search = locationNumber
-
-                part = get_object_or_404(Part, locationNumber=search)
-                if not part:
-                    return HttpResponseNotFound('<h1>Invalid location number')
+            elif website == 'Emus' and location:
+                search = location
+                loc = Location.objects.filter(name=search).first()
+                if loc:
+                    exists = LocationRelationship.objects.filter(location_id=loc).first()
+                    if not exists:
+                        return HttpResponseNotFound('<h1>No parts found for location entered')
+                    else:
+                        redirect_url = reverse('part_location', args=[loc.id])
+                        return HttpResponseRedirect(redirect_url)
                 else:
-                    redirect_url = reverse('edit_part', args=[part.partType_id, part.id])
-                    return HttpResponseRedirect(redirect_url)
+                    return HttpResponseNotFound('<h1>Invalid location')
             else:
                 return HttpResponseNotFound('<h1>Must select a website and enter a field!</h1>')
 
@@ -785,6 +788,26 @@ def enter_digi_part(request):
     else:
         form = APIForm()
     return render(request, "oauth.html", {'form': form})
+
+
+def get_location(request, loc_id):
+
+    if loc_id:
+        location = Location.objects.filter(id=loc_id).first()
+        if location:
+            searchField=location.name
+            parts = Part.objects.annotate(search=SearchVector('partType__name', 'description', 'location__name',
+                                                              'engimusingPartNumber', 'manufacturer__name',
+                                                              'manufacturerrelationship__partNumber'), ).filter(
+                search=searchField)
+        else:
+            parts = Part.objects.all()
+    else:
+        parts = Part.objects.all()
+
+    return render(request, 'part_by_location.html', {
+                                                   'location': location.name,
+                                                   'parts': parts,})
 
 
 """used in create/edit product form to filter parts in dropdown

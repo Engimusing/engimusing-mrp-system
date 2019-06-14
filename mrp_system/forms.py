@@ -515,7 +515,8 @@ class APIForm(forms.Form):
     partNumber = forms.CharField(label='Digi-Key Part Number', help_text='(Digi-Key only)', required=False)
     manuPartNumber = forms.CharField(label='Manufacturer Part Number', required=False)
     emusPartNumber = forms.CharField(label='Engimusing Part Number', required=False)
-    locationNumber = forms.CharField(label='Location', required=False)
+    #locationPartNumber = forms.MultipleChoiceField(label='Location', required=False)
+    #location = forms.CharField(label='Location', required=False)
 
     def clean(self):
         super(APIForm, self).clean()
@@ -524,18 +525,18 @@ class APIForm(forms.Form):
         manuPartNumber = self.cleaned_data.get('manuPartNumber', None)
         website = self.cleaned_data.get('website', None)
         emusPartNumber = self.cleaned_data.get('emusPartNumber', None)
-        locationNumber = self.cleaned_data.get('locationNumber', None)
+        location = self.cleaned_data.get('location', None)
         related_fields = [barcode, partNumber, manuPartNumber, emusPartNumber]
         related_fields_selected = [field for field in related_fields if field]
 
         # check if more than one related fields was selected
         if len(related_fields_selected) > 1:
             raise forms.ValidationError(
-                'Please enter only one of Barcode, Digi-Key Part Number, Manufacturer Part Number, Emus Part Number, Location Number!')
+                'Please enter only one of Barcode, Digi-Key Part Number, Manufacturer Part Number, Emus Part Number, Location!')
         # check that if mouser is selected, a part number isn't input(no functionality for this)
         if website == "Mouser" and partNumber:
             raise forms.ValidationError('Can\'t enter a mouser part number, must be a manufacturer number for Mouser.')
-        if website == "Emus" and not emusPartNumber or not locationNumber:
+        if website == "Emus" and not (emusPartNumber or location):
             raise forms.ValidationError('Must be a Emus number for Emus.')
         return self.cleaned_data
 

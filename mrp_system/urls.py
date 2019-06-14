@@ -78,6 +78,11 @@ urlpatterns = [
         views.LocationRelationshipDelete.as_view(),
         name='delete_loc_rel'),
 
+    #part by location
+    url('digikey/partLocation/(?P<loc_id>\d+)/$',
+        views.get_location,
+        name='part_location'),
+
     #api enter part and access urls
     url('digikey/enter/$',
         views.enter_digi_part,
