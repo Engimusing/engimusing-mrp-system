@@ -515,8 +515,7 @@ class APIForm(forms.Form):
     partNumber = forms.CharField(label='Digi-Key Part Number', help_text='(Digi-Key only)', required=False)
     manuPartNumber = forms.CharField(label='Manufacturer Part Number', required=False)
     emusPartNumber = forms.CharField(label='Engimusing Part Number', required=False)
-    #locationPartNumber = forms.MultipleChoiceField(label='Location', required=False)
-    #location = forms.CharField(label='Location', required=False)
+    location = forms.CharField(label='Location', required=False)
 
     def clean(self):
         super(APIForm, self).clean()
