@@ -805,9 +805,8 @@ def get_location(request, loc_id):
     else:
         parts = Part.objects.all()
 
-    return render(request, 'part_by_location.html', {
-                                                   'location': location.name,
-                                                   'parts': parts,})
+    return render(request, 'part_by_location.html', {'location': location.name,
+                                                   'parts': parts, })
 
 
 """used in create/edit product form to filter parts in dropdown
