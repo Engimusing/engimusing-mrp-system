@@ -3,6 +3,20 @@ import datetime
 # from django.contrib.sites.models import Site
 from django.forms import ModelForm
 
+# This is a model just to set up permissions
+class MrpSystem(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        permissions = (
+            ('mrp_user', 'Can access mrp site'),
+            ('modify_admin_site', 'Can access admin site, do redirects'),
+            ('time_user', 'Can clock in and out and handle todos'),
+            ('time_supervisor', 'Can manage projects'),
+            ('mrp_admin', 'Can view, add, modify, or delete digikeys')
+        )
+        default_permissions = ()
+
 
 class Vendor(models.Model):
     TYPE_CHOICES = (
