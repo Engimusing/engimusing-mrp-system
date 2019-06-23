@@ -282,7 +282,9 @@ document.getElementById("id_end_date").value = date;
                                     <tbody>
                                         {% for data in project_progress %}
                                             <tr>
-                                                <td>{{ data.project}} </td>
+                                                    
+                                                <td>{{ data.project}} - {{data.activities}}</td>
+                                               
                                                 <td class="hours">{{ data.worked|humanize_hours:"{hours:02d}:{minutes:02d}:{seconds:02d}" }}</td>
                                             </tr>
                                         {% endfor %}

@@ -136,18 +136,35 @@ class Dashboard(DashboardMixin, TemplateView):
         for project in projects:
             try:
                 assigned = assignments.get(project__id=project.pk).hours
+                activity = ' '
             except ProjectHours.DoesNotExist:
                 assigned = Decimal('0.00')
+                activity = ' '
+
             project_data[project.pk] = {
                 'project': project,
+                'activities': activity,
                 'assigned': assigned,
                 'worked': Decimal('0.00'),
             }
 
+        total = 0
         for entry in entries:
+            total += 1
+
+        cntr = 0
+        for entry in entries:
+            cntr += 1
             pk = entry.project_id
             hours = Decimal('%.5f' % (entry.get_total_seconds() / 3600.0))
             project_data[pk]['worked'] += hours
+
+            activity = entry.activities
+            if cntr < total:
+                project_data[pk]['activities'] += activity + ', '
+            else:
+                project_data[pk]['activities'] += activity
+
 
         # Sort by maximum of worked or assigned hours (highest first).
         key = lambda x: x['project'].name.lower()
