@@ -13,6 +13,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
+from django.db.models.functions import Lower
 
 
 from timepiece import utils
@@ -131,43 +132,51 @@ class Dashboard(DashboardMixin, TemplateView):
         project_q |= Q(id__in=entries.values_list('project__id', flat=True))
         projects = Project.objects.filter(project_q)#.select_related('business')
 
-        # Hours per project.
+       # Hours per project.
+
         project_data = {}
+
         for project in projects:
             try:
                 assigned = assignments.get(project__id=project.pk).hours
-                activity = ' '
             except ProjectHours.DoesNotExist:
+
                 assigned = Decimal('0.00')
-                activity = ' '
+
+            # get the list of activities associated with the project.   This filters the list of
+
+            # entries, sorts them and insures that they are distinct with no duplicates
+
+            activity = ", ".join(entry.activities for entry in entries.filter(project__id=project.pk)
+
+                                       .order_by().annotate(lower_activities=Lower('activities'))
+
+                                       .distinct('lower_activities')) 
 
             project_data[project.pk] = {
+
                 'project': project,
+
                 'activities': activity,
+
                 'assigned': assigned,
+
                 'worked': Decimal('0.00'),
+
             }
 
-        total = 0
         for entry in entries:
-            total += 1
 
-        cntr = 0
-        for entry in entries:
-            cntr += 1
             pk = entry.project_id
+
             hours = Decimal('%.5f' % (entry.get_total_seconds() / 3600.0))
+
             project_data[pk]['worked'] += hours
 
-            activity = entry.activities
-            if cntr < total:
-                project_data[pk]['activities'] += activity + ', '
-            else:
-                project_data[pk]['activities'] += activity
-
-
         # Sort by maximum of worked or assigned hours (highest first).
+
         key = lambda x: x['project'].name.lower()
+
         project_progress = sorted(project_data.values(), key=key)
 
         return project_progress
