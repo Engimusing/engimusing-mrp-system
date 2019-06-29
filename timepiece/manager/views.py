@@ -176,6 +176,138 @@ def week_timesheet(request, date):
         
     return response
 
+#invoice report
+def week_timesheet_invoice(request, date):
+
+    #only include users that have payroll attribute selected
+
+    all_users = User.objects.filter(profile__payroll=True).select_related('profile')
+
+    response = HttpResponse(content_type='text/csv')
+
+    from_date = datetime.datetime.strptime(date, "%Y-%m-%d")
+
+    response['Content-Disposition'] = 'attachment; filename="invoice_report.csv-%s"' % date
+
+ 
+
+    writer = csv.writer(response)
+
+   
+
+    for use1 in all_users:
+
+        
+
+        week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
+
+        #include projects
+
+        week_entries = week_entries.select_related('project')
+
+        week_entries = week_entries.filter(project__name__startswith='CCE')
+
+        user_entries = week_entries.order_by().values('user__first_name', 'user__last_name')
+
+        user_entries = user_entries.annotate(sum=Sum('hours')).order_by('-sum')  
+
+        if week_entries:
+
+            name = use1.first_name + ' ' + use1.last_name + ":"
+
+            writer.writerow([
+
+                name
+
+            ])
+
+ 
+
+        if user_entries:
+
+            hours = sum(entries['sum'] for entries in user_entries)
+
+        else:
+
+            hours = 0
+
+   
+
+        project_entries = week_entries.order_by().values('project__name').distinct()
+
+        project_entries = project_entries.annotate(sum=Sum('hours')).order_by('-sum')
+
+        #add unique list of activities for each project entry
+
+        for p in project_entries:
+
+            p['activities'] = ", ".join(week.lower_activities for week in week_entries.filter(project__name=p['project__name'])
+
+                                       .order_by().annotate(lower_activities=Lower('activities'))
+
+                                       .distinct('lower_activities'))
+
+ 
+
+        for project in project_entries:
+
+            seconds = project['sum']
+
+            hours = round(seconds, 1)
+
+            writer.writerow([hours ,project['project__name'] + ' - ' + project['activities']])
+
+      
+
+            
+
+    return response
+
+ 
+
+def humanize_seconds(total_seconds,
+
+                     frmt='{hours:02d}:{minutes:02d}:{seconds:02d}',
+
+                     negative_frmt=None):
+
+    """Given time in int(seconds), return a string representing the time.
+
+ 
+
+    If negative_frmt is not given, a negative sign is prepended to frmt
+
+    and the result is wrapped in a <span> with the "negative-time" class.
+
+    """
+
+    if negative_frmt is None:
+
+        negative_frmt = '<span class="negative-time">-{0}</span>'.format(frmt)
+
+    seconds = abs(int(total_seconds))
+
+    mapping = {
+
+        'hours': seconds // 3600,
+
+        'minutes': seconds % 3600 // 60,
+
+        'seconds': seconds % 3600 % 60,
+
+    }
+
+    if total_seconds < 0:
+
+        result = negative_frmt.format(**mapping)
+
+    else:
+
+        result = frmt.format(**mapping)
+
+    return result
+
+
 #used to filter by week and switch between weeks
 class WeekTimesheetMixin(object):
 

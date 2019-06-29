@@ -23,7 +23,9 @@
             <ul class="nav nav-pills">
                 <li style="width: 17%"><a href="{% url 'week_timesheet' user_id %}?week_start={{ prev_week|date:'Y-m-d' }}">&larr; Prev Week</a></li>
                 <li style="width: 17%"><a href="{% url 'week_timesheet' user_id %}?week_start={{ next_week|date:'Y-m-d' }}">Next Week &rarr;</a></li>
-		 <li><a href="{% url 'timesheet_csv' week|date:'Y-m-d' %}?">Download CSV</a></li>
+         <li><a href="{% url 'timesheet_csv' week|date:'Y-m-d' %}?">Download CSV</a></li>
+        
+         <li style="padding-left:165px"><a href="{% url 'invoice_csv' week|date:'Y-m-d' %}">Download Invoice Report</a></li>
             </ul>
         </div>
     </div>

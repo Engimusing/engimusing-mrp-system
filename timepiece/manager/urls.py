@@ -17,6 +17,11 @@ urlpatterns = [
     url(r'^weektimesheetcsv/(?P<date>\d{4}-\d{2}-\d{2})/$',
         views.week_timesheet,
         name='timesheet_csv'),
+
+    url(r'^weektimesheetinvoicecsv/(?P<date>\d{4}-\d{2}-\d{2})/$',
+        views.week_timesheet_invoice,
+        name='invoice_csv'),
+
     url(r'^weektimesheet/(?P<user_id>\d+)/$',
         views.WeekTimesheet.as_view(),
         name='week_timesheet'),
