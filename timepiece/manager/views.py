@@ -181,7 +181,9 @@ def week_timesheet_invoice(request, date):
 
     #only include users that have payroll attribute selected
 
-    all_users = User.objects.filter(profile__payroll=False).select_related('profile')
+    all_users = User.objects.all()
+    
+    #filter(profile__payroll=False).select_related('profile')
 
     response = HttpResponse(content_type='text/csv')
 
