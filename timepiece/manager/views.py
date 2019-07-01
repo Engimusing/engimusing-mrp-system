@@ -221,7 +221,6 @@ def week_timesheet_invoice(request, date):
 
             ])
 
- 
 
         if user_entries:
 
