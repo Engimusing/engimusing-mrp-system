@@ -616,7 +616,9 @@ def enter_digi_part(request):
         # if mouser barcode, its a manufacturer number
         elif buttonPressed == 'Lookup Barcode':
             search = barcode
-        elif buttonPressed == 'Lookup Manu Part Number' and manuPartNumb:
+        elif buttonPressed == 'Lookup Digi-Key':
+            search = partNumber
+        elif (buttonPressed == 'Lookup Manu Part Number' and manuPartNumb):
             search = manuPartNumb
         elif buttonPressed == 'Lookup Emus Part Number':
             if emusPartNumb:
