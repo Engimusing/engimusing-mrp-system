@@ -6,13 +6,51 @@
 {% block content %}
 <h3>Enter DigiKey Part</h3>
 <div class="container-fluid">
-<div class="form-horizontal">
+<div class="form-horizontal" >
 <form action="" method="post">
 {% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Lookup"/>
+<!-- {{ form.as_p }} -->
+<br>
+
+
+<div style="display:flex; flex-direction:row;">
+    <label for="id_barcode">Barcode:</label> <input type="text" name="barcode" autofocus id="id_barcode"> 
+<input type="submit" name="lookupBtn" value="Lookup Barcode"/>
+<label style="margin-left:8px;">(MFG P/N Barcode for Mouser)</label>
+</div>
+
+<br>
+
+<div style="display:flex; flex-direction:row;">
+    <label for="id_partNumber" style="margin-right:8px;">Digi-key Part Number: </label><input type="text" name="partNumber" ></input>
+<input type="submit" name="lookupBtn" value="Lookup Digi-Key"/>
+<label style="margin-left:8px;">(Digi-key only)</label>
+</div>
+
+<br>
+
+<div style="display:flex; flex-direction:row;">
+    <label for="id_manuPartNumber" style="margin-right:8px;">Manufacturer Part Number: </label><input name="manuPartNumber" type="text"></input>
+<input type="submit" name="lookupBtn" value="Lookup Manu Part Number"/>
+</div>
+
+<br>
+
+<div style="display:flex; flex-direction:row;">
+    <label for="id_emusPartNumber" style="margin-right:8px;">Engimusing Part Number: </label><input name="emusPartNumber" type="text"></input>
+<input type="submit" name="lookupBtn" value="Lookup Emus Part Number"/>
+</div>
+
+<br>
+
+<div style="display:flex; flex-direction:row;">
+    <label for="id_location" style="margin-right:8px;">Location: </label><input name="location" type="text"></input>
+<input type="submit" name="lookupBtn" value="Lookup Location"/>
+</div>
+
 </form>
 
 </div>
 </div>
 {% endblock content %}
+

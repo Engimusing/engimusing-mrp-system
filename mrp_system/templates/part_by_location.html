@@ -30,7 +30,7 @@
                 <tbody>
                     {% for part in parts %}
                         <tr>
-                            <td><a href="{% url 'part_view' part.partType.id part.id  %}">{{part.engimusingPartNumber}}</a></td>
+                            <td><a href="{% url 'part_view' part.partType.id part.id  %}"></a>{{part.engimusingPartNumber}}</a></td>
  <td>{{part.partType.name}}</td>
  <td>{{ part.description}}</td>
 

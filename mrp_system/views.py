@@ -558,236 +558,235 @@ def MergeLocation(primary_object, alias_object):
 
 
 def enter_digi_part(request):
-    if request.method == "POST":
-        form = APIForm(request.POST)
-        if form.is_valid():
-            barcode = form.cleaned_data['barcode']
-            partNumber = form.cleaned_data['partNumber']
-            manuPartNumb = form.cleaned_data['manuPartNumber']
-            emusPartNumb = form.cleaned_data['emusPartNumber']
-            location = form.cleaned_data['location']
-            website = form.cleaned_data['website']
+    if request.method == "POST":     
+        barcode = request.POST.get('barcode','')
+        partNumber = request.POST.get('partnumber','')
+        manuPartNumb = request.POST.get('manuPartNumber','')
+        emusPartNumb = request.POST.get('emusPartNumber','')
+        location = request.POST.get('location','')
+       
 
-            if website == 'Digi-Key':
+        buttonPressed = request.POST.get('lookupBtn','')
 
-                # this model holds the access and refresh token for digikey API
-                digi = DigiKeyAPI.objects.get(name="DigiKey")
+        if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Manu Part Number') or (buttonPressed == 'Lookup Barcode'):
 
-                # get new access token with refresh token
-                API_ENDPOINT = "https://sso.digikey.com/as/token.oauth2"
+            # this model holds the access and refresh token for digikey API
+            digi = DigiKeyAPI.objects.get(name="DigiKey")
 
-                data = {'client_id': '73432ca9-e8ba-4965-af17-a22107f63b35',
-                        'client_secret': 'G2rQ1cM8yM4gV6rW2nA1wL2yF7dN4sX4fJ2lV6jE5uT0bB0uG8',
-                        'refresh_token': digi.refresh_token,
-                        'grant_type': 'refresh_token'
-                        }
-                r = requests.post(url=API_ENDPOINT, data=data)
-                response = r.json()
-                try:
-                    refreshToken = response['refresh_token']
-                except (IndexError, KeyError):
-                    messages.warning(request, ('Digi-Key access tokens are off.'))
-                    url = reverse('digi_part')
-                    return HttpResponseRedirect(url)
+            # get new access token with refresh token
+            API_ENDPOINT = "https://sso.digikey.com/as/token.oauth2"
 
-                # set access and refresh token from tokens returned with API
-                accessToken = response['access_token']
-                setattr(digi, "refresh_token", refreshToken)
-                setattr(digi, "access_token", accessToken)
-                digi.save()
-                # if digikey barcode, use barcode api to get part number
-                if website == 'Digi-Key' and barcode:
-                    conn = http.client.HTTPSConnection("api.digikey.com")
-
-                    headers = {
-                        'x-ibm-client-id': '73432ca9-e8ba-4965-af17-a22107f63b35',
-                        'authorization': digi.access_token,
-                        'accept': "application/json"
+            data = {'client_id': '73432ca9-e8ba-4965-af17-a22107f63b35',
+                    'client_secret': 'G2rQ1cM8yM4gV6rW2nA1wL2yF7dN4sX4fJ2lV6jE5uT0bB0uG8',
+                    'refresh_token': digi.refresh_token,
+                    'grant_type': 'refresh_token'
                     }
+            r = requests.post(url=API_ENDPOINT, data=data)
+            response = r.json()
+            try:
+                refreshToken = response['refresh_token']
+            except (IndexError, KeyError):
+                messages.warning(request, ('Digi-Key access tokens are off.'))
+                url = reverse('digi_part')
+                return HttpResponseRedirect(url)
 
-                    conn.request("GET", "/services/barcode/v1/productbarcode/" + barcode, headers=headers)
+            # set access and refresh token from tokens returned with API
+            accessToken = response['access_token']
+            setattr(digi, "refresh_token", refreshToken)
+            setattr(digi, "access_token", accessToken)
+            digi.save()
+            # if digikey barcode, use barcode api to get part number
+            if barcode:
+                conn = http.client.HTTPSConnection("api.digikey.com")
 
-                    res = conn.getresponse()
-                    data = res.read().decode("utf-8")
-                    part = json.loads(data)
-                    partNumber = part['DigiKeyPartNumber']
-                    search = partNumber
+                headers = {
+                    'x-ibm-client-id': '73432ca9-e8ba-4965-af17-a22107f63b35',
+                    'authorization': digi.access_token,
+                    'accept': "application/json"
+                }
 
-            # if mouser barcode, its a manufacturer number
-            elif website == 'Mouser' and barcode:
-                search = barcode
+                conn.request("GET", "/services/barcode/v1/productbarcode/" + barcode, headers=headers)
 
-            elif partNumber:
+                res = conn.getresponse()
+                data = res.read().decode("utf-8")
+                part = json.loads(data)
+                partNumber = part['DigiKeyPartNumber']
                 search = partNumber
-            elif manuPartNumb:
-                search = manuPartNumb
-            elif website == 'Emus' and emusPartNumb:
-                search = emusPartNumb
 
+        # if mouser barcode, its a manufacturer number
+        elif buttonPressed == 'Lookup Barcode':
+            search = barcode
+        elif buttonPressed == 'Lookup Manu Part Number' and manuPartNumb:
+            search = manuPartNumb
+        elif buttonPressed == 'Lookup Emus Part Number':
+            if emusPartNumb:
+                search = emusPartNumb
                 part = get_object_or_404(Part, engimusingPartNumber=search)
                 if not part:
                     return HttpResponseNotFound('<h1>Invalid part number')
                 else:
                     redirect_url = reverse('edit_part', args=[part.partType_id, part.id])
-                    return HttpResponseRedirect(redirect_url)
-
-            elif website == 'Emus' and location:
-                search = location
-                loc = Location.objects.filter(name=search).first()
-                if loc:
-                    exists = LocationRelationship.objects.filter(location_id=loc).first()
-                    if not exists:
-                        return HttpResponseNotFound('<h1>No parts found for location entered')
-                    else:
-                        redirect_url = reverse('part_location', args=[loc.id])
-                        return HttpResponseRedirect(redirect_url)
-                else:
-                    return HttpResponseNotFound('<h1>Invalid location')
+                    return HttpResponseRedirect(redirect_url)        
             else:
-                return HttpResponseNotFound('<h1>Must select a website and enter a field!</h1>')
+                return HttpResponseNotFound('<h1> You must enter a part number')
 
-            # get part information from part number or manufacturer part number
-            conn = http.client.HTTPSConnection("api.digikey.com")
+        elif buttonPressed == 'Lookup Location' and location:
+            search = location
+            loc = Location.objects.filter(name=search).first()
+            if loc:
+                exists = LocationRelationship.objects.filter(location_id=loc).first()
+                if not exists:
+                    return HttpResponseNotFound('<h1>No parts found for location entered')
+                else:
+                    redirect_url = reverse('part_location', args=[loc.id])
+                    return HttpResponseRedirect(redirect_url)
+            else:
+                return HttpResponseNotFound('<h1>Invalid location')
+        else:
+            return HttpResponseNotFound('<h1>You must enter a number in a field!</h1>')
 
-            payload = "{\"SearchOptions\":[\"ManufacturerPartSearch\"],\"Keywords\":\"" + search + "\",\"RecordCount\":\"10\",\"RecordStartPosition\":\"0\",\"Filters\":{\"CategoryIds\":[27442628],\"FamilyIds\":[81316194],\"ManufacturerIds\":[88520800],\"ParametricFilters\":[{\"ParameterId\":\"725\",\"ValueId\":\"7\"}]},\"Sort\":{\"Option\":\"SortByUnitPrice\",\"Direction\":\"Ascending\",\"SortParameterId\":\"50\"},\"RequestedQuantity\":\"50\"}"
+        # get part information from part number or manufacturer part number
+        conn = http.client.HTTPSConnection("api.digikey.com")
 
-            headers = {
-                'x-ibm-client-id': '73432ca9-e8ba-4965-af17-a22107f63b35',
-                'x-digikey-locale-site': "US",
-                'x-digikey-locale-language': "en",
-                'x-digikey-locale-currency': "USD",
-                'authorization': digi.access_token,
-                'content-type': "application/json",
-                'accept': "application/json"
-            }
+        payload = "{\"SearchOptions\":[\"ManufacturerPartSearch\"],\"Keywords\":\"" + search + "\",\"RecordCount\":\"10\",\"RecordStartPosition\":\"0\",\"Filters\":{\"CategoryIds\":[27442628],\"FamilyIds\":[81316194],\"ManufacturerIds\":[88520800],\"ParametricFilters\":[{\"ParameterId\":\"725\",\"ValueId\":\"7\"}]},\"Sort\":{\"Option\":\"SortByUnitPrice\",\"Direction\":\"Ascending\",\"SortParameterId\":\"50\"},\"RequestedQuantity\":\"50\"}"
 
-            conn.request("POST", "/services/partsearch/v2/keywordsearch", payload, headers)
+        headers = {
+            'x-ibm-client-id': '73432ca9-e8ba-4965-af17-a22107f63b35',
+            'x-digikey-locale-site': "US",
+            'x-digikey-locale-language': "en",
+            'x-digikey-locale-currency': "USD",
+            'authorization': digi.access_token,
+            'content-type': "application/json",
+            'accept': "application/json"
+        }
 
-            res = conn.getresponse()
-            string = res.read().decode('utf-8')
-            sys.stdout.flush()
-            jstr = json.loads(string)
-            logger.info('Im here')
+        conn.request("POST", "/services/partsearch/v2/keywordsearch", payload, headers)
+
+        res = conn.getresponse()
+        string = res.read().decode('utf-8')
+        sys.stdout.flush()
+        jstr = json.loads(string)
+        logger.info('Im here')
+        try:
+            part = jstr['ExactDigiKeyPart']
+            logger.info(part)
+            data = part['Parameters']
+            logger.info(data)
+        except(IndexError, KeyError, TypeError):
             try:
-                part = jstr['ExactDigiKeyPart']
-                logger.info(part)
+                part = jstr['ExactParts'][0]
                 data = part['Parameters']
-                logger.info(data)
             except(IndexError, KeyError, TypeError):
-                try:
-                    part = jstr['ExactParts'][0]
-                    data = part['Parameters']
-                except(IndexError, KeyError, TypeError):
-                    if website == 'Mouser' and barcode:
-                        return HttpResponseNotFound(
-                            '<h1>Invalid part number. Ensure the manufacturer part number exists on digi-key.</h1>')
-                    else:
-                        return HttpResponseNotFound('<h1>Invalid Part Number.</h1>')
-            # grab all parameters returned from api
-            params = {}
-            for value in data:
-                params[value['Parameter']] = value['Value']
-            typeName = part['Family']['Text']
-            partType, created = Type.objects.get_or_create(name=typeName)
-            count = 1
-            # if new part type, assign prefix
-            if created:
-                # get all words in type name, exclude -'s
-                list_name = re.findall(r'\w+', typeName)
-                # get word count
-                word_count = len(list_name)
-                # assign prefix based on amount of words in type name
-                prefix = ""
-                if word_count == 1:
-                    prefix = typeName[:3].upper()
-                if word_count == 2:
-                    prefix = (list_name[0][:1] + list_name[1][:2]).upper()
-                if word_count >= 3:
-                    prefix = (list_name[0][:1] + list_name[1][:1] + list_name[2][:1]).upper()
-                setattr(partType, "prefix", prefix)
-                partType.save()
-                # series is always separate from the other parameters
-                try:
-                    part['Series']['Parameter']
-                    Field.objects.create(name='Series', fields='char1', typePart=partType)
-                    count = 2
-                except(IndexError, KeyError, TypeError):
-                    count = 1
-                for name, value in params.items():
-                    # print("here")
-                    if count <= 35:
-                        field = "char" + str(count)
-                        Field.objects.create(name=name, fields=field, typePart=partType)
-                        count += 1
-                    # part model only allows for 35 fields currently
-                    else:
-                        messages.warning(request, 'Can\'t create type, too many fields.')
-                        url = reverse('digi_part')
-                        return HttpResponseRedirect(url)
-            fields = Field.objects.filter(typePart=partType)
-            description = part['DetailedDescription']
-            if not description:
-                description = part['ProductDescription']
+                if website == 'Mouser' and barcode:
+                    return HttpResponseNotFound(
+                        '<h1>Invalid part number. Ensure the manufacturer part number exists on digi-key.</h1>')
+                else:
+                    return HttpResponseNotFound('<h1>Invalid Part Number.</h1>')
+        # grab all parameters returned from api
+        params = {}
+        for value in data:
+            params[value['Parameter']] = value['Value']
+        typeName = part['Family']['Text']
+        partType, created = Type.objects.get_or_create(name=typeName)
+        count = 1
+        # if new part type, assign prefix
+        if created:
+            # get all words in type name, exclude -'s
+            list_name = re.findall(r'\w+', typeName)
+            # get word count
+            word_count = len(list_name)
+            # assign prefix based on amount of words in type name
+            prefix = ""
+            if word_count == 1:
+                prefix = typeName[:3].upper()
+            if word_count == 2:
+                prefix = (list_name[0][:1] + list_name[1][:2]).upper()
+            if word_count >= 3:
+                prefix = (list_name[0][:1] + list_name[1][:1] + list_name[2][:1]).upper()
+            setattr(partType, "prefix", prefix)
+            partType.save()
+            # series is always separate from the other parameters
             try:
-                number = part['ManufacturerPartNumber']
-                manufacturer = part['ManufacturerName']['Text']
+                part['Series']['Parameter']
+                Field.objects.create(name='Series', fields='char1', typePart=partType)
+                count = 2
             except(IndexError, KeyError, TypeError):
-                number = None
-                manufacturer = None
-            if manufacturer:
-                manu, created = Vendor.objects.get_or_create(name=manufacturer, vendor_type="manufacturer")
-                # this is our way of checking for duplicates
-                exists = ManufacturerRelationship.objects.filter(manufacturer=manu, partNumber=number).first()
-                if exists:
-                    messages.warning(request, 'Manufacturer Part Number already exists.')
-                    part = exists.part
-                    partType = exists.part.partType
-                    url = reverse('edit_part', args=(partType.pk, part.pk))
+                count = 1
+            for name, value in params.items():
+                # print("here")
+                if count <= 35:
+                    field = "char" + str(count)
+                    Field.objects.create(name=name, fields=field, typePart=partType)
+                    count += 1
+                # part model only allows for 35 fields currently
+                else:
+                    messages.warning(request, 'Can\'t create type, too many fields.')
+                    url = reverse('digi_part')
                     return HttpResponseRedirect(url)
-            new_part = Part.objects.create(partType=partType, description=description)
-            if manufacturer:
-                ManufacturerRelationship.objects.create(part=new_part, manufacturer=manu, partNumber=number)
-            for field in fields:
-                name = field.name
-                field_name = field.fields
-                # composition parameter is formatted differently
-                if field.name == "Composition":
-                    try:
-                        value = part['Family']['Text']
-                        setattr(new_part, field.fields, value)
-                    except(IndexError, KeyError):
-                        pass
-                # try to get each value and assign it to the part
+        fields = Field.objects.filter(typePart=partType)
+        description = part['DetailedDescription']
+        if not description:
+            description = part['ProductDescription']
+        try:
+            number = part['ManufacturerPartNumber']
+            manufacturer = part['ManufacturerName']['Text']
+        except(IndexError, KeyError, TypeError):
+            number = None
+            manufacturer = None
+        if manufacturer:
+            manu, created = Vendor.objects.get_or_create(name=manufacturer, vendor_type="manufacturer")
+            # this is our way of checking for duplicates
+            exists = ManufacturerRelationship.objects.filter(manufacturer=manu, partNumber=number).first()
+            if exists:
+                messages.warning(request, 'Manufacturer Part Number already exists.')
+                part = exists.part
+                partType = exists.part.partType
+                url = reverse('edit_part', args=(partType.pk, part.pk))
+                return HttpResponseRedirect(url)
+        new_part = Part.objects.create(partType=partType, description=description)
+        if manufacturer:
+            ManufacturerRelationship.objects.create(part=new_part, manufacturer=manu, partNumber=number)
+        for field in fields:
+            name = field.name
+            field_name = field.fields
+            # composition parameter is formatted differently
+            if field.name == "Composition":
                 try:
-                    value = part[name]['Value']
+                    value = part['Family']['Text']
                     setattr(new_part, field.fields, value)
                 except(IndexError, KeyError):
-                    try:
-                        value = params[name]
-                        setattr(new_part, field.fields, value)
-                    except(IndexError, KeyError):
-                        pass
-            new_part.save()
-            # assign datasheet if it exists
+                    pass
+            # try to get each value and assign it to the part
             try:
-                datasheet_url = part['PrimaryDatasheet']
-                if 'pdf' in datasheet_url:
-                    try:
-                        datasheet_name = urlparse(datasheet_url).path.split('/')[-1]
-                        headers = {
-                            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0'}
-                        response = requests.get(datasheet_url, headers=headers, timeout=5)
-                        if response.status_code == 200:
-                            new_part.datasheet.save(datasheet_name, ContentFile(response.content), save=True)
-                    except (requests.exceptions.SSLError):
-                        pass
-            except(IndexError, KeyError, TypeError):
-                pass
-            redirect_url = reverse('edit_part', args=[partType.pk, new_part.id])
-            return HttpResponseRedirect(redirect_url)
-    else:
-        form = APIForm()
-    return render(request, "oauth.html", {'form': form})
+                value = part[name]['Value']
+                setattr(new_part, field.fields, value)
+            except(IndexError, KeyError):
+                try:
+                    value = params[name]
+                    setattr(new_part, field.fields, value)
+                except(IndexError, KeyError):
+                    pass
+        new_part.save()
+        # assign datasheet if it exists
+        try:
+            datasheet_url = part['PrimaryDatasheet']
+            if 'pdf' in datasheet_url:
+                try:
+                    datasheet_name = urlparse(datasheet_url).path.split('/')[-1]
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0'}
+                    response = requests.get(datasheet_url, headers=headers, timeout=5)
+                    if response.status_code == 200:
+                        new_part.datasheet.save(datasheet_name, ContentFile(response.content), save=True)
+                except (requests.exceptions.SSLError):
+                    pass
+        except(IndexError, KeyError, TypeError):
+            pass
+        redirect_url = reverse('edit_part', args=[partType.pk, new_part.id])
+        return HttpResponseRedirect(redirect_url)
+    
+  #  return render(request, "oauth.html", {'form': form})
+    return render(request, "oauth.html")
 
 
 def get_location(request, loc_id):
