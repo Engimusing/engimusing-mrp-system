@@ -560,7 +560,7 @@ def MergeLocation(primary_object, alias_object):
 def enter_digi_part(request):
     if request.method == "POST":     
         barcode = request.POST.get('barcode','')
-        partNumber = request.POST.get('partnumber','')
+        partNumber = request.POST.get('partNumber','')
         manuPartNumb = request.POST.get('manuPartNumber','')
         emusPartNumb = request.POST.get('emusPartNumber','')
         location = request.POST.get('location','')
@@ -588,7 +588,7 @@ def enter_digi_part(request):
             except (IndexError, KeyError):
                 messages.warning(request, ('Digi-Key access tokens are off.'))
                 url = reverse('digi_part')
-                return HttpResponseRedirect(url)
+                #return HttpResponseRedirect(url)
 
             # set access and refresh token from tokens returned with API
             accessToken = response['access_token']
@@ -618,7 +618,7 @@ def enter_digi_part(request):
             search = barcode
         elif buttonPressed == 'Lookup Digi-Key':
             search = partNumber
-        elif (buttonPressed == 'Lookup Manu Part Number' and manuPartNumb):
+        elif buttonPressed == 'Lookup Manu Part Number' and manuPartNumb:
             search = manuPartNumb
         elif buttonPressed == 'Lookup Emus Part Number':
             if emusPartNumb:
