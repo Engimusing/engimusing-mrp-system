@@ -565,7 +565,7 @@ def enter_digi_part(request):
         emusPartNumb = request.POST.get('emusPartNumber','')
         location = request.POST.get('location','')
        
-
+        search = ''
         buttonPressed = request.POST.get('lookupBtn','')
 
         if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Manu Part Number') or (buttonPressed == 'Lookup Barcode'):
