@@ -568,8 +568,10 @@ def enter_digi_part(request):
         search = ''
         buttonPressed = request.POST.get('lookupBtn','')
 
-        if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Manu Part Number') or (buttonPressed == 'Lookup Barcode'):
-
+        if (buttonPressed == 'Lookup Digi-Key'):
+            search = partNumber
+        #elif buttonPressed == 'Lookup Manu Part Number':
+           # search = manuPartNumb
             # this model holds the access and refresh token for digikey API
             digi = DigiKeyAPI.objects.get(name="DigiKey")
 
@@ -588,7 +590,7 @@ def enter_digi_part(request):
             except (IndexError, KeyError):
                 messages.warning(request, ('Digi-Key access tokens are off.'))
                 url = reverse('digi_part')
-                #return HttpResponseRedirect(url)
+                return HttpResponseRedirect(url)
 
             # set access and refresh token from tokens returned with API
             accessToken = response['access_token']
@@ -596,7 +598,7 @@ def enter_digi_part(request):
             setattr(digi, "access_token", accessToken)
             digi.save()
             # if digikey barcode, use barcode api to get part number
-            if barcode:
+            if (buttonPressed == "Lookup barcode" and barcode):
                 conn = http.client.HTTPSConnection("api.digikey.com")
 
                 headers = {
@@ -614,9 +616,7 @@ def enter_digi_part(request):
                 search = partNumber
 
         # if mouser barcode, its a manufacturer number
-        elif buttonPressed == 'Lookup Barcode':
-            search = barcode
-        elif buttonPressed == 'Lookup Digi-Key':
+        elif buttonPressed == 'Lookup Digi-Key' and partNumber:
             search = partNumber
         elif buttonPressed == 'Lookup Manu Part Number' and manuPartNumb:
             search = manuPartNumb
