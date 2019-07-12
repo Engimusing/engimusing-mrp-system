@@ -568,7 +568,7 @@ def enter_digi_part(request):
         search = ''
         buttonPressed = request.POST.get('lookupBtn','')
 
-        if (buttonPressed == 'Lookup Digi-Key'):
+        if (buttonPressed == 'Lookup Digi-Key' or buttonPressed == 'Lookup Barcode'):
             search = partNumber
         #elif buttonPressed == 'Lookup Manu Part Number':
            # search = manuPartNumb
@@ -616,10 +616,7 @@ def enter_digi_part(request):
                 search = partNumber
 
         # if mouser barcode, its a manufacturer number
-        elif buttonPressed == 'Lookup Digi-Key' and partNumber:
-            search = partNumber
-        elif buttonPressed == 'Lookup Manu Part Number' and manuPartNumb:
-            search = manuPartNumb
+      
         elif buttonPressed == 'Lookup Emus Part Number':
             if emusPartNumb:
                 search = emusPartNumb
