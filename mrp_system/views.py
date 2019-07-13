@@ -568,8 +568,7 @@ def enter_digi_part(request):
         search = ''
         buttonPressed = request.POST.get('lookupBtn','')
 
-        if (buttonPressed == 'Lookup Digi-Key' or buttonPressed == 'Lookup Barcode'):
-            search = partNumber
+        if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Barcode') or (buttonPressed == 'Lookup Mouser Barcode'):
         #elif buttonPressed == 'Lookup Manu Part Number':
             #search = manuPartNumb
             #this model holds the access and refresh token for digikey API
@@ -616,7 +615,10 @@ def enter_digi_part(request):
                 search = partNumber
 
         # if mouser barcode, its a manufacturer number
-      
+        if buttonPressed == 'Lookup Digi-Key':
+            search = partNumber
+        elif buttonPressed == 'Lookup Mouser Barcode':
+            search = manuPartNumb
         elif buttonPressed == 'Lookup Emus Part Number':
             if emusPartNumb:
                 search = emusPartNumb
