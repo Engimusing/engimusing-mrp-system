@@ -570,8 +570,8 @@ def enter_digi_part(request):
 
         if (buttonPressed == 'Lookup Digi-Key' or buttonPressed == 'Lookup Barcode'):
             search = partNumber
-        elif buttonPressed == 'Lookup Manu Part Number':
-            search = manuPartNumb
+        #elif buttonPressed == 'Lookup Manu Part Number':
+            #search = manuPartNumb
             #this model holds the access and refresh token for digikey API
             digi = DigiKeyAPI.objects.get(name="DigiKey")
 
