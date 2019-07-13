@@ -561,7 +561,7 @@ def enter_digi_part(request):
     if request.method == "POST":     
         barcode = request.POST.get('barcode','')
         partNumber = request.POST.get('partNumber','')
-        manuPartNumb = request.POST.get('manuPartNumber','')
+        mouserBarcode = request.POST.get('mouserBarcode','')
         emusPartNumb = request.POST.get('emusPartNumber','')
         location = request.POST.get('location','')
        
@@ -618,7 +618,7 @@ def enter_digi_part(request):
         if buttonPressed == 'Lookup Digi-Key':
             search = partNumber
         elif buttonPressed == 'Lookup Mouser Barcode':
-            search = manuPartNumb
+            search = mouserBarcode
         elif buttonPressed == 'Lookup Emus Part Number':
             if emusPartNumb:
                 search = emusPartNumb
@@ -678,7 +678,7 @@ def enter_digi_part(request):
                 part = jstr['ExactParts'][0]
                 data = part['Parameters']
             except(IndexError, KeyError, TypeError):
-                if buttonPressed== 'Lookup Mouser Barcode' and barcode:
+                if buttonPressed== 'Lookup Mouser Barcode' and mouserBarcode:
                     return HttpResponseNotFound(
                         '<h1>Invalid part number. Ensure the manufacturer part number exists on digi-key.</h1>')
                 else:
