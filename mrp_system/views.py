@@ -678,7 +678,7 @@ def enter_digi_part(request):
                 part = jstr['ExactParts'][0]
                 data = part['Parameters']
             except(IndexError, KeyError, TypeError):
-                if buttonPressed== 'Lookup Mouser barcode' and barcode:
+                if buttonPressed== 'Lookup Mouser Barcode' and barcode:
                     return HttpResponseNotFound(
                         '<h1>Invalid part number. Ensure the manufacturer part number exists on digi-key.</h1>')
                 else:
