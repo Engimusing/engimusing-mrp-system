@@ -641,9 +641,7 @@ def enter_digi_part(request):
                 search = part['ManufacturerPartNumber']
                 if not mouserBarcode:
                     return HttpResponseNotFound('<h1>Invalid part number')
-                else:
-                    redirect_url = reverse('edit_part', args=[part.partType_id, part.id])
-                    return HttpResponseRedirect(redirect_url)  
+                
             else: 
                 return HttpResponseNotFound('<h1> You must enter a part number')
 
