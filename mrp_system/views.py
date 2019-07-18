@@ -568,7 +568,7 @@ def enter_digi_part(request):
         search = ''
         buttonPressed = request.POST.get('lookupBtn','')
 
-        if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Barcode') or (buttonPressed == 'Lookup Mouser Barcode'):
+        if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Barcode' ):
         #elif buttonPressed == 'Lookup Manu Part Number':
             #search = manuPartNumb
             #this model holds the access and refresh token for digikey API
@@ -618,7 +618,36 @@ def enter_digi_part(request):
         if buttonPressed == 'Lookup Digi-Key':
             search = partNumber
         elif buttonPressed == 'Lookup Mouser Barcode':
-            search = mouserBarcode
+            if mouserBarcode:
+                search = mouserBarcode
+ # get part information from part number or manufacturer part number
+                conn = http.client.HTTPSConnection("api.mouser.com")
+
+                payload = "{\"SearchByKeywordRequest\":{\"keyword\":\"" + search + "\"}}"
+
+                headers = {
+                    'content-type': "application/json"    
+                }
+
+                conn.request("POST", "/api/V1.0/search/keyword/?apikey=4f3a5802-6d72-4ae2-b25d-b8f9e96d8fe4&", payload, headers)
+
+                res = conn.getresponse()
+                string = res.read().decode('utf-8')
+                sys.stdout.flush()
+                jstr = json.loads(string)
+                searchResults = jstr['SearchResults']
+                parts = searchResults['Parts']
+                part = parts[0]
+                search = part['ManufacturerPartNumber']
+                if not mouserBarcode:
+                    return HttpResponseNotFound('<h1>Invalid part number')
+                else:
+                    redirect_url = reverse('edit_part', args=[part.partType_id, part.id])
+                    return HttpResponseRedirect(redirect_url)  
+            else: 
+                return HttpResponseNotFound('<h1> You must enter a part number')
+
+
         elif buttonPressed == 'Lookup Emus Part Number':
             if emusPartNumb:
                 search = emusPartNumb
