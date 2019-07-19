@@ -561,14 +561,14 @@ def enter_digi_part(request):
     if request.method == "POST":     
         barcode = request.POST.get('barcode','')
         partNumber = request.POST.get('partNumber','')
-        mouserBarcode = request.POST.get('mouserBarcode','')
+        mouserPartNumber = request.POST.get('mouserPartNumber','')
         emusPartNumb = request.POST.get('emusPartNumber','')
         location = request.POST.get('location','')
        
         search = ''
         buttonPressed = request.POST.get('lookupBtn','')
 
-        if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Barcode' ):
+        if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Barcode' ) or (buttonPressed == 'Lookup Mouser Part Number'):
         #elif buttonPressed == 'Lookup Manu Part Number':
             #search = manuPartNumb
             #this model holds the access and refresh token for digikey API
@@ -614,16 +614,16 @@ def enter_digi_part(request):
                 partNumber = part['DigiKeyPartNumber']
                 search = partNumber
 
-        # if mouser barcode, its a manufacturer number
+        # if mouser part number, its a manufacturer number
         if buttonPressed == 'Lookup Digi-Key':
             search = partNumber
-        elif buttonPressed == 'Lookup Mouser Barcode':
-            if mouserBarcode:
-                search = mouserBarcode
+        elif buttonPressed == 'Lookup Mouser Part Number':
+            if mouserPartNumber:
+                search = mouserPartNumber
  # get part information from part number or manufacturer part number
                 conn = http.client.HTTPSConnection("api.mouser.com")
 
-                payload = "{\"SearchByKeywordRequest\":{\"keyword\":\"" + search + "\"}}"
+                payload = "{\"SearchByKeywordRequest\":{\"keyword\":\"" + search + "\",\"records\": 1}}"
 
                 headers = {
                     'content-type': "application/json"    
@@ -636,12 +636,15 @@ def enter_digi_part(request):
                 sys.stdout.flush()
                 jstr = json.loads(string)
                 searchResults = jstr['SearchResults']
-                parts = searchResults['Parts']
-                part = parts[0]
-                search = part['ManufacturerPartNumber']
-                if not mouserBarcode:
+                total = searchResults['NumberOfResult']
+                if total > 0:
+                    parts = searchResults['Parts']
+                    part = parts[0]
+                    search = part['ManufacturerPartNumber']
+                    if not search:
+                        return HttpResponseNotFound('<h1>Invalid part number')
+                else:
                     return HttpResponseNotFound('<h1>Invalid part number')
-                
             else: 
                 return HttpResponseNotFound('<h1> You must enter a part number')
 
@@ -670,8 +673,8 @@ def enter_digi_part(request):
                     return HttpResponseRedirect(redirect_url)
             else:
                 return HttpResponseNotFound('<h1>Invalid location')
-        else:
-            return HttpResponseNotFound('<h1>You must enter a number in a field!</h1>')
+        #else:
+            #return HttpResponseNotFound('<h1>You must enter a number in a field!</h1>')
 
         # get part information from part number or manufacturer part number
         conn = http.client.HTTPSConnection("api.digikey.com")
@@ -705,7 +708,7 @@ def enter_digi_part(request):
                 part = jstr['ExactParts'][0]
                 data = part['Parameters']
             except(IndexError, KeyError, TypeError):
-                if buttonPressed== 'Lookup Mouser Barcode' and mouserBarcode:
+                if buttonPressed== 'Lookup Mouser Part Number' and mouserPartNumber:
                     return HttpResponseNotFound(
                         '<h1>Invalid part number. Ensure the manufacturer part number exists on digi-key.</h1>')
                 else:
