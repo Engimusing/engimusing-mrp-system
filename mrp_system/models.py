@@ -143,7 +143,7 @@ class Part(models.Model):
     manufacturer = models.ManyToManyField(Vendor,
                                           through='ManufacturerRelationship')
     # all of the fields that could be tracked for a part type
-    char1 = models.CharField(max_length=100, blank=True)
+    char1 = models.CharField(max_length=200, blank=True)
     char2 = models.CharField(max_length=100, blank=True)
     char3 = models.CharField(max_length=100, blank=True)
     char4 = models.CharField(max_length=100, blank=True)

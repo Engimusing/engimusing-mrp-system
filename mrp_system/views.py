@@ -568,7 +568,7 @@ def enter_digi_part(request):
         search = ''
         buttonPressed = request.POST.get('lookupBtn','')
 
-        if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Barcode' ) or (buttonPressed == 'Lookup Mouser Part Number'):
+        if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Barcode' ):
         #elif buttonPressed == 'Lookup Manu Part Number':
             #search = manuPartNumb
             #this model holds the access and refresh token for digikey API
@@ -614,41 +614,13 @@ def enter_digi_part(request):
                 partNumber = part['DigiKeyPartNumber']
                 search = partNumber
 
-        # if mouser part number, its a manufacturer number
+        # if mouser barcode, its a manufacturer number
         if buttonPressed == 'Lookup Digi-Key':
             search = partNumber
-        elif buttonPressed == 'Lookup Mouser Part Number':
-            if mouserPartNumber:
-                search = mouserPartNumber
- # get part information from part number or manufacturer part number
-                conn = http.client.HTTPSConnection("api.mouser.com")
-
-                payload = "{\"SearchByKeywordRequest\":{\"keyword\":\"" + search + "\",\"records\": 1}}"
-
-                headers = {
-                    'content-type': "application/json"    
-                }
-
-                conn.request("POST", "/api/V1.0/search/keyword/?apikey=4f3a5802-6d72-4ae2-b25d-b8f9e96d8fe4&", payload, headers)
-
-                res = conn.getresponse()
-                string = res.read().decode('utf-8')
-                sys.stdout.flush()
-                jstr = json.loads(string)
-                searchResults = jstr['SearchResults']
-                total = searchResults['NumberOfResult']
-                if total > 0:
-                    parts = searchResults['Parts']
-                    part = parts[0]
-                    search = part['ManufacturerPartNumber']
-                    if not search:
-                        return HttpResponseNotFound('<h1>Invalid part number')
-                else:
-                    return HttpResponseNotFound('<h1>Invalid part number')
-            else: 
-                return HttpResponseNotFound('<h1> You must enter a part number')
-
-
+        elif buttonPressed == 'Lookup Mouser Part Number':          
+            return lookupMouser(request, mouserPartNumber)
+           
+ 
         elif buttonPressed == 'Lookup Emus Part Number':
             if emusPartNumb:
                 search = emusPartNumb
@@ -673,8 +645,10 @@ def enter_digi_part(request):
                     return HttpResponseRedirect(redirect_url)
             else:
                 return HttpResponseNotFound('<h1>Invalid location')
-        #else:
-            #return HttpResponseNotFound('<h1>You must enter a number in a field!</h1>')
+        else:
+            return HttpResponseNotFound('<h1>You must enter a number in a field!</h1>')
+
+
 
         # get part information from part number or manufacturer part number
         conn = http.client.HTTPSConnection("api.digikey.com")
@@ -698,12 +672,14 @@ def enter_digi_part(request):
         sys.stdout.flush()
         jstr = json.loads(string)
         logger.info('Im here')
+    # try to get the part information
         try:
             part = jstr['ExactDigiKeyPart']
             logger.info(part)
             data = part['Parameters']
             logger.info(data)
         except(IndexError, KeyError, TypeError):
+        # here's the alternative way
             try:
                 part = jstr['ExactParts'][0]
                 data = part['Parameters']
@@ -715,9 +691,12 @@ def enter_digi_part(request):
                     return HttpResponseNotFound('<h1>Invalid Part Number.</h1>')
         # grab all parameters returned from api
         params = {}
+        # loop through all of the parameters and stick them in parms
         for value in data:
             params[value['Parameter']] = value['Value']
+        # create a type name
         typeName = part['Family']['Text']
+        # get or create a part type
         partType, created = Type.objects.get_or_create(name=typeName)
         count = 1
         # if new part type, assign prefix
@@ -743,6 +722,7 @@ def enter_digi_part(request):
                 count = 2
             except(IndexError, KeyError, TypeError):
                 count = 1
+            # create upo to 35 fields from the parameters
             for name, value in params.items():
                 # print("here")
                 if count <= 35:
@@ -819,6 +799,91 @@ def enter_digi_part(request):
   #  return render(request, "oauth.html", {'form': form})
     return render(request, "oauth.html")
 
+def lookupMouser(request, mouserPartNumber):
+    # get part information from part number or manufacturer part number
+        conn = http.client.HTTPSConnection("api.mouser.com")
+
+        payload = "{\"SearchByKeywordRequest\":{\"keyword\":\"" + mouserPartNumber + "\"}}"
+
+        headers = {
+            'content-type': "application/json"    
+        }
+
+        conn.request("POST", "/api/V1.0/search/keyword/?apikey=4f3a5802-6d72-4ae2-b25d-b8f9e96d8fe4&", payload, headers)
+
+        res = conn.getresponse()
+        string = res.read().decode('utf-8')
+        sys.stdout.flush()
+        jstr = json.loads(string)
+        searchResults = jstr['SearchResults']
+        if searchResults['NumberOfResult'] == 0:
+            return HttpResponseNotFound('<h1> invalid part number')
+            
+        parts = searchResults['Parts']
+        part = parts[0]
+        typeName = part['Category']
+        partType, created = Type.objects.get_or_create(name=typeName)
+
+        if created:
+            # get all words in type name, exclude -'s
+            list_name = re.findall(r'\w+', typeName)
+            # get word count
+            word_count = len(list_name)
+            # assign prefix based on amount of words in type name
+            prefix = ""
+            if word_count == 1:
+                prefix = typeName[:3].upper()
+            if word_count == 2:
+                prefix = (list_name[0][:1] + list_name[1][:2]).upper()
+            if word_count >= 3:
+                prefix = (list_name[0][:1] + list_name[1][:1] + list_name[2][:1]).upper()
+            setattr(partType, "prefix", prefix)
+            partType.save()
+        description = part['Description']
+        number = part['ManufacturerPartNumber']
+        manufacturer = part['Manufacturer']
+        if manufacturer:
+            manu, created = Vendor.objects.get_or_create(name=manufacturer, vendor_type="manufacturer")
+            # this is our way of checking for duplicates
+            exists = ManufacturerRelationship.objects.filter(manufacturer=manu, partNumber=number).first()
+            if exists:
+                messages.warning(request, 'Manufacturer Part Number already exists.')
+                part = exists.part
+                partType = exists.part.partType
+                url = reverse('edit_part', args=(partType.pk, part.pk))
+                return HttpResponseRedirect(url)
+        new_part = Part.objects.create(partType=partType, description=description)
+        if manufacturer:
+            ManufacturerRelationship.objects.create(part=new_part, manufacturer=manu, partNumber=number)
+        
+        try:
+            
+            field = Field.objects.create(name='ProductDetailUrl', fields='char1', typePart=partType)
+            try:
+                value = part['ProductDetailUrl']
+                setattr(new_part, field.fields, value)
+            except(IndexError, KeyError):
+                pass
+        except(IndexError, KeyError, TypeError):
+            pass
+        new_part.save()
+        try:
+            datasheet_url = part['DataSheetUrl']
+            if 'pdf' in datasheet_url:
+                try:
+                    datasheet_name = urlparse(datasheet_url).path.split('/')[-1]
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0'}
+                    response = requests.get(datasheet_url, headers=headers, timeout=5)
+                    if response.status_code == 200:
+                        new_part.datasheet.save(datasheet_name, ContentFile(response.content), save=True)
+                except (requests.exceptions.SSLError):
+                    pass
+        except(IndexError, KeyError, TypeError):
+            pass
+        redirect_url = reverse('edit_part', args=[partType.pk, new_part.id])
+        return HttpResponseRedirect(redirect_url)
+    
 
 def get_location(request, loc_id):
 
