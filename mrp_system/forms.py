@@ -11,7 +11,10 @@ from django.utils.safestring import mark_safe
 from mrp_system.models import ReadOnlyFormMixin
 
 
-class PartForm(ModelForm): 
+class PartForm(ModelForm):
+        description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'rows': 2, 'cols': 35, 'max_length': 750}), required=True)
+        char1 = forms.CharField(label=" <a href='Description'>terms&conditions</a>", widget=forms.Textarea(attrs={'rows': 2, 'cols': 48, 'max_length': 750}), required=True)
+        
 
         def __init__(self, type_id, *args, **kwargs):
             super(PartForm, self).__init__(*args, **kwargs)
