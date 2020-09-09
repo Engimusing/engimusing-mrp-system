@@ -1,6 +1,7 @@
 <!doctype html>
 
 {% load static %}
+
 <html>
 <head>
     <title>Timepiece: {% block title %}{% endblock title %}</title>
@@ -79,8 +80,10 @@
 
       <div class="dropdown-menu">
         <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
-            <a class="dropdown-item" href="{% url 'list_projects' %}">Projects</a>
-            <a class="dropdown-item" href="{% url 'list_users' %}">Users</a>
+        <a class="dropdown-item" href="{% url 'list_projects' %}">Projects</a>
+        <a class="dropdown-item" href="{% url 'list_users' %}">Users</a>
+        <a class="dropdown-item" href="{% url 'payroll_download' %}">Payroll Hours</a>
+        <a class="dropdown-item" href="{% url 'invoice_download' %}">Invoice Hours</a>
       </div>
     </li>
       {% endif %}

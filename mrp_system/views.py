@@ -583,6 +583,7 @@ def enter_digi_part(request):
                     'grant_type': 'refresh_token'
                     }
             r = requests.post(url=API_ENDPOINT, data=data)
+            print(r.text)
             response = r.json()
             try:
                 refreshToken = response['refresh_token']
@@ -617,9 +618,11 @@ def enter_digi_part(request):
         # if mouser barcode, its a manufacturer number
         if buttonPressed == 'Lookup Digi-Key':
             search = partNumber
-        elif buttonPressed == 'Lookup Mouser Part Number':          
-            return lookupMouser(request, mouserPartNumber)
-           
+        elif buttonPressed == 'Lookup Mouser Part Number': 
+            try:         
+                return lookupMouser(request, mouserPartNumber)
+            except Exception as e:
+                logger.exception("EXCEPTION OCCURED!")           
  
         elif buttonPressed == 'Lookup Emus Part Number':
             if emusPartNumb:
@@ -799,6 +802,7 @@ def enter_digi_part(request):
   #  return render(request, "oauth.html", {'form': form})
     return render(request, "oauth.html")
 
+
 def lookupMouser(request, mouserPartNumber):
     # get part information from part number or manufacturer part number
         conn = http.client.HTTPSConnection("api.mouser.com")
@@ -866,7 +870,9 @@ def lookupMouser(request, mouserPartNumber):
                 pass
         except(IndexError, KeyError, TypeError):
             pass
+            
         new_part.save()
+
         try:
             datasheet_url = part['DataSheetUrl']
             if 'pdf' in datasheet_url:
@@ -883,7 +889,172 @@ def lookupMouser(request, mouserPartNumber):
             pass
         redirect_url = reverse('edit_part', args=[partType.pk, new_part.id])
         return HttpResponseRedirect(redirect_url)
-    
+
+
+def search_all_models(request):
+    search_query = request.POST.get("search_text")
+    all_checkbox = request.POST.get("all_checkbox")
+
+    filter_list = [
+        request.POST.get("part_checkbox"),
+        request.POST.get("vendor_checkbox"),
+        request.POST.get("location_checkbox"),
+        request.POST.get("product_checkbox"),
+        request.POST.get("manufacturingorder_checkbox"),
+        request.POST.get("purchaseorder_checkbox"),
+    ]
+    models_list = [Part, Vendor, Location, Product, ManufacturingOrder, PurchaseOrder]
+
+    if not all_checkbox:
+        models_list = [model for model, checkbox in zip(models_list, filter_list) if checkbox is not None]
+
+    results_list = []
+    if search_query:
+        for model in models_list:
+            # get rid of auto-generated fields
+            fields_list = []
+            fields_list2 = []
+            if model.__name__ == "ManufacturingOrder":
+                # fields_list = [f for f in Product._meta.fields if f.get_internal_type()!="ForeignKey"]
+                fields_list = [f for f in Part._meta.fields if f.get_internal_type()!="ForeignKey"]
+                fields_list2 = [f for f in Vendor._meta.fields if f.get_internal_type()!="ForeignKey"]
+                fields_list2 = [f for f in fields_list2 if "id" not in f.name]
+
+            elif model.__name__ == "PurchaseOrder":
+                fields_list = [f for f in Part._meta.fields if f.get_internal_type()!="ForeignKey"]
+            else:
+                fields_list = [f for f in model._meta.fields if f.get_internal_type()!="ForeignKey"]
+            
+            fields_list = [f for f in fields_list if "id" not in f.name]
+
+            # create search vectors for each fielf and convert int and float fields to charfields
+            search_vecs = [SearchVector(f.name) if f.get_internal_type()=="CharField"\
+                            else SearchVector(Cast(f.name, CharField())) for f in fields_list]
+            search_vecs2 = []
+            if model.__name__ == "ManufacturingOrder":
+                search_vecs2 = [SearchVector(f.name) if f.get_internal_type()=="CharField"\
+                            else SearchVector(Cast(f.name, CharField())) for f in fields_list2]
+
+            # ensure unique results               
+            cache = set()
+
+            if model.__name__ == "ManufacturingOrder":
+                for query in search_query.split():
+                    for vec, field in zip(search_vecs2, fields_list2):
+                        kwargs = {f"{field.name}__icontains": query}
+                        vendors = list(Vendor.objects.annotate(search=vec).filter(**kwargs))
+                        # vendor -> manufacturing relationship -> part -> product -> manufacturing order
+                        parts = []
+                        for vendor in vendors:
+                            for mr in list(ManufacturerRelationship.objects.filter(manufacturer=vendor)):
+                                parts.append(mr.part)
+                        products = []
+                        for p in parts:
+                            for product in list(Product.objects.filter(part=p)):
+                                products.append(product)
+                        for p in products:
+                            for mo in list(ManufacturingOrder.objects.filter(product=p)):
+                                if str(mo) in cache:
+                                    continue
+
+                                result_dict = {
+                                    "mo_id": mo.id,
+                                    "type": model.__name__,
+                                    "result": mo
+                                    }
+                                results_list.append(result_dict)
+                                cache.add(str(mo))
+
+
+            for query in search_query.split():
+                for vec, field in zip(search_vecs, fields_list):
+
+                    kwargs = {}
+                    results = []
+
+                    if model.__name__ == "ManufacturingOrder":
+                        kwargs = {f"{field.name}__icontains": query}
+                        parts = list(Part.objects.annotate(search=vec).filter(**kwargs))
+                        products = []
+                        for part in parts:
+                            for product in list(Product.objects.filter(part=part)):
+                                products.append(product)
+                        results = []
+                        for p in products:
+                            for mo in list(ManufacturingOrder.objects.filter(product=p)):
+                                results.append(mo)
+
+                    elif model.__name__ == "PurchaseOrder": 
+                        kwargs = {f"part__{field.name}__icontains": query}
+                        results = list(model.objects.filter(**kwargs))
+
+                    else:
+                        kwargs = {f"{field.name}__icontains": query}
+                        results = list(model.objects.annotate(search=vec).filter(**kwargs))
+
+                    for r in results:
+                        if str(r) in cache:
+                            continue
+
+                        # if it's a Part
+                        if model.__name__ == "Part":
+                            locations = r.get_location()
+                            stock_locations = r.get_stock()
+                            stock = 0
+                            # get total stock number
+                            if stock_locations:
+                                stock = sum([location.stock for location in stock_locations if location.stock is not None])
+                            
+                            results_list.append({
+                                "part": str(r),
+                                "part_id": r.pk,
+                                "parttype_id": r.partType.pk,
+                                "location": locations if locations else None,
+                                "stock": stock,
+                                "type": model.__name__,
+                                "result": r
+                                })
+                        
+                        # if manufacturing order
+                        elif model.__name__ == "ManufacturingOrder":
+                            results_list.append({
+                                "result": str(r),
+                                "mo_id": r.id,
+                                "type": model.__name__
+                            })
+                        # if purchase order
+                        elif model.__name__ == "PurchaseOrder":
+                            results_list.append({
+                                "result": str(r),
+                                "po_id": r.id,
+                                "type": model.__name__
+                            })
+                        # if vendor
+                        elif model.__name__ == "Vendor":
+                            results_list.append({
+                                "result": str(r),
+                                "vendor_id": r.id,
+                                "type": model.__name__
+                            })
+
+                        else:
+                            results_list.append({
+                                "type": model.__name__,
+                                "result": str(r)
+                                })
+
+                        cache.add(str(r))
+
+    return render(
+                request, 
+                'search_query_results.html', 
+                {
+                    "query": search_query,
+                    "results_list": results_list,
+                    "num_results": len(results_list)
+                })
+
+
 
 def get_location(request, loc_id):
 

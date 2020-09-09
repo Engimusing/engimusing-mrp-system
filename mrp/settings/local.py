@@ -25,13 +25,19 @@ SECRET_KEY = '@muayu7vm$(i0ebd1ox7#eh#njglb2j)lxlh+*#43dxtj@nv-q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+        'www.emus.us',
+        'emus.us',
+        '142.11.199.250',
+        'localhost', 
+        '127.0.0.1',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'sslserver',
+    #'sslserver',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -151,21 +157,35 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
 # doug commented out these two lines
-AWS_ACCESS_KEY_ID = os.environ['access_key']
-AWS_SECRET_ACCESS_KEY = os.environ['secret_access_key']
-AWS_STORAGE_BUCKET_NAME = 'emus-mrp'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+#with open('/etc/access_key.txt') as f:
+#    AWS_ACCESS_KEY_ID = f.read().strip()
+#    AWS_SECRET_ACCESS_KEY = f.read().strip()
+#AWS_STORAGE_BUCKET_NAME = 'emus-mrp'
+#AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+#
+#AWS_S3_OBJECT_PARAMETERS = {
+#    'CacheControl': 'max-age=86400',
+#}
 
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-
-MEDIAFILES_LOCATION = 'media'
-DEFAULT_FILE_STORAGE = 'mrp.settings.custom_storages.MediaStorage'
+MEDIA_ROOT = '/home/owenb/mrp-system/emus-mrp/media/'
+MEDIA_URL = '/documents/'
+MEDIAFILES_LOCATION = 'documents'
+#DEFAULT_FILE_STORAGE = 'mrp.settings.custom_storages.MediaStorage'
 
 STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'mrp.settings.custom_storages.StaticStorage'
+#STATICFILES_STORAGE = 'mrp.settings.custom_storages.StaticStorage'
+
+
+#SECURE_SSL_REDIRECT = True
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
+#SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# wsgi scheme
+#os.environ['wsgi.url_scheme'] = 'https'
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

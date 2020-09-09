@@ -136,16 +136,21 @@ class ListUsers(ListView):
         context = super(ListUsers, self).get_context_data(**kwargs)
         return context
 
-##csv report found in weekly timesheet view
-def week_timesheet(request, date):
+
+def payroll_hours_download(request):
     #only include users that have payroll attribute selected
-    all_users = User.objects.filter(profile__payroll=True).select_related('profile')
+    all_users = User.objects.filter(profile__payroll=True, is_active=True).select_related('profile')
+
+    week_start = datetime.date.today() - datetime.timedelta(days=datetime.date.today().isoweekday() % 7)
+    last_week_start = week_start - datetime.timedelta(days=7)
+    from_date = datetime.datetime.strptime(str(last_week_start), "%Y-%m-%d")
+    formatted_date = str(from_date).split(' ')[0]
     response = HttpResponse(content_type='text/csv')
-    from_date = datetime.datetime.strptime(date, "%Y-%m-%d")
-    response['Content-Disposition'] = 'attachment; filename="engimusing-llc-timesheet-%s.csv"' % date
+    response['Content-Disposition'] = 'attachment; filename="engimusing-llc-timesheet-%s.csv"' % formatted_date
 
     writer = csv.writer(response)
-    writer.writerow(['last_name',
+    writer.writerow([
+            'last_name',
             'first_name',
             'ssn',
             'title',
@@ -162,6 +167,7 @@ def week_timesheet(request, date):
     for use1 in all_users:
         last_name = use1.last_name
         first_name = use1.first_name
+        first_name = first_name if first_name!="Owen" else "Samuel" # hacky until figure out how to add payroll_name field
         ssn = use1.profile.ssn
         title = use1.profile.title
         week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
@@ -170,9 +176,107 @@ def week_timesheet(request, date):
         hours = sum(entries['sum'] for entries in user_entries)
         #hours to 2 decimal places
         hours = round(hours, 2)
-        writer.writerow([last_name, first_name, ssn, title, hours])
-       
-            
+        over_time = None
+        if hours > 40:
+            over_time = hours - 40
+            hours = 40
+            writer.writerow([last_name, first_name, ssn, title, hours, over_time])   
+        else:
+            writer.writerow([last_name, first_name, ssn, title, hours])
+        
+    return response
+
+
+def invoice_hours_download(request):
+    #only include users that have payroll attribute selected
+    all_users = User.objects.all()
+        
+    week_start = datetime.date.today() - datetime.timedelta(days=datetime.date.today().isoweekday() % 7)
+    last_week_start = week_start - datetime.timedelta(days=7)
+    from_date = datetime.datetime.strptime(str(last_week_start), "%Y-%m-%d")
+    formatted_date = str(from_date).split(' ')[0]
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="invoice_report-%s.csv"' % formatted_date
+
+    writer = csv.writer(response)
+
+    for use1 in all_users:
+        week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
+
+        #include projects
+        week_entries = week_entries.select_related('project')
+        week_entries = week_entries.filter(project__name__startswith='CCE')
+        user_entries = week_entries.order_by().values('user__first_name', 'user__last_name')
+        user_entries = user_entries.annotate(sum=Sum('hours')).order_by('-sum')  
+
+        if week_entries:
+            name = use1.first_name + ' ' + use1.last_name + ":"
+            writer.writerow([
+                name
+            ])
+
+        if user_entries:
+            hours = sum(entries['sum'] for entries in user_entries)
+        else:
+            hours = 0
+
+        project_entries = week_entries.order_by().values('project__name').distinct()
+        project_entries = project_entries.annotate(sum=Sum('hours')).order_by('-sum')
+
+        #add unique list of activities for each project entry
+        for p in project_entries:
+            p['activities'] = ", ".join(week.activities for week in week_entries.filter(project__name=p['project__name']))
+            # p['activities'] = ", ".join(week.lower_activities for week in week_entries.filter(project__name=p['project__name'])
+            #                            .order_by().annotate(lower_activities=Lower('activities'))
+            #                            .distinct('lower_activities'))
+
+        for project in project_entries:
+            seconds = project['sum']
+            hours = round(seconds, 1)
+            writer.writerow([hours ,project['project__name'] + ' - ' + project['activities']])
+
+    return response
+
+
+##csv report found in weekly timesheet view
+def week_timesheet(request, date):
+    #only include users that have payroll attribute selected
+    all_users = User.objects.filter(profile__payroll=True, is_active=True).select_related('profile')
+    response = HttpResponse(content_type='text/csv')
+    # date = datetime.datetime.today().strftime('%Y-%m-%d') # remove this if stuff don't work
+    from_date = datetime.datetime.strptime(date, "%Y-%m-%d")
+    response['Content-Disposition'] = 'attachment; filename="engimusing-llc-timesheet-%s.csv"' % date
+
+    writer = csv.writer(response)
+    writer.writerow([
+            'last_name',
+            'first_name',
+            'ssn',
+            'title',
+            'regular_hours',
+            'overtime_hours',
+            'double_overtime_hours',
+            'bonus',
+            'commision',
+            'paycheck_tips',
+            'cash_tips',
+            'correction_payment',
+            'reimbursement',
+            'personal_note',])
+    for use1 in all_users:
+        last_name = use1.last_name
+        first_name = use1.first_name
+        first_name = first_name if first_name!="Owen" else "Samuel" # hacky until figure out how to add payroll_name field
+        ssn = use1.profile.ssn
+        title = use1.profile.title
+        week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
+        user_entries = week_entries.order_by().values('user__first_name', 'user__last_name')
+        user_entries = user_entries.annotate(sum=Sum('hours')).order_by('-sum')
+        hours = sum(entries['sum'] for entries in user_entries)
+        #hours to 2 decimal places
+        hours = round(hours, 2)
+        writer.writerow([last_name, first_name, ssn, title, hours])   
         
     return response
 
@@ -180,130 +284,77 @@ def week_timesheet(request, date):
 def week_timesheet_invoice(request, date):
 
     #only include users that have payroll attribute selected
-
     all_users = User.objects.all()
     
     #filter(profile__payroll=False).select_related('profile')
-
     response = HttpResponse(content_type='text/csv')
-
+    # date = datetime.datetime.today().strftime('%Y-%m-%d') # remove this if stuff don't work
     from_date = datetime.datetime.strptime(date, "%Y-%m-%d")
-
-    response['Content-Disposition'] = 'attachment; filename="invoice_report.csv-%s"' % date
-
- 
+    response['Content-Disposition'] = 'attachment; filename="invoice_report-%s.csv"' % date
 
     writer = csv.writer(response)
 
-   
-
     for use1 in all_users:
-
-        
-
         week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
 
         #include projects
-
         week_entries = week_entries.select_related('project')
-
         week_entries = week_entries.filter(project__name__startswith='CCE')
-
         user_entries = week_entries.order_by().values('user__first_name', 'user__last_name')
-
         user_entries = user_entries.annotate(sum=Sum('hours')).order_by('-sum')  
 
         if week_entries:
-
             name = use1.first_name + ' ' + use1.last_name + ":"
-
             writer.writerow([
-
                 name
-
             ])
 
-
         if user_entries:
-
             hours = sum(entries['sum'] for entries in user_entries)
-
         else:
-
             hours = 0
 
-   
-
         project_entries = week_entries.order_by().values('project__name').distinct()
-
         project_entries = project_entries.annotate(sum=Sum('hours')).order_by('-sum')
 
         #add unique list of activities for each project entry
-
         for p in project_entries:
-
             p['activities'] = ", ".join(week.lower_activities for week in week_entries.filter(project__name=p['project__name'])
-
                                        .order_by().annotate(lower_activities=Lower('activities'))
-
                                        .distinct('lower_activities'))
 
- 
-
         for project in project_entries:
-
             seconds = project['sum']
-
             hours = round(seconds, 1)
-
             writer.writerow([hours ,project['project__name'] + ' - ' + project['activities']])
-
-      
-
-            
 
     return response
 
  
-
 def humanize_seconds(total_seconds,
-
                      frmt='{hours:02d}:{minutes:02d}:{seconds:02d}',
-
                      negative_frmt=None):
 
     """Given time in int(seconds), return a string representing the time.
-
- 
-
     If negative_frmt is not given, a negative sign is prepended to frmt
-
     and the result is wrapped in a <span> with the "negative-time" class.
-
     """
 
     if negative_frmt is None:
-
         negative_frmt = '<span class="negative-time">-{0}</span>'.format(frmt)
 
     seconds = abs(int(total_seconds))
 
     mapping = {
-
         'hours': seconds // 3600,
-
         'minutes': seconds % 3600 // 60,
-
         'seconds': seconds % 3600 % 60,
-
     }
 
     if total_seconds < 0:
-
         result = negative_frmt.format(**mapping)
 
     else:
-
         result = frmt.format(**mapping)
 
     return result

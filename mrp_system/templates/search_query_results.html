@@ -1,0 +1,53 @@
+{% extends "base2.html" %}
+
+
+{% block title %}Search Results{% endblock title %}
+
+{% block content %}
+    <h1> Search results for: {{ query }} </h1>
+    <h3> {{ num_results }} results</h3>
+    <table class='table table-bordered table-striped table-condensed'>
+        <thead>
+            <tr>
+                <th>Result</th>
+                <th>Stock</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results_list %}
+                {% if result.type == "Part" %}
+                    <tr>
+                        <td><a href="{% url 'edit_part' result.parttype_id result.part_id %}">{{ result.part }}</a></td>
+                        <td>{{ result.stock }}</td>
+                        <td>{{ result.location }}</td>
+                    </tr>
+                {% elif result.type == "ManufacturingOrder" %}
+                    <tr>
+                        <td><a href="{% url 'detail_mo' result.mo_id %}">{{ result.result }}</a></td>
+                        <td>NA</td>
+                        <td>NA</td>
+                    </tr>
+                {% elif result.type == "PurchaseOrder" %}
+                    <tr>
+                        <td><a href="{% url 'detail_po' result.po_id %}">{{ result.result }}</a></td>
+                        <td>NA</td>
+                        <td>NA</td>
+                    </tr>
+                {% elif result.type == "Vendor" %}
+                <tr>
+                    <td><a href="{% url 'edit_vendor' result.vendor_id %}">{{ result.result }}</a></td>
+                    <td>NA</td>
+                    <td>NA</td>
+                </tr>
+                {% else %}
+                    <tr>
+                        <td>{{ result }}</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

@@ -25,6 +25,15 @@ urlpatterns = [
     url(r'^weektimesheet/(?P<user_id>\d+)/$',
         views.WeekTimesheet.as_view(),
         name='week_timesheet'),
+
+    # new payroll and invoice csv download links
+    url(r'^downloadpayrollhourscsv/$',
+        views.payroll_hours_download,
+        name='payroll_download'),
+
+    url(r'^downloadinvoicehourscsv/$',
+        views.invoice_hours_download,
+        name='invoice_download'),
     
 
     # Projects

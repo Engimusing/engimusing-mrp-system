@@ -13,7 +13,7 @@ class CreateEditProjectForm(forms.ModelForm):
         fields = ('name', 'inactive') 
 
 class EditProjectRelationshipForm(forms.ModelForm):
-    user = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(), queryset=User.objects.all())
+    user = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(), queryset=User.objects.filter(is_active=True).order_by('first_name'))
     class Meta:
         model = ProjectRelationship
         exclude = ('project',)
@@ -27,7 +27,7 @@ class ProjectCreateForm(forms.Form):
     name = forms.CharField(label='Name', max_length=60)
     inactive = forms.BooleanField(required=False)
     users = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                           queryset=User.objects.order_by('first_name'), required=False)
+                                           queryset=User.objects.filter(is_active=True).order_by('first_name'), required=False)
    # activities = forms.CharField(label='Activities', widget=forms.TextInput(attrs={'rows': 1, 'cols': 90, 'max_length': 250}), required=True)
 
 

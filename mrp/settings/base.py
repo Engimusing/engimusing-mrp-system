@@ -23,9 +23,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '@muayu7vm$(i0ebd1ox7#eh#njglb2j)lxlh+*#43dxtj@nv-q')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['emus-mrp.herokuapp.com']
+ALLOWED_HOSTS = [
+        '142.11.199.250',
+        'localhost', 
+        '127.0.0.1'
+
+]
 
 
 # Application definition
@@ -45,6 +50,7 @@ INSTALLED_APPS = [
     'redirect.apps.RedirectConfig',
     'mrp_system.apps.MrpSystemConfig',
     'storages',
+    'sslserver',
 
 ]
 
@@ -145,10 +151,10 @@ LOGOUT_REDIRECT_URL = 'auth_login'
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
-##STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ##
 ### The URL to use when referring to static files (where they will be served from)
-##STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),

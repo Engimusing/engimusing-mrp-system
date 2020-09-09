@@ -153,6 +153,11 @@ urlpatterns = [
     url('purchase_order/part/(?P<part_id>\d+)/$',
         views.get_po_from_part,
         name='part_po'),
+
+    # search results
+    url('search_query_results',
+        views.search_all_models,
+        name='open_search_results'),
     
     
 ]
