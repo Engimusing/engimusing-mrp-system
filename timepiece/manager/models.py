@@ -32,6 +32,7 @@ class Profile(models.Model):
     ssn = models.CharField(max_length=4, blank=True, default = ' ')
     title = models.CharField(max_length=20, blank=True, default = ' ')
     payroll = models.BooleanField(default=True, blank=False)
+    health_insurance = models.IntegerField(default=0)
     # payroll_name = models.CharField(max_length=20, blank=True, default='blahblahblah')
 
     class Meta:
