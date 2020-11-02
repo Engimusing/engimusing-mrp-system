@@ -27,7 +27,7 @@ from timepiece.entries.views import DashboardMixin, Dashboard
 from timepiece.manager.forms import (
     CreateEditProjectForm, EditUserSettingsForm, EditUserForm,
     EditProjectRelationshipForm, ProjectRelationshipFormSet,
-    ProjectCreateForm, SelectMultipleUserForm)
+    ProjectCreateForm, SelectMultipleUserForm, SelectPayrollDate)
 from timepiece.manager.models import Project, ProjectRelationship
 from timepiece.manager.utils import grouped_totals
 from timepiece.entries.models import Entry
@@ -170,6 +170,7 @@ def payroll_hours_download(request):
         first_name = first_name if first_name!="Owen" else "Samuel" # hacky until figure out how to add payroll_name field
         ssn = use1.profile.ssn
         title = use1.profile.title
+        bonus = use1.profile.health_insurance
         week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
         user_entries = week_entries.order_by().values('user__first_name', 'user__last_name')
         user_entries = user_entries.annotate(sum=Sum('hours')).order_by('-sum')
@@ -177,12 +178,77 @@ def payroll_hours_download(request):
         #hours to 2 decimal places
         hours = round(hours, 2)
         over_time = None
-        if hours > 40:
+        if hours > 40 and use1.profile.hourly:
             over_time = hours - 40
             hours = 40
-            writer.writerow([last_name, first_name, ssn, title, hours, over_time])   
+            writer.writerow([last_name, first_name, ssn, title, hours, over_time, '', bonus])   
+        elif hours > 40 and use1.profile.salaried:
+            writer.writerow([last_name, first_name, ssn, title, hours, '', '', bonus])
         else:
-            writer.writerow([last_name, first_name, ssn, title, hours])
+            writer.writerow([last_name, first_name, ssn, title, hours, '', '', bonus])
+
+        
+    return response
+
+
+def select_payroll_date(request):
+    if request.method == 'POST':
+        form = SelectPayrollDate(request.POST)
+        if form.is_valid():
+            date = form['date'].value()
+            return redirect(reverse('download_date', kwargs={'date': date}))
+    else:
+        form = SelectPayrollDate()
+    
+    return render(request, 'timepiece/payrollselect.html', {'form': form})
+
+def payroll_hours_select(request, date):
+    # only include users that have payroll attribute selected
+    all_users = User.objects.filter(profile__payroll=True, is_active=True).select_related('profile')
+    from_date = datetime.datetime.strptime(str(date), "%Y-%m-%d")
+    formatted_date = str(from_date).split(' ')[0]
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="engimusing-llc-timesheet-%s.csv"' % formatted_date
+
+    writer = csv.writer(response)
+    writer.writerow([
+            'last_name',
+            'first_name',
+            'ssn',
+            'title',
+            'regular_hours',
+            'overtime_hours',
+            'double_overtime_hours',
+            'bonus',
+            'commision',
+            'paycheck_tips',
+            'cash_tips',
+            'correction_payment',
+            'reimbursement',
+            'personal_note',])
+    for use1 in all_users:
+        last_name = use1.last_name
+        first_name = use1.first_name
+        first_name = first_name if first_name!="Owen" else "Samuel" # hacky until figure out how to add payroll_name field
+        ssn = use1.profile.ssn
+        title = use1.profile.title
+        bonus = use1.profile.health_insurance
+        week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
+        user_entries = week_entries.order_by().values('user__first_name', 'user__last_name')
+        user_entries = user_entries.annotate(sum=Sum('hours')).order_by('-sum')
+        hours = sum(entries['sum'] for entries in user_entries)
+        #hours to 2 decimal places
+        hours = round(hours, 2)
+        over_time = None
+        if hours > 40 and use1.profile.hourly:
+            over_time = hours - 40
+            hours = 40
+            writer.writerow([last_name, first_name, ssn, title, hours, over_time, '', bonus])   
+        elif hours > 40 and use1.profile.salaried:
+            writer.writerow([last_name, first_name, ssn, title, hours, '', '', bonus])
+        else:
+            writer.writerow([last_name, first_name, ssn, title, hours, '', '', bonus])
+
         
     return response
 

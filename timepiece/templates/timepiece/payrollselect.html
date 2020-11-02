@@ -1,0 +1,57 @@
+{% extends "timepiece/base.html" %}
+
+{% load static %}
+{% load timepiece_tags %}
+
+
+{% block title %}Home{% endblock title %}
+
+{% block bodyid %}dashboard{% endblock bodyid %}
+
+{% block breadcrumb %}{% endblock breadcrumb %}
+
+{% block extrajs %}
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script charset="utf-8" src="{% static 'timepiece/js/permanent_tabs.js' %}"></script>
+    <script charset="utf-8" src="{% static 'timepiece/js/dashboard.js' %}"></script>
+    <script charset="utf-8" src="{% static 'timepiece/js/prevent_double_click.js' %}"></script>
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
+    </script>
+<script>
+    $(#id_end_time).click(function(){
+	 var end_time = new Date();
+	 $('end_time').val(time);
+        $('[data-toggle="popover"]').popover();
+    });
+    </script>
+<script>
+//can be used with button to populate an end_date field with current //date
+function myFunction() {
+var d = new Date();
+var date = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+var currentDate = date.format;
+document.getElementById("id_end_date").value = date;
+}
+</script>
+
+
+
+{% endblock extrajs %}
+
+{% block content %}
+{% if perms.mrp_system.time_user %}
+    <br> <h3> Select Date </h3>
+    <form method="POST" action=''>
+        {% csrf_token %}
+        {{ form.date }}
+        <button type="submit">get</button>
+    </form>
+{% endif %}
+
+{% endblock content %}

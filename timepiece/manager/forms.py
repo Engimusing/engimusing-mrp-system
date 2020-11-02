@@ -98,4 +98,14 @@ class SelectMultipleUserForm(forms.Form):
         for user in user1:
             users.append(user)
         return users
-        
+
+
+class DateForm(forms.DateInput):
+    input_type = 'date'
+    # input_formats = '%m-%d-%Y'
+
+
+class SelectPayrollDate(forms.Form):
+    # widget=DateForm, input_formats=['%m-%d-%Y']
+    date = forms.DateField()
+

@@ -63,7 +63,7 @@ document.getElementById("id_end_date").value = date;
             <div class="row" style="margin-left:1px;">
                 <div class="btn-group-sm" style="margin-top:3px;">
 
-
+                    
                         {% if active_entry %}
 
                             <a class="btn btn-primary" href="{% url 'clock_out' %}">Clock Out</a>
@@ -96,20 +96,20 @@ document.getElementById("id_end_date").value = date;
                     {% else %}
                         You are not currently clocked into a project.
                     {% endif %}
-</p>
+        </p>
                 </div>
         <br>
 	<div>
             <form class="form-horizontal" method="post" action="" accept-charset="utf-8">
                {% csrf_token %}
                 <table>
-		{{ form.as_table }}
+		<!-- {{ form.as_table }} -->
                 </table>
 {% comment %}
-{{ form.non_field_errors }}
+<!-- {{ form.non_field_errors }} -->
 
-		{{ form.project.errors }}{{ form.project.label_tag }}{{ form.project }}{{ form.start_time.errors }}{{ form.start_time.label_tag }}{{ form.start_time }}
-                     {{ form.end_date.errors }}{{ form.end_date.label_tag }}{{ form.end_date }}{{ form.time_end.errors }}{{ form.time_end }}
+		<!-- {{ form.project.errors }}{{ form.project.label_tag }}{{ form.project }}{{ form.start_time.errors }}{{ form.start_time.label_tag }}{{ form.start_time }} -->
+                     <!-- {{ form.end_date.errors }}{{ form.end_date.label_tag }}{{ form.end_date }}{{ form.time_end.errors }}{{ form.time_end }} -->
             <a id="demo" onclick=myFunction() href="#"> Today</a>{{ form.activities.errors }}{{ form.activities.label_tag }}{{ form.activities }}
 {% endcomment %}
 
@@ -129,7 +129,7 @@ document.getElementById("id_end_date").value = date;
             </ul>
 <br>
 {% if todos %}
-<form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
+<!-- <form class="form-horizontal" action="{% url 'todo' %}" method="post" accept-charset="utf-8">
 <table class="table">
   {% csrf_token %}
 
@@ -188,7 +188,7 @@ document.getElementById("id_end_date").value = date;
                     <button class="btn btn-primary btn-sm" type="submit" value="Add" name="taskAdd">Add</button>
                  
 </div>
-</form>
+</form> -->
 
 </div>
     {% endif %}
@@ -318,6 +318,5 @@ document.getElementById("id_end_date").value = date;
 
 <!--TO DO LIST -->
 
-
-
 {% endblock content %}
+

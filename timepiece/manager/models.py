@@ -32,8 +32,10 @@ class Profile(models.Model):
     ssn = models.CharField(max_length=4, blank=True, default = ' ')
     title = models.CharField(max_length=20, blank=True, default = ' ')
     payroll = models.BooleanField(default=True, blank=False)
-    health_insurance = models.IntegerField(default=0)
+    health_insurance = models.DecimalField(default=0, decimal_places=2, max_digits=5)
     payroll_name = models.CharField(max_length=20, blank=True, default='blahblahblah')
+    salaried = models.BooleanField(default=True, blank=False)
+    hourly = models.BooleanField(default=False, blank=False)
 
     class Meta:
         db_table = 'manager_profile'  # Using legacy table name.
