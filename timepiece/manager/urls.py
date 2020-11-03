@@ -38,6 +38,14 @@ urlpatterns = [
     url(r'^payrolldate/(?P<date>\d{4}-\d{2}-\d{2})/$',
         views.payroll_hours_select,
         name='download_date'),
+    
+    url(r'^selectinvoice/$',
+        views.select_invoice_date,
+        name='select_invoice'),
+    
+    url(r'^invoicedate/(?P<date>\d{4}-\d{2}-\d{2})/$',
+        views.invoice_hours_select,
+        name='invoice_date'),
 
     url(r'^downloadinvoicehourscsv/$',
         views.invoice_hours_download,

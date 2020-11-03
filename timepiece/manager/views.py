@@ -27,7 +27,7 @@ from timepiece.entries.views import DashboardMixin, Dashboard
 from timepiece.manager.forms import (
     CreateEditProjectForm, EditUserSettingsForm, EditUserForm,
     EditProjectRelationshipForm, ProjectRelationshipFormSet,
-    ProjectCreateForm, SelectMultipleUserForm, SelectPayrollDate)
+    ProjectCreateForm, SelectMultipleUserForm, SelectPayrollDate, SelectInvoiceDate)
 from timepiece.manager.models import Project, ProjectRelationship
 from timepiece.manager.utils import grouped_totals
 from timepiece.entries.models import Entry
@@ -203,6 +203,19 @@ def select_payroll_date(request):
     
     return render(request, 'timepiece/payrollselect.html', {'select_date': slpd})
 
+
+def select_invoice_date(request):
+    if request.method == 'POST':
+        slid = SelectInvoiceDate(request.POST)
+        if slid.is_valid():
+            date = slid['date'].value()
+            return redirect(reverse('invoice_date', kwargs={'date': date}))
+    else:
+        slid = SelectInvoiceDate()
+    
+    return render(request, 'timepiece/invoiceselect.html', {'select_invoice': slid})
+
+
 def payroll_hours_select(request, date):
     # only include users that have payroll attribute selected
     all_users = User.objects.filter(profile__payroll=True, is_active=True).select_related('profile')
@@ -261,6 +274,71 @@ def invoice_hours_download(request):
     week_start = datetime.date.today() - datetime.timedelta(days=datetime.date.today().isoweekday() % 7)
     last_week_start = week_start - datetime.timedelta(days=7)
     from_date = datetime.datetime.strptime(str(last_week_start), "%Y-%m-%d")
+    formatted_date = str(from_date).split(' ')[0]
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="invoice_report-%s.csv"' % formatted_date
+
+    writer = csv.writer(response)
+
+    project_order_dict = {}
+
+    for use1 in all_users:
+        week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
+
+        #include projects
+        week_entries = week_entries.select_related('project')
+        week_entries = week_entries.filter(project__name__startswith='CCE')
+        user_entries = week_entries.order_by().values('user__first_name', 'user__last_name')
+        user_entries = user_entries.annotate(sum=Sum('hours')).order_by('-sum')  
+
+        if week_entries:
+            name = use1.first_name + ' ' + use1.last_name + ":"
+            # writer.writerow([
+            #     name
+            # ])
+
+        if user_entries:
+            hours = sum(entries['sum'] for entries in user_entries)
+        else:
+            hours = 0
+
+        project_entries = week_entries.order_by().values('project__name').distinct()
+        project_entries = project_entries.annotate(sum=Sum('hours')).order_by('-sum')
+
+        #add unique list of activities for each project entry
+        for p in project_entries:
+            p['activities'] = ", ".join(week.activities for week in week_entries.filter(project__name=p['project__name']))
+            # p['activities'] = ", ".join(week.lower_activities for week in week_entries.filter(project__name=p['project__name'])
+            #                            .order_by().annotate(lower_activities=Lower('activities'))
+            #                            .distinct('lower_activities'))
+
+        for project in project_entries:
+            if project['project__name'] not in project_order_dict:
+                project_order_dict[project['project__name']] = {}
+                project_order_dict[project['project__name']][name] = [hours, project['activities']]
+            else:
+                project_order_dict[project['project__name']][name] = [hours, project['activities']]
+            seconds = project['sum']
+            hours = round(seconds, 1)
+            # writer.writerow([hours, project['project__name'] + ' - ' + project['activities']])
+    
+    for project in sorted(project_order_dict.keys()):
+        writer.writerow([project + ':'])
+        for user in sorted(project_order_dict[project].keys()):
+            writer.writerow([user])
+            writer.writerow([project_order_dict[project][user][0], project_order_dict[project][user][1]])
+        writer.writerow([])
+    return response
+
+
+def invoice_hours_select(request, date):
+    #only include users that have payroll attribute selected
+    all_users = User.objects.all()
+        
+    # week_start = datetime.date.today() - datetime.timedelta(days=datetime.date.today().isoweekday() % 7)
+    # last_week_start = week_start - datetime.timedelta(days=7)
+    from_date = datetime.datetime.strptime(str(date), "%Y-%m-%d")
     formatted_date = str(from_date).split(' ')[0]
 
     response = HttpResponse(content_type='text/csv')
