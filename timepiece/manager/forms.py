@@ -107,6 +107,6 @@ class DateForm(forms.DateInput):
 
 class SelectPayrollDate(forms.Form):
     # widget=DateForm, input_formats=['%m-%d-%Y']
-    date = forms.DateField()
+    date = forms.DateField(widget=DateForm)
 
 

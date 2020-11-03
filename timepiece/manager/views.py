@@ -194,6 +194,7 @@ def payroll_hours_download(request):
 def select_payroll_date(request):
     if request.method == 'POST':
         slpd = SelectPayrollDate(request.POST)
+        print(slpd)
         if slpd.is_valid():
             date = slpd['date'].value()
             return redirect(reverse('download_date', kwargs={'date': date}))
