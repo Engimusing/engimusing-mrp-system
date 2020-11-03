@@ -193,14 +193,14 @@ def payroll_hours_download(request):
 
 def select_payroll_date(request):
     if request.method == 'POST':
-        form = SelectPayrollDate(request.POST)
-        if form.is_valid():
-            date = form['date'].value()
+        slpd = SelectPayrollDate(request.POST)
+        if slpd.is_valid():
+            date = slpd['date'].value()
             return redirect(reverse('download_date', kwargs={'date': date}))
     else:
-        form = SelectPayrollDate()
+        slpd = SelectPayrollDate()
     
-    return render(request, 'timepiece/payrollselect.html', {'form': form})
+    return render(request, 'timepiece/payrollselect.html', {'select_date': slpd})
 
 def payroll_hours_select(request, date):
     # only include users that have payroll attribute selected
@@ -267,6 +267,8 @@ def invoice_hours_download(request):
 
     writer = csv.writer(response)
 
+    project_order_dict = {}
+
     for use1 in all_users:
         week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
 
@@ -278,9 +280,9 @@ def invoice_hours_download(request):
 
         if week_entries:
             name = use1.first_name + ' ' + use1.last_name + ":"
-            writer.writerow([
-                name
-            ])
+            # writer.writerow([
+            #     name
+            # ])
 
         if user_entries:
             hours = sum(entries['sum'] for entries in user_entries)
@@ -298,10 +300,21 @@ def invoice_hours_download(request):
             #                            .distinct('lower_activities'))
 
         for project in project_entries:
+            if project['project__name'] not in project_order_dict:
+                project_order_dict[project['project__name']] = {}
+                project_order_dict[project['project__name']][name] = [hours, project['activities']]
+            else:
+                project_order_dict[project['project__name']][name] = [hours, project['activities']]
             seconds = project['sum']
             hours = round(seconds, 1)
-            writer.writerow([hours ,project['project__name'] + ' - ' + project['activities']])
-
+            # writer.writerow([hours, project['project__name'] + ' - ' + project['activities']])
+    
+    for project in sorted(project_order_dict.keys()):
+        writer.writerow([project + ':'])
+        for user in sorted(project_order_dict[project].keys()):
+            writer.writerow([user])
+            writer.writerow([project_order_dict[project][user][0], project_order_dict[project][user][1]])
+        writer.writerow([])
     return response
 
 
