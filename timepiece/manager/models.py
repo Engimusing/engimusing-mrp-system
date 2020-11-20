@@ -52,7 +52,7 @@ class Project(models.Model):
     name = models.CharField(max_length=255)
     users = models.ManyToManyField(User, related_name='user_projects', through='ProjectRelationship')
     # added in activities to test it out
-   # activities = models.CharField(max_length=350, blank=False)
+    activities = models.CharField(default="N/A",max_length=350, blank=False)
     inactive = models.BooleanField(blank=False, default=False)
     objects = models.Manager()
     trackable = TrackableProjectManager()
