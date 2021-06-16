@@ -2,6 +2,11 @@ from django.db import models
 import datetime
 # from django.contrib.sites.models import Site
 from django.forms import ModelForm
+from django.db import connection
+import csv
+from openpyxl import Workbook
+import os
+
 
 # This is a model just to set up permissions
 class MrpSystem(models.Model):
@@ -133,7 +138,7 @@ class Field(models.Model):
 class Part(models.Model):
     # used to keep track of part type and fields
     partType = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="part")
-    engimusingPartNumber = models.CharField(max_length=30, editable=False)
+    engimusing_part_number = models.CharField(max_length=30, editable=False)
     description = models.CharField(max_length=300, blank=True)
 
     # description = forms.CharField(label='Description',
@@ -181,7 +186,7 @@ class Part(models.Model):
     datasheet = models.FileField(upload_to='documents/', blank=True)
 
     def __str__(self):
-        return '%s - %s' % (self.engimusingPartNumber, self.description)
+        return 'Part #: %s - Description: %s' % (self.engimusing_part_number, self.description)
 
     # can call these 4 functions from template to get related fields
     def get_location(self):
@@ -207,7 +212,7 @@ class Part(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             partType = self.partType
-            self.engimusingPartNumber = increment_engi_partnumber(partType)
+            self.engimusing_part_number = increment_engi_partnumber(partType)
         super().save(*args, **kwargs)
 
     class Meta:
@@ -216,15 +221,17 @@ class Part(models.Model):
         )
 
 
+
+
 def increment_engi_partnumber(partType):
     # get greatest part number
-    last_id = Part.objects.filter(partType=partType).order_by('engimusingPartNumber').last()
+    last_id = Part.objects.filter(partType=partType).order_by('engimusing_part_number').last()
     prefix = partType.prefix
     # if no parts yet
     if not last_id:
         return prefix + '000001'
     length = len(prefix)
-    partNumber = int(last_id.engimusingPartNumber[length:10])
+    partNumber = int(last_id.engimusing_part_number[length:10])
     new_partNumber = partNumber + 1
     new_engi_partNumber = prefix + str(new_partNumber).zfill(6)
     return new_engi_partNumber
@@ -234,7 +241,7 @@ class ManufacturerRelationship(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
     manufacturer = models.ForeignKey(Vendor, on_delete=models.CASCADE,
                                      limit_choices_to={'vendor_type': 'manufacturer'}, )
-    partNumber = models.CharField(max_length=40, blank=True)
+    part_number = models.CharField(max_length=40, blank=True)
 
     class Meta:
         permissions = (
@@ -251,6 +258,8 @@ class LocationRelationship(models.Model):
         permissions = (
             ('modify_admin_site', 'Can modify, add, view, or location relationships'),
         )
+
+    
 
 
 class Product(models.Model):
@@ -404,3 +413,31 @@ class DigiKeyAPI(models.Model):
     name = models.CharField(max_length=100)
     refresh_token = models.CharField(max_length=150)
     access_token = models.CharField(max_length=150)
+
+
+def printParts():
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT part.engimusing_part_number, part.description, mrp_system_location.name, mrp_system_manufacturerrelationship.part_number, mrp_system_locationrelationship.stock FROM mrp_system_part as part LEFT OUTER JOIN mrp_system_locationrelationship ON part.id = mrp_system_locationrelationship.part_id LEFT OUTER JOIN mrp_system_location ON mrp_system_locationrelationship.location_id = mrp_system_location.id LEFT OUTER JOIN mrp_system_manufacturerrelationship ON part.id = mrp_system_manufacturerrelationship.part_id")
+        rows = cursor.fetchall()
+
+        with open('parts.csv', 'w+', newline='') as csvfile:
+            headers = ['Part Number', 'Description', 'Location', 'Manufacturer Part Number', 'Stock']
+            obj = csv.writer(csvfile, delimiter="\t")
+            obj.writerow(header for header in headers)
+            for row in rows:
+                obj.writerow(row)
+        wb = Workbook()
+        with open('parts.csv', 'r+') as csv_file:
+            ws = wb.active
+            ws.title = 'Parts'
+
+            contents = csv.reader(csv_file, delimiter="\t")
+            for row in contents:
+                ws.append(row)
+        wb.save('parts.xlsx')
+        os.remove('parts.csv')
+
+
+        
+
+printParts()

@@ -1,17 +1,19 @@
 from django.contrib import admin
-from django.conf.urls import include, url
+from django.conf.urls import include, url, re_path
 from django.urls import path
+from django.views.generic.base import TemplateView
 from django.views.generic import RedirectView
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('timepiece.urls')),
     path('', RedirectView.as_view(url='/time/')),
     path('mrp/', include('mrp_system.urls')),
+    re_path(r'^inventory/', TemplateView.as_view(template_name="index.html")),
+
 
     #authentication views
     url(r'^accounts/login/$', auth_views.LoginView.as_view(),

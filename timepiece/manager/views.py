@@ -270,6 +270,7 @@ def payroll_hours_select(request, date):
 def invoice_hours_download(request):
     #only include users that have payroll attribute selected
     all_users = User.objects.all()
+    
         
     week_start = datetime.date.today() - datetime.timedelta(days=datetime.date.today().isoweekday() % 7)
     last_week_start = week_start - datetime.timedelta(days=7)
@@ -279,13 +280,12 @@ def invoice_hours_download(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="invoice_report-%s.csv"' % formatted_date
 
-    writer = csv.writer(response)
+    writer = csv.writer(response, delimiter='\t')
 
     project_order_dict = {}
 
     for use1 in all_users:
         week_entries = Entry.objects.filter(user=use1).timespan(from_date, span='week')
-
         #include projects
         week_entries = week_entries.select_related('project')
         week_entries = week_entries.filter(project__name__startswith='CCE')
@@ -305,29 +305,54 @@ def invoice_hours_download(request):
 
         project_entries = week_entries.order_by().values('project__name').distinct()
         project_entries = project_entries.annotate(sum=Sum('hours')).order_by('-sum')
-
         #add unique list of activities for each project entry
         for p in project_entries:
-            p['activities'] = ", ".join(week.activities for week in week_entries.filter(project__name=p['project__name']))
+            p['activities'] = ", ".join(week for week in week_entries.filter(project__name=p['project__name']).values_list('activities', flat=True).distinct())
+            
             # p['activities'] = ", ".join(week.lower_activities for week in week_entries.filter(project__name=p['project__name'])
             #                            .order_by().annotate(lower_activities=Lower('activities'))
             #                            .distinct('lower_activities'))
 
         for project in project_entries:
-            if project['project__name'] not in project_order_dict:
-                project_order_dict[project['project__name']] = {}
-                project_order_dict[project['project__name']][name] = [hours, project['activities']]
-            else:
-                project_order_dict[project['project__name']][name] = [hours, project['activities']]
+            full_proj_name = project['project__name'].split(' ')
+        
+            main_project = " ".join(full_proj_name[0:2])
+            sub_project = " ".join(full_proj_name[2:])
+            
             seconds = project['sum']
-            hours = round(seconds, 1)
-            # writer.writerow([hours, project['project__name'] + ' - ' + project['activities']])
+            hours = round(seconds, 2)
+            
+            filtered = project['activities']
+            filtered = filtered.split(', ')
+            filtered = set(filtered)
+            filtered = {item[:-1] if item[-1] == '.' else item for item in filtered}
+            filtered = sorted(filtered)
+            filtered = ", ".join(filtered)
+
+            if not sub_project:
+                sub_project_activities = filtered
+            else:
+                sub_project_activities = sub_project + ' - ' + filtered
+
+            if main_project not in project_order_dict:
+                project_order_dict[main_project] = {}
+                if name in project_order_dict[main_project]:
+                    project_order_dict[main_project][name].append([hours, sub_project_activities])
+                else:
+                    project_order_dict[main_project][name] = [[hours, sub_project_activities]]
+            else:
+                if name in project_order_dict[main_project]:
+                    project_order_dict[main_project][name].append([hours, sub_project_activities])
+                else:
+                    project_order_dict[main_project][name] = [[hours, sub_project_activities]]
+      # writer.writerow([hours, project['project__name'] + ' - ' + project['activities']])
     
     for project in sorted(project_order_dict.keys()):
         writer.writerow([project + ':'])
         for user in sorted(project_order_dict[project].keys()):
-            writer.writerow([user])
-            writer.writerow([project_order_dict[project][user][0], project_order_dict[project][user][1]])
+            for activity in project_order_dict[project][user]:
+                writer.writerow([activity[0], activity[1], user[:-1]])
+                
         writer.writerow([])
     return response
 
@@ -344,7 +369,7 @@ def invoice_hours_select(request, date):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="invoice_report-%s.csv"' % formatted_date
 
-    writer = csv.writer(response)
+    writer = csv.writer(response, delimiter='\t')
 
     project_order_dict = {}
 
@@ -359,12 +384,10 @@ def invoice_hours_select(request, date):
 
         if week_entries:
             name = use1.first_name + ' ' + use1.last_name + ":"
-            # writer.writerow([
-            #     name
-            # ])
 
         if user_entries:
-            hours = sum(entries['sum'] for entries in user_entries)
+            hours = [entries['sum'] for entries in user_entries]
+            hours = sum(hours)
         else:
             hours = 0
 
@@ -373,29 +396,51 @@ def invoice_hours_select(request, date):
 
         #add unique list of activities for each project entry
         for p in project_entries:
-            p['activities'] = ", ".join(week.activities for week in week_entries.filter(project__name=p['project__name']))
-            # p['activities'] = ", ".join(week.lower_activities for week in week_entries.filter(project__name=p['project__name'])
-            #                            .order_by().annotate(lower_activities=Lower('activities'))
-            #                            .distinct('lower_activities'))
-
+            p['activities'] = ", ".join(week for week in week_entries.filter(project__name=p['project__name']).values_list('activities', flat=True).distinct())
+            
         for project in project_entries:
-            if project['project__name'] not in project_order_dict:
-                project_order_dict[project['project__name']] = {}
-                project_order_dict[project['project__name']][name] = [hours, project['activities']]
-            else:
-                project_order_dict[project['project__name']][name] = [hours, project['activities']]
+            full_proj_name = project['project__name'].split(' ')
+        
+            main_project = " ".join(full_proj_name[0:2])
+            sub_project = " ".join(full_proj_name[2:])
+            
             seconds = project['sum']
-            hours = round(seconds, 1)
+            hours = round(seconds, 2)
+            
+            filtered = project['activities']
+            filtered = filtered.split(', ')
+            filtered = set(filtered)
+            filtered = {item[:-1] if item[-1] == '.' else item for item in filtered}
+            filtered = sorted(filtered)
+            filtered = ", ".join(filtered)
+
+            if not sub_project:
+                sub_project_activities = filtered
+            else:
+                sub_project_activities = sub_project + ' - ' + filtered
+
+            if main_project not in project_order_dict:
+                project_order_dict[main_project] = {}
+                if name in project_order_dict[main_project]:
+                    project_order_dict[main_project][name].append([hours, sub_project_activities])
+                else:
+                    project_order_dict[main_project][name] = [[hours, sub_project_activities]]
+            else:
+                if name in project_order_dict[main_project]:
+                    project_order_dict[main_project][name].append([hours, sub_project_activities])
+                else:
+                    project_order_dict[main_project][name] = [[hours, sub_project_activities]]
+
             # writer.writerow([hours, project['project__name'] + ' - ' + project['activities']])
     
     for project in sorted(project_order_dict.keys()):
         writer.writerow([project + ':'])
         for user in sorted(project_order_dict[project].keys()):
-            writer.writerow([user])
-            writer.writerow([project_order_dict[project][user][0], project_order_dict[project][user][1]])
+            for activity in project_order_dict[project][user]:
+                writer.writerow([activity[0], activity[1], user[0:-1]])
+                
         writer.writerow([])
     return response
-
 
 ##csv report found in weekly timesheet view
 def week_timesheet(request, date):

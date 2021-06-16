@@ -1,6 +1,0 @@
-{
-    "python.pythonPath": "/Users/smoldev/.local/share/virtualenvs/emus-mrp-Ulo3_xI4/bin/python",
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
-}

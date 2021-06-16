@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -24,6 +24,7 @@ SECRET_KEY = '@muayu7vm$(i0ebd1ox7#eh#njglb2j)lxlh+*#43dxtj@nv-q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 
 ALLOWED_HOSTS = [
         'www.emus.us',
@@ -38,6 +39,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     #'sslserver',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'timepiece.apps.TimepieceConfig',
     'timepiece.manager',
     'timepiece.entries',
@@ -56,6 +59,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -67,12 +71,19 @@ MIDDLEWARE = [
     'mrp.middleware.middleware.RedirectFallbackMiddleware',
 ]
 
+
+# CORS_ALLOWED_ORIGINS = all
+
+# CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+
+
+
 ROOT_URLCONF = 'mrp.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,6 +167,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'build/static'),
 ]
 
 # doug commented out these two lines
@@ -189,3 +201,13 @@ STATICFILES_LOCATION = 'static'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+CORS_ORIGIN_ALLOW_ALL = True

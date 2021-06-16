@@ -3,6 +3,7 @@ from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseNotFoun
                          JsonResponse)
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView
+from django.contrib.auth.models import User
 from mrp_system.models import (Part, Type, Field, Vendor,
                                ManufacturerRelationship, Location,
                                LocationRelationship, DigiKeyAPI,
@@ -36,8 +37,67 @@ import logging
 from django.conf import settings
 import http.client
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.decorators.csrf import csrf_protect
+from rest_framework import viewsets, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import PartSerializer
+# logger = logging.getLogger(__name__)
 
-logger = logging.getLogger(__name__)
+
+class InventoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Part.objects.all()
+    serializer_class = PartSerializer
+
+
+
+@method_decorator(csrf_protect, name='dispatch')
+class AddPart(APIView):
+    def post(self, request, format=None):
+
+        parts = json.dumps(request.data)
+        payload = json.loads(parts)
+        partType_instance, _ = Type.objects.get_or_create(name=payload['partType'])
+
+        jsonpart = {
+            "partType": partType_instance.id,
+            "engimusing_part_number": payload['engimusing_part_number'],
+            "description": payload['description'],
+            "location": payload['location'],
+            "manufacturer": payload['manufacturer']
+        }
+        part = PartSerializer(data=jsonpart)
+        if part.is_valid():
+            part.save()
+            return Response({'Part': part.data}, status=status.HTTP_201_CREATED)
+        return Response(part.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@method_decorator(csrf_protect, name='dispatch')
+class UpdatePart(APIView):
+    def put(self, request, part_id):
+        part = json.dumps(request.data)
+        payload = json.loads(part)
+
+        try:
+            part_to_update = Part.objects.filter(id=part_id)
+            partType_id = Type.objects.get(name=payload['partType'])
+            payload = {**payload, "partType": partType_id.id}
+            part_to_update.update(**payload)
+            updated_part = Part.objects.get(id=part_id)
+            serializer = PartSerializer(updated_part)
+            return Response({'part': serializer.data}, status=status.HTTP_200_OK)
+        except Part.DoesNotExist as e:
+            return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(e)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class SinglePart(APIView):
+    def get(self, request, part_id):
+        part = Part.objects.get(id=part_id)
+        serializer = PartSerializer(part)
+        return Response(serializer.data, status=status.HTTP_200_OK) 
 
 
 def class_view_decorator(function_decorator):
@@ -567,7 +627,6 @@ def enter_digi_part(request):
        
         search = ''
         buttonPressed = request.POST.get('lookupBtn','')
-
         if (buttonPressed == 'Lookup Digi-Key') or (buttonPressed == 'Lookup Barcode' ):
         #elif buttonPressed == 'Lookup Manu Part Number':
             #search = manuPartNumb
@@ -575,11 +634,12 @@ def enter_digi_part(request):
             digi = DigiKeyAPI.objects.get(name="DigiKey")
 
             # get new access token with refresh token
-            API_ENDPOINT = "https://sso.digikey.com/as/token.oauth2"
+            API_ENDPOINT = "https://sandbox-api.digikey.com/v1/oauth2/authorize"
 
-            data = {'client_id': '73432ca9-e8ba-4965-af17-a22107f63b35',
-                    'client_secret': 'G2rQ1cM8yM4gV6rW2nA1wL2yF7dN4sX4fJ2lV6jE5uT0bB0uG8',
+            data = {'client_id': 'jT2cg2V4fAxE6gGO2XjPRVlTALrBdbmH',
+                    'client_secret': 'rLzUdLh1ALOicWwo',
                     'refresh_token': digi.refresh_token,
+                    'redirect_uri': 'http://localhost/',
                     'grant_type': 'refresh_token'
                     }
             r = requests.post(url=API_ENDPOINT, data=data)
@@ -587,7 +647,8 @@ def enter_digi_part(request):
             response = r.json()
             try:
                 refreshToken = response['refresh_token']
-            except (IndexError, KeyError):
+            except (IndexError, KeyError) as e:
+                print(e)
                 messages.warning(request, ('Digi-Key access tokens are off.'))
                 url = reverse('digi_part')
                 return HttpResponseRedirect(url)
@@ -618,7 +679,8 @@ def enter_digi_part(request):
         # if mouser barcode, its a manufacturer number
         if buttonPressed == 'Lookup Digi-Key':
             search = partNumber
-        elif buttonPressed == 'Lookup Mouser Part Number': 
+        elif buttonPressed == 'Lookup Mouser Part Number':
+            print('>>>>>>>>>> HELLO WORLD <<<<<<<<<<<') 
             try:         
                 return lookupMouser(request, mouserPartNumber)
             except Exception as e:

@@ -1,11 +1,23 @@
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls import url
-
+from rest_framework.routers import DefaultRouter
+from mrp_system.views import InventoryViewSet, AddPart, UpdatePart, SinglePart
 from . import views
+
+# inventory_list = InventoryViewSet.as_view({'get': 'list'})
+
+router = DefaultRouter()
+router.register('inventory', InventoryViewSet)
+
+
 
 urlpatterns = [
     #part types
     path('', views.TypeListView.as_view(), name='list_types'),
+    path('api/', include(router.urls)),
+    path('api/addPart', AddPart.as_view()),
+    path('api/updatePart/<int:part_id>', UpdatePart.as_view()),
+    path('api/part/<int:part_id>', SinglePart.as_view()),
     path('type/create/',
          views.TypeCreate.as_view(),
          name='create_type'),

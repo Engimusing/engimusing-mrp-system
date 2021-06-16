@@ -12,7 +12,7 @@
 <hr>
 <h4> Part Lookups </h4>
 <div class="form-horizontal" >
-<form action="digikey/enter/" method="post">
+<form action="{% url 'digi_part' %}" method="post">
 {% csrf_token %}
 <div style="display:flex; flex-direction:row;">
     <label for="id_partNumber" style="margin-right:8px;">Digi-key Part Number: </label><input type="text" name="partNumber" id="id_partNumber" >
