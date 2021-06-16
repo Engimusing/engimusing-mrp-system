@@ -49,7 +49,6 @@ class PartSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         location = validated_data.pop('location', None)
         manufacturer = validated_data.pop('manufacturer', None)
-g
         
         part = Part.objects.create(**validated_data)
         print(part)
