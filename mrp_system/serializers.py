@@ -49,9 +49,8 @@ class PartSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         location = validated_data.pop('location', None)
         manufacturer = validated_data.pop('manufacturer', None)
-        
+
         part = Part.objects.create(**validated_data)
-        print(part)
         for loc in location:
             add_loc = Location.objects.filter(name=loc['name'])[0] or Location.objects.create(loc)
             if add_loc:

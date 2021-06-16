@@ -60,6 +60,7 @@ class AddPart(APIView):
         partType_instance, _ = Type.objects.get_or_create(name=payload['partType'])
 
         jsonpart = {
+            **payload,
             "partType": partType_instance.id,
             "engimusing_part_number": payload['engimusing_part_number'],
             "description": payload['description'],
