@@ -41,7 +41,7 @@ from django.views.decorators.csrf import csrf_protect
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import PartSerializer
+from .serializers import PartSerializer, FieldSerializer
 # logger = logging.getLogger(__name__)
 
 
@@ -86,7 +86,18 @@ class UpdatePart(APIView):
             payload = {**payload, "partType": partType_id.id}
             loc = payload.pop('location', None)
             man = payload.pop('manufacturer', None)
+            typefields = payload.pop('TypeFields', None)
             part_to_update.update(**payload)
+            fields_to_update = Field.objects.filter(typePart__name=payload['partType'])
+
+            for field in typefields:
+                print(field)
+                update_field = Field.objects.get(id=field['id'])
+                update_field.name = field['name']
+                update_field.fields = field['fields']
+                update_field.typePart = partType_id
+                update_field.save()
+
             part_to_update[0].location.clear()
             part_to_update[0].manufacturer.clear()
             if loc and man:
@@ -113,7 +124,7 @@ class UpdatePart(APIView):
                     
             updated_part = Part.objects.get(id=part_id)
             serializer = PartSerializer(updated_part)
-            return Response({'part': serializer.data}, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Part.DoesNotExist as e:
             return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:

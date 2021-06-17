@@ -38,7 +38,7 @@ class TypeField(serializers.RelatedField):
 class FieldSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Field
-        fields = ["name", "fields"]
+        fields = "__all__"
 
 class PartSerializer(serializers.ModelSerializer):
     partType = TypeField(many=False, queryset=Type.objects.all())
@@ -68,5 +68,6 @@ class PartSerializer(serializers.ModelSerializer):
     def get_TypeFields(self, instance):
         TypeFields = Field.objects.filter(typePart__name=instance.partType)
         return FieldSerializer(TypeFields, many=True).data
+
     
 
