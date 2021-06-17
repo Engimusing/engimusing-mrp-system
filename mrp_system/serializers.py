@@ -1,4 +1,4 @@
-from .models import Part, Type, Location, LocationRelationship, Vendor, ManufacturerRelationship
+from .models import Field, Part, Type, Location, LocationRelationship, Vendor, ManufacturerRelationship
 from rest_framework import serializers
 
 
@@ -35,16 +35,21 @@ class TypeField(serializers.RelatedField):
         except Type.DoesNotExist:
             raise serializers.ValidationError("Type does not exist.")
 
+class FieldSerializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = Field
+        fields = ["name", "fields"]
 
 class PartSerializer(serializers.ModelSerializer):
     partType = TypeField(many=False, queryset=Type.objects.all())
     location = LocationSerializer(many=True)
     manufacturer = ManufacturerSerializer(many=True)
-    
-    class Meta:
+    TypeFields = serializers.SerializerMethodField()
+
+    class Meta(object):
         model = Part
         fields = "__all__"
-    
+
     def create(self, validated_data):
         location = validated_data.pop('location', None)
         manufacturer = validated_data.pop('manufacturer', None)
@@ -60,5 +65,8 @@ class PartSerializer(serializers.ModelSerializer):
                 part.manufacturer.add(add_man)
         return part
 
-
+    def get_TypeFields(self, instance):
+        TypeFields = Field.objects.filter(typePart__name=instance.partType)
+        return FieldSerializer(TypeFields, many=True).data
     
+

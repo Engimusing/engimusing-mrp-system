@@ -97,7 +97,6 @@ class UpdatePart(APIView):
                     if check_loc:
                         loc_ids.append(check_loc.id)
                     else:
-                        print(l)
                         new_loc = Location.objects.create(name=l['name'])
                         loc_ids.append(new_loc.id)
                 for m in man:
@@ -123,8 +122,8 @@ class UpdatePart(APIView):
 
 class SinglePart(APIView):
     def get(self, request, part_id):
-        part = Part.objects.get(id=part_id)
-        serializer = PartSerializer(part)
+        queryset = Part.objects.get(id=part_id)
+        serializer = PartSerializer(queryset)
         return Response(serializer.data, status=status.HTTP_200_OK) 
 
 
