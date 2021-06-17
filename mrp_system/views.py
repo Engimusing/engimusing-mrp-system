@@ -84,7 +84,34 @@ class UpdatePart(APIView):
             part_to_update = Part.objects.filter(id=part_id)
             partType_id = Type.objects.get(name=payload['partType'])
             payload = {**payload, "partType": partType_id.id}
+            loc = payload.pop('location', None)
+            man = payload.pop('manufacturer', None)
             part_to_update.update(**payload)
+            part_to_update[0].location.clear()
+            part_to_update[0].manufacturer.clear()
+            if loc and man:
+                loc_ids = []
+                man_ids = []
+                for l in loc:
+                    check_loc = Location.objects.filter(name=l['name']).first()
+                    if check_loc:
+                        loc_ids.append(check_loc.id)
+                    else:
+                        print(l)
+                        new_loc = Location.objects.create(name=l['name'])
+                        loc_ids.append(new_loc.id)
+                for m in man:
+                    check_man = Vendor.objects.filter(name=m['name']).first()
+                    if check_man:
+                        man_ids.append(check_man.id)
+                    else:
+                        print(m)
+                        new_man = Vendor.objects.create(name=m['name'])
+                        man_ids.append(new_man.id)
+                    
+                part_to_update[0].location.add(*loc_ids)
+                part_to_update[0].manufacturer.add(*man_ids)
+                    
             updated_part = Part.objects.get(id=part_id)
             serializer = PartSerializer(updated_part)
             return Response({'part': serializer.data}, status=status.HTTP_200_OK)

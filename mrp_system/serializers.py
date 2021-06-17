@@ -13,7 +13,6 @@ class LocationSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         return f"{instance.name}"
 
-
 class ManufacturerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
@@ -63,5 +62,3 @@ class PartSerializer(serializers.ModelSerializer):
 
 
     
-    def update(self, instance, validated_data):
-        pass
