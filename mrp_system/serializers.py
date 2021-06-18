@@ -56,11 +56,11 @@ class PartSerializer(serializers.ModelSerializer):
 
         part = Part.objects.create(**validated_data)
         for loc in location:
-            add_loc = Location.objects.filter(name=loc['name'])[0] or Location.objects.create(loc)
+            add_loc = Location.objects.filter(name=loc['name']).first() or Location.objects.create(name=loc['name'])
             if add_loc:
                 part.location.add(add_loc)
         for man in manufacturer:
-            add_man = Vendor.objects.filter(name=man['name'])[0] or Vendor.objects.create(man)
+            add_man = Vendor.objects.filter(name=man['name']).first() or Vendor.objects.create(name=man['name'])
             if add_man:
                 part.manufacturer.add(add_man)
         return part

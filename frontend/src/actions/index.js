@@ -4,6 +4,7 @@ import {axiosWithAuth} from '../utils/axiosWithAuth'
 
 export const addPart = (part) => dispatch => {
 	dispatch({ type: ADD_PART_START });
+	console.log("we hit add")
 	axiosWithAuth()
 		.post("/addPart", part)
 		.then(res => {
@@ -16,6 +17,7 @@ export const addPart = (part) => dispatch => {
 };
 
 export const updatePart = (id, changes) => dispatch => {
+	console.log("updatePart", changes)
 	axiosWithAuth()
 		.put(`/updatePart/${id}`, changes)
 		.then(res => {

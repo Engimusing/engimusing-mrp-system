@@ -54,7 +54,7 @@ class InventoryViewSet(viewsets.ReadOnlyModelViewSet):
 @method_decorator(csrf_protect, name='dispatch')
 class AddPart(APIView):
     def post(self, request, format=None):
-
+        print(request.data)
         parts = json.dumps(request.data)
         payload = json.loads(parts)
         partType_instance, _ = Type.objects.get_or_create(name=payload['partType'])
@@ -68,6 +68,7 @@ class AddPart(APIView):
             "manufacturer": payload['manufacturer']
         }
         part = PartSerializer(data=jsonpart)
+        print(part)
         if part.is_valid():
             part.save()
             return Response({'Part': part.data}, status=status.HTTP_201_CREATED)
@@ -88,8 +89,6 @@ class UpdatePart(APIView):
             man = payload.pop('manufacturer', None)
             typefields = payload.pop('TypeFields', None)
             part_to_update.update(**payload)
-            fields_to_update = Field.objects.filter(typePart__name=payload['partType'])
-
             for field in typefields:
                 print(field)
                 update_field = Field.objects.get(id=field['id'])

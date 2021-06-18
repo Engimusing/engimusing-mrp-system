@@ -9,9 +9,12 @@ function PartForm(props) {
 		"partType": "",
 		"description": "",
         "engimusing_part_number": "",
-        "location": "",
-        "manufacturer": "",
+        "location": [],
+        "manufacturer": [],
 	});
+
+    const [locationName, setLocationName] = React.useState("")
+    const [manufacturerName, setManufacturerName] = React.useState("")
 
     React.useEffect(() => {
         if(!props.editing) {
@@ -19,21 +22,37 @@ function PartForm(props) {
 		"partType": "",
 		"description": "",
         "engimusing_part_number": "",
-        "location": "",
-        "manufacturer": "",
+        "location": [],
+        "manufacturer": [],
 	})
         } else {
             setPart(props.editPart)
+            // TODO: Turn this into a map
+            setLocationName(props.editPart.location[0])
+            setManufacturerName(props.editPart.manufacturer[0])
         }
     }, [props.editing, props.editPart])
 
 	const handleChange = e => {
         console.log(e.target.name, e.target.value)
-		setPart({ ...part, [e.target.name]: e.target.value });
+        if(e.target.name === "locName") {
+            setLocationName(e.target.value)
+        } else if(e.target.name === "manName") {
+            setManufacturerName(e.target.value)
+        } else {
+            setPart({...part, [e.target.name]: e.target.value})
+        }
 	};
 
 	const handleSubmit = e => {
 		e.preventDefault();
+        if(locationName && manufacturerName) {
+            console.log(locationName, manufacturerName, part)
+            part.location = [{"name": locationName}]
+            part.manufacturer = [{"name": manufacturerName}]
+
+        }
+        console.log(part)
         if(!props.editing) {
 		    props.addPart(part);
 
@@ -57,12 +76,14 @@ function PartForm(props) {
                     <input class="form-control" name="description" type="text" placeholder="Description..." onChange={handleChange} value={part.description} />
                 </div>
                 <div class="form-group">
-                    <label htmlFor="location">Location:</label>
-                    <input class="form-control" name="location" type="text" placeholder="Location..." onChange={handleChange} value={part.location} />
+                    <label htmlFor="locName">Location:</label>
+                    <input class="form-control" name="locName" type="text" placeholder="Location..." onChange={handleChange} value={locationName} />
+                    
+                    
                 </div>
                 <div class="form-group">
-                    <label htmlFor="manufacturer">Manufacturer:</label>
-                    <input class="form-control" name="manufacturer" type="text" placeholder="Manufacturer..." onChange={handleChange} value={part.manufacturer} />
+                    <label htmlFor="manName">Manufacturer:</label>
+                    <input class="form-control" name="manName" type="text" placeholder="Manufacturer..." onChange={handleChange} value={manufacturerName}/>
                 </div>
                 <br />
                 <button type="submit" class="btn btn-primary">Submit</button>

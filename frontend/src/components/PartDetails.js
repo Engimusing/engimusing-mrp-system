@@ -13,9 +13,11 @@ function PartDetails(props) {
     useEffect(() => {
         setLoading(true)
         axiosWithAuth().get(`/part/${partId}`).then(res => {
+            delete res.data.datasheet
+            const cleanData = {...res.data}
             console.log(res.data)
-            setSinglePart(res.data)
-            dispatch({type: UPDATE_PART_START, payload: res.data})
+            setSinglePart(cleanData)
+            dispatch({type: UPDATE_PART_START, payload: cleanData})
             setLoading(false)
         }).catch(err => console.log(err))
     } ,[])
