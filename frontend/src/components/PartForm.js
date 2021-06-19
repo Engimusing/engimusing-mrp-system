@@ -1,62 +1,97 @@
-import React from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { connect } from "react-redux";
 import { addPart, updatePart } from "../actions";
 
 
 function PartForm(props) {
-    console.log(props)
-    const [part, setPart] = React.useState({
+    const fieldConn = useRef(null)
+    const [part, setPart] = useState({
 		"partType": "",
 		"description": "",
         "engimusing_part_number": "",
-        "location": [],
-        "manufacturer": [],
+        "location": [{"name": ""}],
+        "manufacturer": [{"name": ""}],
+        "TypeFields": [{"name": "", "fields": ""}],
+        "char1": "",
+        "char2": "",
+        "char3": "",
+        "char4": "",
+        "char5": "",
+        "char6": "",
+        "char7": "",
+        "char8": "",
+        "char9": "",
+        "char10": "",
+        "char11": "",
+        "char12": "",
+        "char13": "",
+        "char14": "",
+        "char15": "",
+        "char16": "",
+        "char17": "",
+        "char18": "",
+        "char19": "",
+        "char20": "",
+        "char21": "",
+        "char22": "",
+        "char23": "",
+        "char24": "",
+        "char25": "",
+        "char26": "",
+        "char27": "",
+        "char28": "",
+        "char29": "",
+        "char30": "",
+        "char31": "",
+        "char32": "",
+        "char33": "",
+        "char34": "",
+        "char35": ""
+        
+        
 	});
 
-    const [locationName, setLocationName] = React.useState("")
-    const [manufacturerName, setManufacturerName] = React.useState("")
-
-    React.useEffect(() => {
+    useEffect(() => {
+        
         if(!props.editing) {
             setPart({
-		"partType": "",
-		"description": "",
-        "engimusing_part_number": "",
-        "location": [],
-        "manufacturer": [],
-	})
+                ...part
+	        })
         } else {
             setPart(props.editPart)
-            // TODO: Turn this into a map
-            setLocationName(props.editPart.location[0])
-            setManufacturerName(props.editPart.manufacturer[0])
         }
     }, [props.editing, props.editPart])
 
 	const handleChange = e => {
-        console.log(e.target.name, e.target.value)
-        if(e.target.name === "locName") {
-            setLocationName(e.target.value)
-        } else if(e.target.name === "manName") {
-            setManufacturerName(e.target.value)
-        } else {
-            setPart({...part, [e.target.name]: e.target.value})
-        }
+        setPart({...part, [e.target.name]: e.target.value})
+        
 	};
 
+    const handleArrayInputs = (index, e) => {
+            if(e.target.placeholder === "Location...") {
+                const values = [...part.location]
+                values[index][e.target.name] = e.target.value
+                setPart({...part, values})
+            } else if(e.target.placeholder === "Manufacturer...") {
+                const values = [...part.manufacturer]
+                values[index][e.target.name] = e.target.value
+                setPart({...part, values})
+            } else {
+                const values = [...part.TypeFields]
+                values[index][e.target.name] = e.target.value
+                values[index][fieldConn.current.name] = fieldConn.current.value
+                setPart({...part, values})
+                
+            }
+    }
+
 	const handleSubmit = e => {
+        delete part.values
 		e.preventDefault();
-        if(locationName && manufacturerName) {
-            console.log(locationName, manufacturerName, part)
-            part.location = [{"name": locationName}]
-            part.manufacturer = [{"name": manufacturerName}]
-
-        }
-        console.log(part)
         if(!props.editing) {
-		    props.addPart(part);
-
+            props.addPart(part);
         } else {
+            console.log(part)
             props.updatePart(props.editPart.id, part)
         }
 	};
@@ -75,16 +110,34 @@ function PartForm(props) {
                     <label htmlFor="description">Description:</label>
                     <input class="form-control" name="description" type="text" placeholder="Description..." onChange={handleChange} value={part.description} />
                 </div>
-                <div class="form-group">
-                    <label htmlFor="locName">Location:</label>
-                    <input class="form-control" name="locName" type="text" placeholder="Location..." onChange={handleChange} value={locationName} />
-                    
-                    
-                </div>
-                <div class="form-group">
-                    <label htmlFor="manName">Manufacturer:</label>
-                    <input class="form-control" name="manName" type="text" placeholder="Manufacturer..." onChange={handleChange} value={manufacturerName}/>
-                </div>
+                {part.location.map((location, index) => {
+                return (<div key={index} class="form-group">
+                    <label htmlFor="name">Location:</label>
+                    <input class="form-control" name="name" type="text" placeholder="Location..." onChange={event => handleArrayInputs(index, event)} value={location.name} />
+                    <button>+</button>
+                    <button>-</button>
+                </div>)
+                })}
+                {part.manufacturer.map((manufacturer, index) => {
+                return (<div key={index} class="form-group">
+                    <label htmlFor="name">Manufacturer:</label>
+                    <input class="form-control" name="name" type="text" placeholder="Manufacturer..." onChange={event => handleArrayInputs(index, event)} value={manufacturer.name}/>
+                    <button>+</button>
+                    <button>-</button>
+                </div>)
+                })}
+                {part.TypeFields.map((typefield, index) => {
+                    return (
+                        <div key={index} class="form-group">
+                            <label htmlFor="name">Field Name:</label>
+                            <input class="form-control" name="name" type="text" placeholder="Field Name..." onChange={event => handleArrayInputs(index, event)} value={typefield.name}/>
+                            <input class="form-control" name="fields" ref={fieldConn} type="hidden" value={`char${index+1}`} />
+                            <input class="form-control" name={`char${index+1}`} type="text" placeholder="Field Data..." onChange={handleChange} value={part["char"+(index+1)]} />
+                            <button>+</button>
+                            <button>-</button>
+                        </div>
+                    )
+                })}
                 <br />
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

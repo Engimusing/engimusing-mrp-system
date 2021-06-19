@@ -58,15 +58,19 @@ class AddPart(APIView):
         parts = json.dumps(request.data)
         payload = json.loads(parts)
         partType_instance, _ = Type.objects.get_or_create(name=payload['partType'])
-
+        for field in payload['TypeFields']:
+                print(field)
+                add_field, _ = Field.objects.get_or_create(name=field['name'], fields=field['fields'], typePart=partType_instance)
+                add_field.save()
         jsonpart = {
             **payload,
             "partType": partType_instance.id,
             "engimusing_part_number": payload['engimusing_part_number'],
             "description": payload['description'],
             "location": payload['location'],
-            "manufacturer": payload['manufacturer']
+            "manufacturer": payload['manufacturer'],
         }
+        del payload['TypeFields']
         part = PartSerializer(data=jsonpart)
         print(part)
         if part.is_valid():
@@ -90,14 +94,12 @@ class UpdatePart(APIView):
             typefields = payload.pop('TypeFields', None)
             part_to_update.update(**payload)
             for field in typefields:
-                print(field)
                 update_field = Field.objects.get(id=field['id'])
                 update_field.name = field['name']
                 update_field.fields = field['fields']
                 update_field.typePart = partType_id
                 update_field.save()
 
-            part_to_update[0].location.clear()
             part_to_update[0].manufacturer.clear()
             if loc and man:
                 loc_ids = []
@@ -114,12 +116,12 @@ class UpdatePart(APIView):
                     if check_man:
                         man_ids.append(check_man.id)
                     else:
-                        print(m)
                         new_man = Vendor.objects.create(name=m['name'])
                         man_ids.append(new_man.id)
                     
                 part_to_update[0].location.add(*loc_ids)
                 part_to_update[0].manufacturer.add(*man_ids)
+                part_to_update[0].save()
                     
             updated_part = Part.objects.get(id=part_id)
             serializer = PartSerializer(updated_part)

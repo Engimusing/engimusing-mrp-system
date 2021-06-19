@@ -10,17 +10,11 @@ class LocationSerializer(serializers.ModelSerializer):
             "name": {"validators": []}
         }
 
-    def to_representation(self, instance):
-        return f"{instance.name}"
-
 class ManufacturerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
         fields = ["name"]
         extra_kwargs = {'name': {"validators": []}}
-    
-    def to_representation(self, instance):
-        return f"{instance.name}"
 
 class TypeField(serializers.RelatedField):
     def to_representation(self, value):

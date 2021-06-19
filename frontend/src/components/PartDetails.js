@@ -4,6 +4,7 @@ import Link from 'react-router-dom/Link'
 import {UPDATE_PART_START} from '../actions/constants'
 import {connect, useDispatch} from 'react-redux'
 
+
 function PartDetails(props) {
     const [singlePart, setSinglePart] = useState({})
     const [loading, setLoading] = useState(false)
@@ -13,24 +14,28 @@ function PartDetails(props) {
     useEffect(() => {
         setLoading(true)
         axiosWithAuth().get(`/part/${partId}`).then(res => {
-            delete res.data.datasheet
+            if(res.data.datasheet === null) {
+                delete res.data.datasheet
+            }
             const cleanData = {...res.data}
-            console.log(res.data)
             setSinglePart(cleanData)
             dispatch({type: UPDATE_PART_START, payload: cleanData})
             setLoading(false)
         }).catch(err => console.log(err))
     } ,[])
+    
 
-    if(!loading) {
+    if(!loading && singlePart.TypeFields) {
         return (
             <div>
                 <Link to={`/part/${partId}/edit`}>Edit Part</Link>
                 <h1>{singlePart.partType}</h1>
                 <p>{singlePart.description}</p>
                 <p>{singlePart.engimusing_part_number}</p>
-                <p>{singlePart.location}</p>
-                <p>{singlePart.manufacturer}</p>
+                <p>{!Array.isArray(singlePart.location) ? <p>{singlePart.location}</p> : singlePart.location.map(loc => <p>{loc.name}</p>)}</p>
+                <p>{!Array.isArray(singlePart.manufacturer) ? <p>{singlePart.manufacturer}</p> : singlePart.manufacturer.map(vendor => <p>{vendor.name}</p>)}</p>
+                <p>{!Array.isArray(singlePart.TypeFields) ? <><b>{singlePart.TypeFields.name}:</b> <p>{singlePart[singlePart.TypeFields.fields]}</p></> : singlePart.TypeFields.map(field => <><b>{field.name}:</b> <p>{singlePart[field.fields]}</p></>)}</p>
+                {singlePart.datasheet ? <pre>{singlePart.datasheet}</pre> : ""}
             </div>
         )
     } else {

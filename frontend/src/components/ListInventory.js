@@ -31,10 +31,10 @@ function ListInventory(props) {
                     <div>
                         <Link to={`/part/${item.id}`}><strong>{item.partType}</strong></Link>
                         <br />
-                        <em>{item.engimusing_part_number}</em> | <em>{item.location.map(loc => <em>{loc}</em>)}</em>
+                        <em>{item.engimusing_part_number}</em> | <em>{item.location.map(loc => <em>{loc.name}</em>)}</em>
                         <p>{item.description}</p>
                         <div>
-                        Manufacturers: {item.manufacturer.map(man => <p>{man}</p>)}
+                        Manufacturers: {item.manufacturer.map(man => <p>{man.name}</p>)}
                         </div>
 
                     </div>
