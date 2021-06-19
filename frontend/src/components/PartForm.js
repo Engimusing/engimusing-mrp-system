@@ -52,13 +52,11 @@ function PartForm(props) {
 	});
 
     useEffect(() => {
-        
+        console.log(props)
         if(!props.editing) {
-            setPart({
-                ...part
-	        })
+            setPart({...part})
         } else {
-            setPart(props.editPart)
+            setPart({...props.editPart})
         }
     }, [props.editing, props.editPart])
 
@@ -85,9 +83,36 @@ function PartForm(props) {
             }
     }
 
+    const addNewLocation = () => {
+        setPart({...part, location: [...part.location, {"name": ""}]})
+        console.log(part)
+    }
+    const addNewManufacturer = () => {
+        setPart({...part, manufacturer: [...part.manufacturer, {"name": ""}]})
+        console.log(part)
+    }
+    const addNewTypeField = () => {
+        setPart({...part, TypeFields: [...part.TypeFields, {"name": "", "fields": ""}]})
+        console.log(part)
+    }
+
+    const removeLocation = (index) => {
+        let fields = part.location.filter(location => location !== part.location[index])
+        setPart({...part, location: fields})
+    }
+    const removeManufacturer = (index) => {
+        let fields = part.manufacturer.filter(manufacturer => manufacturer !== part.manufacturer[index])
+        setPart({...part, manufacturer: fields})
+    }
+    const removeTypeField = (index) => {
+        let fields = part.TypeField.filter(typefield => typefield !== part.TypeFields[index])
+        setPart({...part, TypeFields: fields})
+    }
+
 	const handleSubmit = e => {
         delete part.values
-		e.preventDefault();
+        e.preventDefault()
+		
         if(!props.editing) {
             props.addPart(part);
         } else {
@@ -95,6 +120,8 @@ function PartForm(props) {
             props.updatePart(props.editPart.id, part)
         }
 	};
+
+    
 
     return (
             <form onSubmit={handleSubmit}>
@@ -114,16 +141,16 @@ function PartForm(props) {
                 return (<div key={index} class="form-group">
                     <label htmlFor="name">Location:</label>
                     <input class="form-control" name="name" type="text" placeholder="Location..." onChange={event => handleArrayInputs(index, event)} value={location.name} />
-                    <button>+</button>
-                    <button>-</button>
+                    <button onClick={addNewLocation}>+</button>
+                    <button onClick={() => removeLocation(index)}>-</button>
                 </div>)
                 })}
                 {part.manufacturer.map((manufacturer, index) => {
                 return (<div key={index} class="form-group">
                     <label htmlFor="name">Manufacturer:</label>
                     <input class="form-control" name="name" type="text" placeholder="Manufacturer..." onChange={event => handleArrayInputs(index, event)} value={manufacturer.name}/>
-                    <button>+</button>
-                    <button>-</button>
+                    <button onClick={addNewManufacturer}>+</button>
+                    <button onClick={() => removeManufacturer(index)}>-</button>
                 </div>)
                 })}
                 {part.TypeFields.map((typefield, index) => {
@@ -133,13 +160,13 @@ function PartForm(props) {
                             <input class="form-control" name="name" type="text" placeholder="Field Name..." onChange={event => handleArrayInputs(index, event)} value={typefield.name}/>
                             <input class="form-control" name="fields" ref={fieldConn} type="hidden" value={`char${index+1}`} />
                             <input class="form-control" name={`char${index+1}`} type="text" placeholder="Field Data..." onChange={handleChange} value={part["char"+(index+1)]} />
-                            <button>+</button>
-                            <button>-</button>
+                            <button onClick={addNewTypeField}>+</button>
+                            <button onClick={() => removeTypeField(index)}>-</button>
                         </div>
                     )
                 })}
                 <br />
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" onClick={handleSubmit}>Submit</button>
             </form>
     )
 }
