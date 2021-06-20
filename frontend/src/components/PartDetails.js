@@ -14,6 +14,7 @@ function PartDetails(props) {
     useEffect(() => {
         setLoading(true)
         axiosWithAuth().get(`/part/${partId}`).then(res => {
+            console.log(res.data)
             if(res.data.datasheet === null) {
                 delete res.data.datasheet
             }

@@ -94,11 +94,14 @@ class UpdatePart(APIView):
             typefields = payload.pop('TypeFields', None)
             part_to_update.update(**payload)
             for field in typefields:
-                update_field = Field.objects.get(id=field['id'])
-                update_field.name = field['name']
-                update_field.fields = field['fields']
-                update_field.typePart = partType_id
-                update_field.save()
+                update_field, created = Field.objects.get_or_create(name=field['name'], fields=field['fields'], typePart=partType_id)
+                if created:
+                    update_field.save()
+                else:
+                    update_field.name = field['name']
+                    update_field.fields = field['fields']
+                    update_field.typePart = partType_id
+                    update_field.save()
 
             part_to_update[0].manufacturer.clear()
             if loc and man:

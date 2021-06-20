@@ -54,7 +54,49 @@ function PartForm(props) {
     useEffect(() => {
         console.log(props)
         if(!props.editing) {
-            setPart({...part})
+            setPart({
+                		"partType": "",
+		"description": "",
+        "engimusing_part_number": "",
+        "location": [{"name": ""}],
+        "manufacturer": [{"name": ""}],
+        "TypeFields": [{"name": "", "fields": ""}],
+        "char1": "",
+        "char2": "",
+        "char3": "",
+        "char4": "",
+        "char5": "",
+        "char6": "",
+        "char7": "",
+        "char8": "",
+        "char9": "",
+        "char10": "",
+        "char11": "",
+        "char12": "",
+        "char13": "",
+        "char14": "",
+        "char15": "",
+        "char16": "",
+        "char17": "",
+        "char18": "",
+        "char19": "",
+        "char20": "",
+        "char21": "",
+        "char22": "",
+        "char23": "",
+        "char24": "",
+        "char25": "",
+        "char26": "",
+        "char27": "",
+        "char28": "",
+        "char29": "",
+        "char30": "",
+        "char31": "",
+        "char32": "",
+        "char33": "",
+        "char34": "",
+        "char35": ""
+            })
         } else {
             setPart({...props.editPart})
         }
@@ -83,29 +125,35 @@ function PartForm(props) {
             }
     }
 
-    const addNewLocation = () => {
+    const addNewLocation = (e) => {
+        e.preventDefault();
         setPart({...part, location: [...part.location, {"name": ""}]})
         console.log(part)
     }
-    const addNewManufacturer = () => {
+    const addNewManufacturer = (e) => {
+        e.preventDefault();
         setPart({...part, manufacturer: [...part.manufacturer, {"name": ""}]})
         console.log(part)
     }
-    const addNewTypeField = () => {
+    const addNewTypeField = (e) => {
+        e.preventDefault();
         setPart({...part, TypeFields: [...part.TypeFields, {"name": "", "fields": ""}]})
         console.log(part)
     }
 
-    const removeLocation = (index) => {
+    const removeLocation = (e,index) => {
+        e.preventDefault();
         let fields = part.location.filter(location => location !== part.location[index])
         setPart({...part, location: fields})
     }
-    const removeManufacturer = (index) => {
+    const removeManufacturer = (e,index) => {
+        e.preventDefault();
         let fields = part.manufacturer.filter(manufacturer => manufacturer !== part.manufacturer[index])
         setPart({...part, manufacturer: fields})
     }
-    const removeTypeField = (index) => {
-        let fields = part.TypeField.filter(typefield => typefield !== part.TypeFields[index])
+    const removeTypeField = (e,index) => {
+        e.preventDefault();
+        let fields = part.TypeFields.filter(typefield => typefield !== part.TypeFields[index])
         setPart({...part, TypeFields: fields})
     }
 
@@ -141,16 +189,16 @@ function PartForm(props) {
                 return (<div key={index} class="form-group">
                     <label htmlFor="name">Location:</label>
                     <input class="form-control" name="name" type="text" placeholder="Location..." onChange={event => handleArrayInputs(index, event)} value={location.name} />
-                    <button onClick={addNewLocation}>+</button>
-                    <button onClick={() => removeLocation(index)}>-</button>
+                    <button onClick={(e) => addNewLocation(e)}>+</button>
+                    <button onClick={(e) => removeLocation(e, index)}>-</button>
                 </div>)
                 })}
                 {part.manufacturer.map((manufacturer, index) => {
                 return (<div key={index} class="form-group">
                     <label htmlFor="name">Manufacturer:</label>
                     <input class="form-control" name="name" type="text" placeholder="Manufacturer..." onChange={event => handleArrayInputs(index, event)} value={manufacturer.name}/>
-                    <button onClick={addNewManufacturer}>+</button>
-                    <button onClick={() => removeManufacturer(index)}>-</button>
+                    <button onClick={(e) => addNewManufacturer(e)}>+</button>
+                    <button onClick={(e) => removeManufacturer(e, index)}>-</button>
                 </div>)
                 })}
                 {part.TypeFields.map((typefield, index) => {
@@ -160,8 +208,8 @@ function PartForm(props) {
                             <input class="form-control" name="name" type="text" placeholder="Field Name..." onChange={event => handleArrayInputs(index, event)} value={typefield.name}/>
                             <input class="form-control" name="fields" ref={fieldConn} type="hidden" value={`char${index+1}`} />
                             <input class="form-control" name={`char${index+1}`} type="text" placeholder="Field Data..." onChange={handleChange} value={part["char"+(index+1)]} />
-                            <button onClick={addNewTypeField}>+</button>
-                            <button onClick={() => removeTypeField(index)}>-</button>
+                            <button onClick={(e) => addNewTypeField(e)}>+</button>
+                            <button onClick={(e) => removeTypeField(e, index)}>-</button>
                         </div>
                     )
                 })}
