@@ -28,7 +28,7 @@ class Vendor(models.Model):
         ('manufacturer', 'manufacturer'),
         ('distributor', 'distributor'),
     )
-    name = models.CharField(max_length=128, unique=True)
+    name = models.CharField(max_length=250, unique=True)
     vendor_type = models.CharField(max_length=12, choices=TYPE_CHOICES,
                                    default='manufacturer')
     address = models.CharField(max_length=300, blank=True)
@@ -48,7 +48,7 @@ class Vendor(models.Model):
 
 
 class Location(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=250, unique=True)
 
     def __str__(self):
         return self.name
@@ -61,7 +61,7 @@ class Location(models.Model):
 
 # used to track different part types
 class Type(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=200, unique=True)
     prefix = models.CharField(max_length=4)
 
     def __str__(self):
@@ -149,40 +149,40 @@ class Part(models.Model):
                                           through='ManufacturerRelationship')
     # all of the fields that could be tracked for a part type
     char1 = models.CharField(max_length=200, blank=True)
-    char2 = models.CharField(max_length=100, blank=True)
-    char3 = models.CharField(max_length=100, blank=True)
-    char4 = models.CharField(max_length=100, blank=True)
-    char5 = models.CharField(max_length=100, blank=True)
-    char6 = models.CharField(max_length=100, blank=True)
-    char7 = models.CharField(max_length=100, blank=True)
-    char8 = models.CharField(max_length=100, blank=True)
-    char9 = models.CharField(max_length=100, blank=True)
-    char10 = models.CharField(max_length=100, blank=True)
-    char11 = models.CharField(max_length=100, blank=True)
-    char12 = models.CharField(max_length=100, blank=True)
-    char13 = models.CharField(max_length=100, blank=True)
-    char14 = models.CharField(max_length=100, blank=True)
-    char15 = models.CharField(max_length=100, blank=True)
-    char16 = models.CharField(max_length=100, blank=True)
-    char17 = models.CharField(max_length=100, blank=True)
-    char18 = models.CharField(max_length=100, blank=True)
-    char19 = models.CharField(max_length=100, blank=True)
-    char20 = models.CharField(max_length=100, blank=True)
-    char21 = models.CharField(max_length=100, blank=True)
-    char22 = models.CharField(max_length=100, blank=True)
-    char23 = models.CharField(max_length=100, blank=True)
-    char24 = models.CharField(max_length=100, blank=True)
-    char25 = models.CharField(max_length=100, blank=True)
-    char26 = models.CharField(max_length=100, blank=True)
-    char27 = models.CharField(max_length=100, blank=True)
-    char28 = models.CharField(max_length=100, blank=True)
-    char29 = models.CharField(max_length=100, blank=True)
-    char30 = models.CharField(max_length=100, blank=True)
-    char31 = models.CharField(max_length=100, blank=True)
-    char32 = models.CharField(max_length=100, blank=True)
-    char33 = models.CharField(max_length=100, blank=True)
-    char34 = models.CharField(max_length=100, blank=True)
-    char35 = models.CharField(max_length=100, blank=True)
+    char2 = models.CharField(max_length=200, blank=True)
+    char3 = models.CharField(max_length=200, blank=True)
+    char4 = models.CharField(max_length=200, blank=True)
+    char5 = models.CharField(max_length=200, blank=True)
+    char6 = models.CharField(max_length=200, blank=True)
+    char7 = models.CharField(max_length=200, blank=True)
+    char8 = models.CharField(max_length=200, blank=True)
+    char9 = models.CharField(max_length=200, blank=True)
+    char10 = models.CharField(max_length=200, blank=True)
+    char11 = models.CharField(max_length=200, blank=True)
+    char12 = models.CharField(max_length=200, blank=True)
+    char13 = models.CharField(max_length=200, blank=True)
+    char14 = models.CharField(max_length=200, blank=True)
+    char15 = models.CharField(max_length=200, blank=True)
+    char16 = models.CharField(max_length=200, blank=True)
+    char17 = models.CharField(max_length=200, blank=True)
+    char18 = models.CharField(max_length=200, blank=True)
+    char19 = models.CharField(max_length=200, blank=True)
+    char20 = models.CharField(max_length=200, blank=True)
+    char21 = models.CharField(max_length=200, blank=True)
+    char22 = models.CharField(max_length=200, blank=True)
+    char23 = models.CharField(max_length=200, blank=True)
+    char24 = models.CharField(max_length=200, blank=True)
+    char25 = models.CharField(max_length=200, blank=True)
+    char26 = models.CharField(max_length=200, blank=True)
+    char27 = models.CharField(max_length=200, blank=True)
+    char28 = models.CharField(max_length=200, blank=True)
+    char29 = models.CharField(max_length=200, blank=True)
+    char30 = models.CharField(max_length=200, blank=True)
+    char31 = models.CharField(max_length=200, blank=True)
+    char32 = models.CharField(max_length=200, blank=True)
+    char33 = models.CharField(max_length=200, blank=True)
+    char34 = models.CharField(max_length=200, blank=True)
+    char35 = models.CharField(max_length=200, blank=True)
     datasheet = models.FileField(upload_to='documents/', blank=True)
 
     def __str__(self):

@@ -98,7 +98,7 @@ function PartForm(props) {
         "char35": ""
             })
         } else {
-            setPart({...props.editPart})
+            setPart({...props.editPart, removeItems: {removeLocations: [], removeManufacturers: [], removeTypeFields: []}})
         }
     }, [props.editing, props.editPart])
 
@@ -128,33 +128,36 @@ function PartForm(props) {
     const addNewLocation = (e) => {
         e.preventDefault();
         setPart({...part, location: [...part.location, {"name": ""}]})
-        console.log(part)
     }
     const addNewManufacturer = (e) => {
         e.preventDefault();
         setPart({...part, manufacturer: [...part.manufacturer, {"name": ""}]})
-        console.log(part)
     }
     const addNewTypeField = (e) => {
         e.preventDefault();
         setPart({...part, TypeFields: [...part.TypeFields, {"name": "", "fields": ""}]})
-        console.log(part)
     }
 
     const removeLocation = (e,index) => {
         e.preventDefault();
         let fields = part.location.filter(location => location !== part.location[index])
-        setPart({...part, location: fields})
+        let deleteIds = part.location.filter(location => location === part.location[index])
+        setPart({...part, location: fields, removeItems: {...part.removeItems, removeLocations: [...part.removeItems.removeLocations, ...deleteIds]}})
+        
     }
     const removeManufacturer = (e,index) => {
         e.preventDefault();
         let fields = part.manufacturer.filter(manufacturer => manufacturer !== part.manufacturer[index])
-        setPart({...part, manufacturer: fields})
+        let deleteIds = part.manufacturer.filter(manufacturer => manufacturer === part.manufacturer[index])
+        setPart({...part, manufacturer: fields, removeItems: {...part.removeItems, removeManufacturers: [...part.removeItems.removeManufacturers, ...deleteIds]}})
+        
     }
     const removeTypeField = (e,index) => {
         e.preventDefault();
         let fields = part.TypeFields.filter(typefield => typefield !== part.TypeFields[index])
-        setPart({...part, TypeFields: fields})
+        let deleteIds = part.TypeFields.filter(typefield => typefield === part.TypeFields[index])
+        setPart({...part, TypeFields: fields, removeItems: {...part.removeItems, removeTypeFields: [...part.removeItems.removeTypeFields, ...deleteIds]}})
+        
     }
 
 	const handleSubmit = e => {
@@ -162,10 +165,12 @@ function PartForm(props) {
         e.preventDefault()
 		
         if(!props.editing) {
-            props.addPart(part);
+            props.addPart(part)
+            props.history.push(`/`)
         } else {
-            console.log(part)
             props.updatePart(props.editPart.id, part)
+            props.history.push(`/part/${props.editPart.id}`)
+            window.location.reload()
         }
 	};
 

@@ -1,4 +1,4 @@
-import {RETRIEVE_PARTS, ADD_PART_START, ADD_PART_SUCCESS, ADD_PART_FAILURE, UPDATE_PART_START, UPDATE_PART_SUCCESS, UPDATE_PART_FAILURE, SEARCH_START, SEARCH_SUCCESS, SEARCH_FAILURE} from "../actions/constants"
+import {RETRIEVE_PARTS, ADD_PART_START, ADD_PART_SUCCESS, ADD_PART_FAILURE, UPDATE_PART_START, UPDATE_PART_SUCCESS, UPDATE_PART_FAILURE, SEARCH_START, SEARCH_SUCCESS, SEARCH_FAILURE, DELETE_START, DELETE_SUCCESS, DELETE_FAILURE} from "../actions/constants"
 
 const initialState = {
     parts: [],
@@ -15,7 +15,7 @@ const initialState = {
         "engimusing_part_number": "",
         "location": "",
         "manufacturer": "",
-    }
+    },
 }
 
 export const reducer = (state = initialState, action) => {
@@ -38,7 +38,9 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 parts: [...state.parts, action.payload],
-                addingPart: false
+                filteredParts: [...state.filteredParts, action.payload],
+                addingPart: false,
+
             }
         case ADD_PART_FAILURE:
             return {
@@ -84,6 +86,23 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload,
                 searching: false
+            }
+        case DELETE_START:
+            return {
+                ...state,
+                deletingPart: true
+            }
+        case DELETE_SUCCESS:
+            return {
+                ...state,
+                deletingPart: false,
+                filteredParts: state.filteredParts.filter(part => part.id !== action.payload)
+            }
+        case DELETE_FAILURE:
+            return {
+                ...state,
+                deletingPart: false,
+                error: action.payload
             }
     }
 }

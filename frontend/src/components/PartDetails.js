@@ -30,6 +30,7 @@ function PartDetails(props) {
         return (
             <div>
                 <Link to={`/part/${partId}/edit`}>Edit Part</Link>
+                <Link className="m-lg-0" to={`/part/${partId}/delete`}>Delete Part</Link>
                 <h1>{singlePart.partType}</h1>
                 <p>{singlePart.description}</p>
                 <p>{singlePart.engimusing_part_number}</p>

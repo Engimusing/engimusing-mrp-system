@@ -75,7 +75,7 @@ class AddPart(APIView):
         print(part)
         if part.is_valid():
             part.save()
-            return Response({'Part': part.data}, status=status.HTTP_201_CREATED)
+            return Response(part.data, status=status.HTTP_201_CREATED)
         return Response(part.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -87,8 +87,10 @@ class UpdatePart(APIView):
 
         try:
             part_to_update = Part.objects.filter(id=part_id)
-            partType_id = Type.objects.get(name=payload['partType'])
+            partType_id, _ = Type.objects.get_or_create(name=payload['partType'])
             payload = {**payload, "partType": partType_id.id}
+            delete_items = payload.pop("removeItems")
+            print(delete_items)
             loc = payload.pop('location', None)
             man = payload.pop('manufacturer', None)
             typefields = payload.pop('TypeFields', None)
@@ -102,6 +104,25 @@ class UpdatePart(APIView):
                     update_field.fields = field['fields']
                     update_field.typePart = partType_id
                     update_field.save()
+            for field in delete_items['removeTypeFields']:
+                try:
+                    Field.objects.get(id=field['id']).delete()
+                except Exception as e:
+                    continue
+            
+            for location in delete_items['removeLocations']:
+                try:
+                    part_to_update[0].location.remove(location['id'])
+                    part_to_update[0].save()
+                except Exception as e:
+                    print(e)
+            
+            for manufacturer in delete_items['removeManufacturers']:
+                try:
+                    part_to_update[0].manufacturer.remove(manufacturer['id'])
+                    part_to_update[0].save()
+                except Exception as e:
+                    print(e)
 
             part_to_update[0].manufacturer.clear()
             if loc and man:
@@ -141,6 +162,10 @@ class SinglePart(APIView):
         serializer = PartSerializer(queryset)
         return Response(serializer.data, status=status.HTTP_200_OK) 
 
+class RemovePart(APIView):
+    def delete(self, request, part_id):
+        Part.objects.get(id=part_id).delete()
+        return Response("post deleted!", status=status.HTTP_204_NO_CONTENT)
 
 def class_view_decorator(function_decorator):
     """Convert a function based decorator into a class based decorator usable
