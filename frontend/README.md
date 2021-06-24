@@ -9,7 +9,3 @@ Before you can see if your changes are working, you need to make sure of a coupl
 * Run `npm run build` in the `frontend` directory, and wait for the build to finish.
 
 Once the build is done, you can refresh the page and test your changes.
-
-# To Do
-* Comment frontend components
-* Comment & document api endpoints

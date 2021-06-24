@@ -8,6 +8,12 @@ import { RETRIEVE_PARTS } from "../actions/constants";
 import Search from './Search'
 
 function ListInventory(props) {
+    /** 
+        Makes a call to the api, and sends the response to the store.
+        If there are any issues with retrieving data, check to see that 
+        you are logged in to the site as it utilizes the cookies that django
+        sends to the frontend.
+     */
     const [loading, setLoading] = useState(true)
     const dispatch = useDispatch()
     

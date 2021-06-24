@@ -4,7 +4,10 @@ import {deletePart} from '../actions/index'
 import Link from 'react-router-dom/Link'
 
 function DeleteConfirm(props) {
-    console.log(props)
+    /** 
+     Pulls in data from the Parts Detail component. If there are issues with this component's data, check there.
+     Once it pulls in that data from the detail component it allows you to make a deletion call to the api to delete the part.
+    */
     const { id } = props.match.params
 
     const handleConfirm = (id) => {

@@ -33,7 +33,6 @@ from django.contrib import messages
 from django.core.files.base import ContentFile
 from django.utils.safestring import mark_safe
 from itertools import chain
-import logging
 from django.conf import settings
 import http.client
 from django.contrib.auth.decorators import login_required, permission_required
@@ -42,10 +41,12 @@ from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import PartSerializer, FieldSerializer
-# logger = logging.getLogger(__name__)
 
 
 class InventoryViewSet(viewsets.ReadOnlyModelViewSet):
+    """ 
+    Displays all parts in the database.
+    """
     queryset = Part.objects.all()
     serializer_class = PartSerializer
 
@@ -53,13 +54,22 @@ class InventoryViewSet(viewsets.ReadOnlyModelViewSet):
 
 @method_decorator(csrf_protect, name='dispatch')
 class AddPart(APIView):
+    """Adds a new part to the database.
+
+        If there are any issues with adding a part you'll want to check here.
+
+        Returns: json object.
+    """
     def post(self, request, format=None):
-        print(request.data)
+        # Makes the data the frontend sends usable by python and django
         parts = json.dumps(request.data)
         payload = json.loads(parts)
+        # Checks to see if the partType submitted exists and then sets
+        # the id in the payload that is then passed to the serializer.
         partType_instance, _ = Type.objects.get_or_create(name=payload['partType'])
         for field in payload['TypeFields']:
-                print(field)
+            # Loops through request's typefields and checks 
+            # for their existence on the part
                 add_field, _ = Field.objects.get_or_create(name=field['name'], fields=field['fields'], typePart=partType_instance)
                 add_field.save()
         jsonpart = {
@@ -70,9 +80,10 @@ class AddPart(APIView):
             "location": payload['location'],
             "manufacturer": payload['manufacturer'],
         }
+        # Delete's the TypeFields array as that field 
+        # doesn't exist in the serializer and will cause and error.
         del payload['TypeFields']
         part = PartSerializer(data=jsonpart)
-        print(part)
         if part.is_valid():
             part.save()
             return Response(part.data, status=status.HTTP_201_CREATED)
@@ -81,21 +92,37 @@ class AddPart(APIView):
 
 @method_decorator(csrf_protect, name='dispatch')
 class UpdatePart(APIView):
+    """Updates part in the database and all associated data.
+        If there are any issues with updating a part, you'll want 
+        to check here.
+
+    Returns: json object.
+    """
     def put(self, request, part_id):
+        # Makes the data the frontend sends usable by python and django
         part = json.dumps(request.data)
         payload = json.loads(part)
 
         try:
             part_to_update = Part.objects.filter(id=part_id)
+            # Checks to see if the partType submitted exists and then sets
+            # the id in the payload that is then passed to the serializer.
             partType_id, _ = Type.objects.get_or_create(name=payload['partType'])
             payload = {**payload, "partType": partType_id.id}
-            delete_items = payload.pop("removeItems")
-            print(delete_items)
+            # Grabs the array of removeItems from the request to be 
+            # utilized later in the api code.
+            delete_items = payload.pop("removeItems", None)
+            # Grabs the array of locations/manufacturers/typefields 
+            # that still exist on the object
             loc = payload.pop('location', None)
             man = payload.pop('manufacturer', None)
             typefields = payload.pop('TypeFields', None)
+            # Passes the data that wasn't popped off of the request
+            # to to the update fucntion
             part_to_update.update(**payload)
             for field in typefields:
+                # Loops through typefields on the part to
+                # check if they are brand new or being modified.
                 update_field, created = Field.objects.get_or_create(name=field['name'], fields=field['fields'], typePart=partType_id)
                 if created:
                     update_field.save()
@@ -105,12 +132,16 @@ class UpdatePart(APIView):
                     update_field.typePart = partType_id
                     update_field.save()
             for field in delete_items['removeTypeFields']:
+                # Loops through typefields in the removeItems array
+                # and deletes them from the part
                 try:
                     Field.objects.get(id=field['id']).delete()
                 except Exception as e:
                     continue
             
             for location in delete_items['removeLocations']:
+                # Loops through locations in the removeItems array
+                # and removes them from the part
                 try:
                     part_to_update[0].location.remove(location['id'])
                     part_to_update[0].save()
@@ -118,6 +149,8 @@ class UpdatePart(APIView):
                     print(e)
             
             for manufacturer in delete_items['removeManufacturers']:
+                # Loops through manufacturers in the removeItems array
+                # and removes them from the part
                 try:
                     part_to_update[0].manufacturer.remove(manufacturer['id'])
                     part_to_update[0].save()
@@ -126,6 +159,8 @@ class UpdatePart(APIView):
 
             part_to_update[0].manufacturer.clear()
             if loc and man:
+                # Loops through the locations and manufacturers
+                # on the request to see if they are new or being modified.
                 loc_ids = []
                 man_ids = []
                 for l in loc:
@@ -146,7 +181,9 @@ class UpdatePart(APIView):
                 part_to_update[0].location.add(*loc_ids)
                 part_to_update[0].manufacturer.add(*man_ids)
                 part_to_update[0].save()
-                    
+
+            # Grabs the updated part and passes it to the serializer 
+            # to validate the data       
             updated_part = Part.objects.get(id=part_id)
             serializer = PartSerializer(updated_part)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -157,15 +194,23 @@ class UpdatePart(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class SinglePart(APIView):
+    """Retrieves a single part from the database.
+
+    Returns: json object
+    """
     def get(self, request, part_id):
         queryset = Part.objects.get(id=part_id)
         serializer = PartSerializer(queryset)
         return Response(serializer.data, status=status.HTTP_200_OK) 
 
 class RemovePart(APIView):
+    """Deletes a part from the database.
+
+    Returns: json object
+    """
     def delete(self, request, part_id):
         Part.objects.get(id=part_id).delete()
-        return Response("post deleted!", status=status.HTTP_204_NO_CONTENT)
+        return Response("Part deleted!", status=status.HTTP_204_NO_CONTENT)
 
 def class_view_decorator(function_decorator):
     """Convert a function based decorator into a class based decorator usable

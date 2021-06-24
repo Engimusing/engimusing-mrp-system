@@ -4,6 +4,21 @@ import { addPart, updatePart } from "../actions";
 
 
 function PartForm(props) {
+    /**
+    
+        This component handles both adding and updating parts.
+        On update this component pulls in data from the store and passes it into state.
+        On submit for update it sends a request to the api to modify all of the data 
+        that is given to it.
+
+        If you have any issues with data showing up in this form on update, check the store 
+        and also check the response recieved in the Part Details component.
+
+        On Add this component simply makes a call to the api on submit. 
+        If there are any issues with data on add, you should check the AddPart view
+        in the backend: mrp_system -> Views -> AddPart.
+
+     */
     const fieldConn = useRef(null)
     const [part, setPart] = useState({
 		"partType": "",

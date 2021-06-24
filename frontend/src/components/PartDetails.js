@@ -6,6 +6,12 @@ import {connect, useDispatch} from 'react-redux'
 
 
 function PartDetails(props) {
+    /**
+        Pulls in data from the api and sets it as an object in the state
+        This allows the edit link to make sure that the data it recieves is correct.
+        As with the inventory component make sure you're logged into the site if you have issues
+        with data being returned in this component.
+     */
     const [singlePart, setSinglePart] = useState({})
     const [loading, setLoading] = useState(false)
     let partId = props.match.params.id
@@ -14,7 +20,6 @@ function PartDetails(props) {
     useEffect(() => {
         setLoading(true)
         axiosWithAuth().get(`/part/${partId}`).then(res => {
-            console.log(res.data)
             if(res.data.datasheet === null) {
                 delete res.data.datasheet
             }

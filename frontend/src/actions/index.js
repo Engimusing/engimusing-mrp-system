@@ -1,6 +1,5 @@
 import {RETRIEVE_PARTS, ADD_PART_START, ADD_PART_SUCCESS, ADD_PART_FAILURE, UPDATE_PART_START, UPDATE_PART_SUCCESS, UPDATE_PART_FAILURE, SEARCH_START, SEARCH_SUCCESS, SEARCH_FAILURE, DELETE_START, DELETE_SUCCESS, DELETE_FAILURE} from './constants'
 import {axiosWithAuth} from '../utils/axiosWithAuth'
-import {useHistory} from 'react-router-dom'
 
 export const addPart = (part) => dispatch => {
 	dispatch({ type: ADD_PART_START });
