@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
+
+load_dotenv()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
 print(BASE_DIR)
@@ -48,13 +51,11 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'timepiece.apps.TimepieceConfig',
     'timepiece.manager',
     'timepiece.entries',
     'redirect.apps.RedirectConfig',
     'import_export',
-    'mrp_system.apps.MrpSystemConfig',
     'storages',
 ]
 
@@ -108,17 +109,7 @@ WSGI_APPLICATION = 'mrp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mrp',
-        'USER': 'mrp',
-        'PASSWORD': 'emusmrp$$%%',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    },
-}
-
+DATABASES = {    'default': {    'ENGINE': 'django.db.backends.postgresql_psycopg2',    'NAME': 'mrp',    'USER': 'mrp',    'PASSWORD': 'emusmrp$$%%',    'HOST': '127.0.0.1',    'PORT': '5432',    },   }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -201,13 +192,6 @@ STATICFILES_LOCATION = 'static'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-    ]
-}
+
 
 CORS_ORIGIN_ALLOW_ALL = True

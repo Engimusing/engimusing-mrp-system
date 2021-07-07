@@ -45,14 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'timepiece.apps.TimepieceConfig',
     'timepiece.manager',
     'timepiece.entries',
     'import_export',
     'redirect.apps.RedirectConfig',
-    'mrp_system.apps.MrpSystemConfig',
-    'frontend.apps.frontendConfig',
     'storages',
     'sslserver',
 
@@ -104,12 +101,8 @@ WSGI_APPLICATION = 'mrp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test',
-        'USER': 'mrp',
-        'PASSWORD': 'emusmrp$$%%',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/Users/smoldev/Documents/mrp-system/emus-mrp/data.sqlite'
     },
 }
 
