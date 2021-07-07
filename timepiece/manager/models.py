@@ -4,7 +4,7 @@ from django.apps import apps
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
+# from django.utils.encoding import python_2_unicode_compatible
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -26,13 +26,16 @@ _get_absolute_url = lambda user: reverse('view_user', args=(user.pk,))
 User.add_to_class('get_absolute_url', _get_absolute_url)
 
 
-@python_2_unicode_compatible
+# @python_2_unicode_compatible
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     ssn = models.CharField(max_length=4, blank=True, default = ' ')
     title = models.CharField(max_length=20, blank=True, default = ' ')
     payroll = models.BooleanField(default=True, blank=False)
-    # payroll_name = models.CharField(max_length=20, blank=True, default='blahblahblah')
+    health_insurance = models.DecimalField(default=0, decimal_places=2, max_digits=5)
+    payroll_name = models.CharField(max_length=20, blank=True, default='blahblahblah')
+    salaried = models.BooleanField(default=True, blank=False)
+    hourly = models.BooleanField(default=False, blank=False)
 
     class Meta:
         db_table = 'manager_profile'  # Using legacy table name.
@@ -47,7 +50,7 @@ class TrackableProjectManager(models.Manager):
         )
 
 
-@python_2_unicode_compatible
+# @python_2_unicode_compatible
 class Project(models.Model):
     name = models.CharField(max_length=255)
     users = models.ManyToManyField(User, related_name='user_projects', through='ProjectRelationship')
@@ -74,7 +77,7 @@ class Project(models.Model):
 
 #through model was used to track other fields that we got rid of
 #kept through model for db compatibility
-@python_2_unicode_compatible
+# @python_2_unicode_compatible
 class ProjectRelationship(models.Model):
     user = models.ForeignKey(User, related_name='project_relationships', on_delete=models.CASCADE,)
     project = models.ForeignKey(Project, related_name='project_relationships', on_delete=models.CASCADE,)

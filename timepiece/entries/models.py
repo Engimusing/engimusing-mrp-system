@@ -9,7 +9,7 @@ from django.db import models
 from django.forms import Textarea
 from django.db.models import F, Q, Sum, Max, Min
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
+# from django.utils.encoding import python_2_unicode_compatible
 
 from timepiece import utils
 from timepiece.manager.models import Project
@@ -78,7 +78,7 @@ class EntryManager(models.Manager):
     def timespan(self, from_date, to_date=None, span='month'):
         return self.get_queryset().timespan(from_date, to_date, span)
 
-@python_2_unicode_compatible
+# @python_2_unicode_compatible
 class Entry(models.Model):
     """
     This class is where all of the time logs are taken care of
@@ -279,7 +279,7 @@ class Entry(models.Model):
         return data
 
 
-@python_2_unicode_compatible
+# @python_2_unicode_compatible
 class ProjectHours(models.Model):
     week_start = models.DateField(verbose_name='start of week')
     project = models.ForeignKey('manager.Project', on_delete=models.CASCADE,)

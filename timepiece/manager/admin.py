@@ -23,6 +23,7 @@ class ProjectAdmin(ImportExportModelAdmin):
 
 class UserProfileInline(admin.StackedInline):
     model = Profile
+    fields = ('ssn', 'title', 'health_insurance', 'payroll_name', 'salaried', 'hourly')
     can_delete = False
     verbose_name_plural = 'employee'
     

@@ -1,0 +1,14 @@
+{% extends 'timepiece/base.html'%}
+{% block content %}
+{% if perms.mrp_system.time_user %}
+<h3>Select Date</h3>
+        <form method="POST" action=''>
+            {% csrf_token %}
+            {{ select_invoice.date }}
+            <button type="submit" class="btn btn-primary">Get Payroll</button>
+
+        </form>
+
+{% endif %}
+
+{% endblock content %}
