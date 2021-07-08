@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'mrp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/Users/smoldev/Documents/mrp-system/emus-mrp/data.sqlite'
+        'NAME': BASE_DIR / 'data.sqlite'
     },
 }
 

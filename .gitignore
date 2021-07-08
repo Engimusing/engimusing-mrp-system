@@ -132,3 +132,9 @@ dmypy.json
 .pyre/
 *.dump
 parts.xlsx
+
+# no database stuff
+*.sql
+*.sqlite
+*.sqlite3
+*.json
