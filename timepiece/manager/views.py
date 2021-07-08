@@ -524,7 +524,7 @@ def week_timesheet_invoice(request, date):
         for p in project_entries:
             p['activities'] = ", ".join(week.lower_activities for week in week_entries.filter(project__name=p['project__name'])
                                        .order_by().annotate(lower_activities=Lower('activities'))
-                                       .distinct('lower_activities'))
+                                       .order_by('lower_activities'))
 
         for project in project_entries:
             seconds = project['sum']
@@ -627,7 +627,7 @@ class WeekTimesheet(WeekTimesheetMixin, TemplateView):
         for p in project_entries:
             p['activities'] = ", ".join(week.lower_activities for week in week_entry.filter(project__name=p['project__name'])
                                        .order_by().annotate(lower_activities=Lower('activities'))
-                                       .distinct('lower_activities'))
+                                       .order_by('lower_activities'))
 
         context.update({
             'user': user,

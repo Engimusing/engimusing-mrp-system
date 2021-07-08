@@ -151,7 +151,7 @@ class Dashboard(DashboardMixin, TemplateView):
 
                                        .order_by().annotate(lower_activities=Lower('activities'))
 
-                                       .distinct('lower_activities')) 
+                                       .order_by('lower_activities')) 
 
             project_data[project.pk] = {
 
