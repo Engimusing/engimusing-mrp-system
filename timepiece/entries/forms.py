@@ -157,6 +157,7 @@ class EntryDashboardForm(forms.ModelForm):
     start_time = TimepieceSplitDateTimeField()
     #just time for end time, gets date from start time
     end = forms.TimeField(required=False)
+    print(end)
     activities = forms.CharField(label='Activities', widget=forms.TextInput(attrs={'rows': 1, 'cols': 90, 'max_length': 250}), required=True)
 
     class Meta:
@@ -184,6 +185,7 @@ class EntryDashboardForm(forms.ModelForm):
         """
         active = utils.get_active_entry(self.user)
         start_time = self.cleaned_data.get('start_time', None)
+        print('form start_time', start_time)
         end = self.cleaned_data.get('end', None)
         if(end != None and active != None):
             end_time = datetime.datetime.combine(active.start_time.date(), end)

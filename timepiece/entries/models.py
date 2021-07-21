@@ -9,6 +9,8 @@ from django.db import models
 from django.forms import Textarea
 from django.db.models import F, Q, Sum, Max, Min
 from django.utils import timezone
+import pytz
+
 # from django.utils.encoding import python_2_unicode_compatible
 
 from timepiece import utils
@@ -153,7 +155,8 @@ class Entry(models.Model):
             raise ValidationError('An unexpected error has occured')
         if not self.start_time:
             raise ValidationError('Please enter a valid start time')
-        start = self.start_time
+        
+        start = self.start_time - datetime.timedelta(hours=6)
 
         #if regular end time (clock out and add entry)
         if self.end_time:
@@ -161,6 +164,8 @@ class Entry(models.Model):
         #this end time is used on homescreen, must grab date from start
         elif self.end:
             end = datetime.datetime.combine(self.start_time.date(), self.end)
+            end = pytz.utc.localize(end)
+           
         #if no end time at all
         else:
             end = start + relativedelta(seconds=1)
@@ -174,7 +179,7 @@ class Entry(models.Model):
         for entry in entries:
             entry_data = {
                 'project': entry.project,
-                'start_time': entry.start_time,
+                'start_time': entry.start_time - datetime.timedelta(hours=6),
                 'end_time': entry.end_time,
                 'endTime': entry.end,
             }
@@ -196,7 +201,6 @@ class Entry(models.Model):
                     raise ValidationError(
                         'Start time overlaps with {project} '
                         'from {start_time} to {end_time}.'.format(**entry_data))                
-        
         if end <= start:
             raise ValidationError('Ending time must exceed the starting time')
         return True
@@ -214,6 +218,9 @@ class Entry(models.Model):
         end = self.end_time
         if not end:
             end = timezone.now()
+        if end.tzinfo is None or end.tzinfo.utcoffset(end) is None:
+            end = pytz.utc.localize(end)
+
         delta = end - start
         seconds = delta.seconds
         return seconds + (delta.days * 86400)
