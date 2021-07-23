@@ -217,10 +217,11 @@ class EntryDashboardForm(forms.ModelForm):
         return self.cleaned_data
 
     def save(self, commit=True):
+        active = utils.get_active_entry(self.user)
         entry = super(EntryDashboardForm, self).save(commit=False)
         if(entry.end != None):
             entry.end_time = datetime.datetime.combine(entry.start_time.date(), entry.end)
-            if entry.end_time.hour >= 18:
+            if active and entry.end_time.hour >= 18:
                 # print('>>> entry.end_time.hours:', entry.end_time.hour)
                 entry.end_time -= datetime.timedelta(days=1)
                 # print('>>> entry.end_time:', entry.end_time)
