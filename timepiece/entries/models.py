@@ -11,6 +11,8 @@ from django.db.models import F, Q, Sum, Max, Min
 from django.utils import timezone
 import pytz
 
+import json
+
 # from django.utils.encoding import python_2_unicode_compatible
 
 from timepiece import utils
@@ -88,6 +90,9 @@ class Entry(models.Model):
     user = models.ForeignKey(User, related_name='timepiece_entries', on_delete=models.CASCADE,)
     project = models.ForeignKey('manager.Project', related_name='entries', on_delete=models.CASCADE,)    
     start_time = models.DateTimeField()
+    # start_time = models.DateTimeField(default=pytz.utc.localize(datetime.datetime.now()))
+    # start_time = models.DateTimeField(default=datetime.datetime.now())
+    # start_time = models.DateTimeField(default=timezone.localtime(timezone.now()))
     end_time = models.DateTimeField(blank=True, null=True, db_index=True)
     end = models.TimeField(blank=True, null=True)
     activities = models.CharField(max_length=350, blank=False)
@@ -156,22 +161,39 @@ class Entry(models.Model):
         if not self.start_time:
             raise ValidationError('Please enter a valid start time')
         
-        start = self.start_time - datetime.timedelta(hours=6)
+        start = self.start_time #- datetime.timedelta(hours=6)
+        # start = pytz.localize(start)
 
         #if regular end time (clock out and add entry)
         if self.end_time:
             end = self.end_time - relativedelta(seconds=1)
         #this end time is used on homescreen, must grab date from start
         elif self.end:
+            # print('>>>>>>> start_time date:', self.start_time.date())
+            # print('>>>>>>> end before combining:', self.end)
             end = datetime.datetime.combine(self.start_time.date(), self.end)
+            # end = datetime.datetime.combine(datetime.datetime.now().date(), self.end)
+            # print('>>>>>>> end after combining:', end)
             end = pytz.utc.localize(end)
            
         #if no end time at all
         else:
             end = start + relativedelta(seconds=1)
 
-        entries = self.user.timepiece_entries.filter(
-            end_time__gt=start, start_time__lte=end)
+        # print('>>> start:', start)
+        # print('>>> end:', end)
+        # print('>>> test:', str(start).replace('-06:00', '+00:00'))
+        start_query = str(start).replace('-06:00', '+00:00')
+        start_query = datetime.datetime.strptime(start_query, '%Y-%m-%d %H:%M:%S+00:00')
+        start_query = pytz.utc.localize(start_query)
+        start_query = start_query + datetime.timedelta(hours=6)
+        
+        end_query = end + datetime.timedelta(hours=6)
+        # print('>>> start_query:', start_query)
+
+        entries = self.user.timepiece_entries.filter(end_time__gt=start_query, start_time__lte=end_query)
+
+        # print('>>>> entries:', entries)
 
         # An entry can not conflict with itself so remove it from the list
         if self.id:
@@ -179,11 +201,12 @@ class Entry(models.Model):
         for entry in entries:
             entry_data = {
                 'project': entry.project,
-                'start_time': entry.start_time - datetime.timedelta(hours=6),
+                'start_time': entry.start_time, #- datetime.timedelta(hours=6),
                 'end_time': entry.end_time,
                 'endTime': entry.end,
             }
             # Conflicting saved entries
+            # print(json.dumps(entry_data, indent=4))
             if entry.end_time:
                 if entry.start_time.date() == start.date() and entry.end_time.date() == end.date():
                     entry_data['start_time'] = entry.start_time.strftime(
@@ -192,7 +215,7 @@ class Entry(models.Model):
                         '%H:%M:%S')
                     raise ValidationError('Start time overlaps with '
                                           '{project} from {start_time} to '
-                                          '{end_time}.'.format(**entry_data))
+                                          '{end_time}.(1)'.format(**entry_data))
                 else:
                     entry_data['start_time'] = entry.start_time.strftime(
                         '%H:%M:%S on %m\%d\%Y')
@@ -200,8 +223,12 @@ class Entry(models.Model):
                         '%H:%M:%S on %m\%d\%Y')
                     raise ValidationError(
                         'Start time overlaps with {project} '
-                        'from {start_time} to {end_time}.'.format(**entry_data))                
+                        'from {start_time} to {end_time}.(2)'.format(**entry_data)) 
+
+        start -= datetime.timedelta(hours=6)              
         if end <= start:
+            # print('>>> end:', end)
+            # print('>>> start:', start)
             raise ValidationError('Ending time must exceed the starting time')
         return True
 
@@ -223,7 +250,12 @@ class Entry(models.Model):
 
         delta = end - start
         seconds = delta.seconds
-        return seconds + (delta.days * 86400)
+        total_seconds = seconds + (delta.days * 86400)
+        # if total_seconds > 3600 * 24:
+        #     total_seconds -= 3600 * 24
+        # print('>>>> total secs:', total_seconds)
+        # print('>>>> total hrs:', total_seconds / 3600.0)
+        return total_seconds
 
     @property
     def total_hours(self):
@@ -231,6 +263,7 @@ class Entry(models.Model):
         Determined the total number of hours worked in this entry
         """
         total = self.get_total_seconds() / 3600.0
+        # print('>>>>>> total hours:', total)
         if total < 0:
             total = 0
         return total

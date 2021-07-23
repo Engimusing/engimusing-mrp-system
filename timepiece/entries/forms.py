@@ -189,8 +189,10 @@ class EntryDashboardForm(forms.ModelForm):
         end = self.cleaned_data.get('end', None)
         if(end != None and active != None):
             end_time = datetime.datetime.combine(active.start_time.date(), end)
+            # end_time -= datetime.timedelta(days=1)
         elif (end != None and active == None):
             end_time = datetime.datetime.combine(start_time.date(), end)
+            # end_time -= datetime.timedelta(days=1)
         else:
             end_time = None
         if active and active.pk != self.instance.pk:
@@ -218,6 +220,10 @@ class EntryDashboardForm(forms.ModelForm):
         entry = super(EntryDashboardForm, self).save(commit=False)
         if(entry.end != None):
             entry.end_time = datetime.datetime.combine(entry.start_time.date(), entry.end)
+            if entry.end_time.hour >= 18:
+                # print('>>> entry.end_time.hours:', entry.end_time.hour)
+                entry.end_time -= datetime.timedelta(days=1)
+                # print('>>> entry.end_time:', entry.end_time)
         if commit:
             entry.save()
         return entry
