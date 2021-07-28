@@ -25,6 +25,3 @@ django-import-export = "*"
 django-cors-headers = "*"
 algoliasearch-django = "*"
 python-dotenv = "*"
-
-[requires]
-python_version = "3.8"
