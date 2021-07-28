@@ -5,7 +5,7 @@
 3. Switch to the development branch: `git checkout -b conversion`
 4. If you don't have `pipenv` installed, install with `pip install pipenv`
 5. Create/activate virtual environment: `pipenv shell`
-6. Install dependencies: `pipenv install -r requirements.txt`
+6. Install dependencies: `pipenv install`
 7. 
 
 # Rest API Endpoints
