@@ -6,7 +6,11 @@
 4. If you don't have `pipenv` installed, install with `pip install pipenv`
 5. Create/activate virtual environment: `pipenv shell`
 6. Install dependencies: `pipenv install`
-7. 
+7. Download sqlite database from dropbox/emus_us_server/timepiece_data_dumps/
+8. Move downloaded db (data.sqlite) into engimusing-mrp-system/mrp/
+9. Check for migrations with `python manage.py makemigrations`
+10. Run migrations: `python manage.py migrate`
+11. Start up the site on localhost: `python manage.py runserver`
 
 # Rest API Endpoints
 - [GET mrp/api/inventory/](#inventory)
