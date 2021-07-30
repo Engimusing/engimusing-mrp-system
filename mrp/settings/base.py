@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'timepiece.manager',
     'timepiece.entries',
     'import_export',
-    'redirect.apps.RedirectConfig',
     'storages',
     'sslserver',
 
@@ -65,7 +64,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'mrp.middleware.middleware.RedirectFallbackMiddleware',
 
 ]
 
