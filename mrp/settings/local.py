@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'timepiece.apps.TimepieceConfig',
     'timepiece.manager',
     'timepiece.entries',
-    'redirect.apps.RedirectConfig',
+    # 'redirect.apps.RedirectConfig',
     'import_export',
     'storages',
 ]
@@ -69,7 +69,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    'mrp.middleware.middleware.RedirectFallbackMiddleware',
+    # 'mrp.middleware.middleware.RedirectFallbackMiddleware',
 ]
 
 
